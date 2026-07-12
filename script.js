@@ -256,6 +256,45 @@
     onTimelineScroll();
   }
 
+  /* ----- SemantiCache pre-warm: its Streamlit frontend and Render API both
+     sleep on the free tier. Pinging them when the card scrolls into view
+     (and again on click) makes both spin up in parallel, so one click on
+     "Live demo" lands on a working stack instead of a double cold start. ----- */
+  var WARM_URLS = [
+    "https://trademarkia-api-trh5.onrender.com/docs",
+    "https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app/"
+  ];
+  var lastWarm = 0;
+  function warmSemanticache() {
+    // re-ping if the visitor lingers; Render idles out after ~15 min
+    if (Date.now() - lastWarm < 4 * 60 * 1000) return;
+    lastWarm = Date.now();
+    WARM_URLS.forEach(function (url) {
+      try {
+        fetch(url, { mode: "no-cors", cache: "no-store" }).catch(function () {});
+      } catch (e) {}
+    });
+  }
+  var scCard = document.getElementById("semanticache");
+  if (scCard && "IntersectionObserver" in window) {
+    var warmIO = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            warmSemanticache();
+            warmIO.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px 0px" }
+    );
+    warmIO.observe(scCard);
+  }
+  document.querySelectorAll("[data-warm-semanticache]").forEach(function (el) {
+    el.addEventListener("click", warmSemanticache);
+    el.addEventListener("mouseenter", warmSemanticache);
+  });
+
   /* ----- Mobile menu ----- */
   var burger = document.getElementById("navBurger");
   var links = document.getElementById("navLinks");
