@@ -185,7 +185,6 @@ ul { list-style: none; }
 .badge-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--live); box-shadow: 0 0 8px var(--live); }
 .badge-local { color: var(--amber); border-color: rgba(217, 160, 63, 0.4); }
 .badge-offline { color: var(--text-muted); }
-.badge-soon { color: var(--violet); border-color: rgba(141, 127, 212, 0.4); }
 .badge-award { color: var(--accent-soft); border-color: rgba(139, 166, 240, 0.4); }
 .badge-review { color: var(--accent-soft); border-color: rgba(139, 166, 240, 0.4); }
 
@@ -478,7 +477,6 @@ ul { list-style: none; }
 /* ---------- Research ---------- */
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
 .paper .badge { margin-bottom: 16px; }
 .paper h3 { margin-bottom: 10px; }
@@ -502,11 +500,6 @@ ul { list-style: none; }
   flex-wrap: wrap;
 }
 .mini p { font-size: 0.93rem; }
-
-.wip-strip { margin-top: 56px; }
-.wip-title { font-size: 1rem; color: var(--accent); margin-bottom: 20px; }
-.wip h4 { font-family: var(--font-head); margin: 12px 0 8px; font-size: 1.05rem; }
-.wip p { font-size: 0.88rem; }
 
 /* ---------- Skills ---------- */
 
@@ -535,11 +528,6 @@ ul { list-style: none; }
 .ach-year { color: var(--accent); font-size: 0.85rem; }
 .ach p { font-size: 0.98rem; }
 .ach strong { color: var(--text); font-weight: 600; }
-
-.verify-grid { margin-top: 40px; }
-.placeholder-card .badge { margin-bottom: 14px; }
-.placeholder-card h3 { margin-bottom: 8px; }
-.placeholder-card p { font-size: 0.92rem; }
 
 /* ---------- Education ---------- */
 
@@ -651,20 +639,6 @@ ul { list-style: none; }
 
 /* ---------- Branded placeholder mockups ---------- */
 
-.ph-label-overlay {
-  position: absolute;
-  left: 50%;
-  bottom: 14px;
-  transform: translateX(-50%);
-  background: rgba(10, 15, 27, 0.85);
-  border: 1px solid var(--line-strong);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  white-space: nowrap;
-}
-
 /* photo-style */
 .ph-photo { flex-direction: column; gap: 12px; color: var(--text-muted); }
 .ph-icon { position: relative; opacity: 0.7; }
@@ -736,44 +710,6 @@ ul { list-style: none; }
   white-space: nowrap;
   max-width: 75%;
 }
-.phb-body {
-  position: relative;
-  flex: 1;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.skel {
-  height: 10px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, var(--surface-2) 25%, var(--brand-navy) 50%, var(--surface-2) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 2.4s linear infinite;
-}
-.skel-title { width: 45%; height: 14px; }
-.skel-short { width: 60%; }
-.skel-row { display: flex; gap: 8px; }
-.skel-chip { width: 64px; height: 20px; border-radius: 6px; }
-.skel-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  height: 110px;
-  padding: 4px 2px;
-}
-.skel-bars span {
-  flex: 1;
-  border-radius: 4px 4px 0 0;
-  background: linear-gradient(180deg, var(--accent-dim), rgba(94, 130, 232, 0.28));
-  border: 1px solid rgba(94, 130, 232, 0.25);
-  border-bottom: 0;
-}
-@keyframes shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
-}
-
 /* diagram style */
 .ph-diagram { min-height: 280px; padding: 28px 20px 44px; }
 .phd-flow {
@@ -813,7 +749,7 @@ ul { list-style: none; }
    anchor jumps (nav links land mid-hero with unrendered sections). */
 
 @media (prefers-reduced-motion: reduce) {
-  .skel, .skel-bars span { animation: none; }
+
   .to-top { transition: none; }
 }
 
@@ -827,7 +763,7 @@ ul { list-style: none; }
   .about-grid { grid-template-columns: 1fr; }
   .project, .project-flip { grid-template-columns: 1fr; gap: 24px; }
   .project-flip .project-media { order: 0; }
-  .robotics-grid, .grid-3 { grid-template-columns: 1fr; }
+  .robotics-grid { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
