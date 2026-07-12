@@ -1,0 +1,8 @@
+# Working notes and dev harnesses, not for the public repo
+.claude/
+CLAUDE.md
+PLACEHOLDERS.md
+_og-card.html
+_mobile-test.html
+
+.DS_Store
