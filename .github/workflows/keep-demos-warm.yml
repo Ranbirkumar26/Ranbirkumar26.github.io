@@ -1,0 +1,24 @@
+name: Keep demos warm
+
+# The SemantiCache demo runs on free tiers that sleep when idle: the
+# Streamlit frontend hibernates without visits and the Render API spins
+# down after 15 idle minutes. Pinging both every 10 minutes keeps the
+# whole stack answering instantly for portfolio visitors.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping SemantiCache frontend and API
+        run: |
+          curl -s -o /dev/null -w "streamlit: %{http_code}\n" --max-time 60 \
+            "https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app/" || true
+          curl -s -o /dev/null -w "render api: %{http_code}\n" --max-time 120 \
+            "https://trademarkia-api-trh5.onrender.com/docs" || true
+          curl -s -o /dev/null -w "craveconnect: %{http_code}\n" --max-time 120 \
+            "https://craveconnect.onrender.com/" || true
