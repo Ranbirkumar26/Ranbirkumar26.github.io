@@ -70,15 +70,19 @@
     }
   }
 
-  /* ----- Scroll reveal ----- */
+  /* ----- Scroll reveal (batch-staggered: items revealed in the same
+     observer tick cascade instead of appearing at once) ----- */
   var revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && !reducedMotion) {
     var io = new IntersectionObserver(
       function (entries) {
+        var batch = 0;
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
+            entry.target.style.setProperty("--stagger", Math.min(batch, 5) * 90 + "ms");
             entry.target.classList.add("in");
             io.unobserve(entry.target);
+            batch++;
           }
         });
       },
@@ -161,6 +165,95 @@
     toTop.addEventListener("click", function () {
       animateScrollTo(0);
     });
+  }
+
+  /* ----- Theme toggle ----- */
+  var themeToggle = document.getElementById("themeToggle");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  function applyThemeMeta() {
+    if (themeMeta) {
+      themeMeta.setAttribute(
+        "content",
+        document.documentElement.getAttribute("data-theme") === "light" ? "#f3f5fa" : "#0a0f1b"
+      );
+    }
+  }
+  applyThemeMeta();
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next =
+        document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      applyThemeMeta();
+    });
+  }
+
+  /* ----- Cursor follower ring (fine pointers only) ----- */
+  var ring = document.getElementById("cursorRing");
+  if (ring && !reducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    var rx = -100, ry = -100, tx = -100, ty = -100, ringOn = false;
+    document.addEventListener("mousemove", function (e) {
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!ringOn) {
+        ringOn = true;
+        rx = tx; ry = ty;
+        ring.classList.add("on");
+      }
+    });
+    document.addEventListener("mouseleave", function () {
+      ringOn = false;
+      ring.classList.remove("on");
+    });
+    (function follow() {
+      rx += (tx - rx) * 0.16;
+      ry += (ty - ry) * 0.16;
+      ring.style.transform = "translate(" + rx + "px," + ry + "px)";
+      requestAnimationFrame(follow);
+    })();
+    document.querySelectorAll("a, button, .card, .shot, .placeholder").forEach(function (el) {
+      el.addEventListener("mouseenter", function () { ring.classList.add("hovering"); });
+      el.addEventListener("mouseleave", function () { ring.classList.remove("hovering"); });
+    });
+  }
+
+  /* ----- Pointer-tracked glow + tilt on media panels ----- */
+  if (!reducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    document.querySelectorAll(".card, .shot, .placeholder").forEach(function (el) {
+      el.classList.add("glow-track");
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+        el.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
+      });
+    });
+    document.querySelectorAll(".project-media .shot, .project-media .placeholder").forEach(function (el) {
+      el.classList.add("tilt");
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform =
+          "perspective(800px) rotateY(" + px * 7 + "deg) rotateX(" + -py * 7 + "deg) translateY(-4px)";
+      });
+      el.addEventListener("mouseleave", function () {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  /* ----- Experience timeline draws with scroll ----- */
+  var timeline = document.querySelector(".timeline");
+  if (timeline && !reducedMotion) {
+    var onTimelineScroll = function () {
+      var r = timeline.getBoundingClientRect();
+      var viewH = window.innerHeight;
+      var progress = (viewH * 0.75 - r.top) / r.height;
+      timeline.style.setProperty("--tl-progress", Math.max(0, Math.min(1, progress)).toFixed(3));
+    };
+    window.addEventListener("scroll", onTimelineScroll, { passive: true });
+    onTimelineScroll();
   }
 
   /* ----- Mobile menu ----- */

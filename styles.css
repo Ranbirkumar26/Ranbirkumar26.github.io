@@ -21,10 +21,36 @@
   --live: #3fce8f;
   --amber: #d9a03f;
   --violet: #8d7fd4;
+  --btn-ink: #0b1020;
+  --nav-glass: rgba(10, 15, 27, 0.72);
+  --glow-strength: 0.16;
   --radius: 14px;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-head: "Space Grotesk", var(--font-body);
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Light theme: same desaturated navy identity, inverted values. Toggled by
+   data-theme on <html>; default (no attribute) stays dark. */
+:root[data-theme="light"] {
+  --bg: #f3f5fa;
+  --bg-alt: #eaeef6;
+  --surface: #ffffff;
+  --surface-2: #f0f3f9;
+  --brand-navy: #e4e9f4;
+  --line: rgba(32, 43, 65, 0.12);
+  --line-strong: rgba(32, 43, 65, 0.26);
+  --text: #17203a;
+  --text-muted: #4d5a75;
+  --accent: #3d63d9;
+  --accent-soft: #4a6de0;
+  --accent-dim: rgba(61, 99, 217, 0.1);
+  --live: #0e8f66;
+  --amber: #a2690f;
+  --violet: #6d5fc4;
+  --btn-ink: #ffffff;
+  --nav-glass: rgba(243, 245, 250, 0.78);
+  --glow-strength: 0.1;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -64,7 +90,7 @@ ul { list-style: none; }
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
-  background: rgba(10, 15, 27, 0.72);
+  background: var(--nav-glass);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
@@ -147,7 +173,7 @@ ul { list-style: none; }
 .btn:active { transform: scale(0.98); }
 .btn-primary {
   background: var(--accent);
-  color: #0b1020;
+  color: var(--btn-ink);
 }
 .btn-primary:hover {
   background: var(--accent-soft);
@@ -247,7 +273,7 @@ ul { list-style: none; }
   width: 640px;
   height: 640px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(94, 130, 232, 0.16) 0%, rgba(32, 43, 65, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(94, 130, 232, var(--glow-strength)) 0%, rgba(32, 43, 65, 0.08) 45%, transparent 70%);
   animation: drift 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -584,7 +610,7 @@ ul { list-style: none; }
   left: 16px;
   z-index: 200;
   background: var(--accent);
-  color: #0b1020;
+  color: var(--btn-ink);
   font-family: var(--font-head);
   font-weight: 600;
   font-size: 0.85rem;
@@ -777,7 +803,7 @@ ul { list-style: none; }
     right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(10, 15, 27, 0.97);
+    background: var(--bg);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
     padding: 12px 24px 20px;
@@ -791,3 +817,153 @@ ul { list-style: none; }
   .ach { grid-template-columns: 64px 1fr; gap: 12px; }
   .footer-inner { flex-direction: column; gap: 8px; }
 }
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.theme-toggle:hover { color: var(--accent-soft); border-color: var(--accent); background: var(--accent-dim); }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+/* ---------- Certifications ---------- */
+
+.cert-block { margin-top: 48px; }
+.cert-heading { font-size: 1rem; color: var(--accent); margin-bottom: 20px; }
+.cert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cert h4 { font-size: 1.05rem; margin-bottom: 4px; }
+.cert-issuer { font-size: 0.86rem; }
+
+/* ---------- Motion layer (gated on fine pointers / no-preference) ---------- */
+
+/* cursor follower ring */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 300;
+  opacity: 0;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, opacity 0.3s ease, border-color 0.25s ease;
+}
+.cursor-ring.on { opacity: 0.55; }
+.cursor-ring.hovering {
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-color: var(--accent-soft);
+  opacity: 0.85;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-ring { display: none; }
+}
+
+/* hero portrait float */
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-frame { animation: floaty 7s ease-in-out infinite; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* animated gradient on the hero accent word */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-title .accent {
+    background: linear-gradient(90deg, var(--accent-soft), var(--accent), var(--violet), var(--accent-soft));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: hueflow 9s linear infinite;
+  }
+}
+@keyframes hueflow {
+  from { background-position: 0% 0; }
+  to { background-position: 300% 0; }
+}
+
+/* section heading underline sweep, runs when the head reveals */
+.section-head h2 { position: relative; padding-bottom: 14px; }
+.section-head h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width 0.9s cubic-bezier(0.2, 0.6, 0.2, 1) 0.15s;
+}
+.js .section-head.reveal.in h2::after, html:not(.js) .section-head h2::after { width: 72px; }
+
+/* pointer-tracked glow on cards (JS sets --mx/--my) */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card, .shot, .placeholder {
+    position: relative;
+  }
+  .glow-track::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(94, 130, 232, 0.1), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .glow-track:hover::before { opacity: 1; }
+}
+
+/* tilt targets get their transform from JS; keep transitions smooth */
+.tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.18s ease-out;
+}
+
+/* experience timeline draws itself as you scroll (JS sets --tl-progress) */
+.timeline::before {
+  background: linear-gradient(to bottom, var(--line), var(--line));
+}
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  width: 1.5px;
+  height: calc((100% - 16px) * var(--tl-progress, 0));
+  background: linear-gradient(to bottom, var(--accent-soft), var(--accent));
+  box-shadow: 0 0 12px rgba(94, 130, 232, 0.5);
+  transition: height 0.15s linear;
+}
+
+/* staggered reveal: JS assigns --stagger per element inside a batch */
+.js .reveal { transition-delay: var(--stagger, 0ms); }
+.js .reveal.in { transition-delay: var(--stagger, 0ms); }
