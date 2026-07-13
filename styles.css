@@ -1104,3 +1104,214 @@ ul { list-style: none; }
   color: var(--accent-soft);
   margin-bottom: 8px;
 }
+
+/* =========================================================
+   Identity layer v2: mission-control amber + HUD system.
+   Amber is the signature; blue stays for interactive states.
+   ========================================================= */
+
+/* amber signature moments */
+.section-kicker { color: var(--amber); }
+.hero-eyebrow { color: var(--amber); }
+.project-index { color: var(--amber); }
+.tel-title { color: var(--amber); }
+.wip-title, .cert-heading { color: var(--amber); }
+.ph-label { color: var(--amber); letter-spacing: 0.18em; }
+.fact-key { color: var(--amber); }
+.mission-log li::before { color: var(--amber); }
+.ach-year { color: var(--amber); }
+.scroll-progress { background: linear-gradient(90deg, var(--accent), var(--amber)); }
+.brand-dot { color: var(--amber); }
+.footer-eot { color: var(--amber); font-size: 0.74rem; letter-spacing: 0.1em; }
+
+/* section heads: HUD corner ticks + amber index line */
+.section-head {
+  position: relative;
+  padding-left: 18px;
+}
+.section-head::before,
+.section-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  transition: width 0.6s ease 0.2s, height 0.6s ease 0.2s;
+}
+.section-head::before {
+  top: -6px;
+  border-top: 2px solid var(--amber);
+  border-left: 2px solid var(--amber);
+}
+.section-head::after {
+  bottom: -6px;
+  border-bottom: 2px solid var(--line-strong);
+  border-left: 2px solid var(--line-strong);
+}
+.js .section-head.reveal.in::before { width: 26px; height: 16px; }
+
+/* cards: single HUD tick, top right */
+.card::after,
+.shot::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+  border-radius: 0 var(--radius) 0 0;
+  opacity: 0.55;
+  transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+  pointer-events: none;
+}
+.card { position: relative; }
+.card:hover::after, .shot:hover::after { width: 26px; height: 26px; opacity: 1; }
+
+/* circuit-trace divider along every section top (masked so it themes) */
+.section {
+  position: relative;
+}
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--line-strong);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='10'%3E%3Cpath d='M0 5h64l6-4h44l6 4h60' fill='none' stroke='black'/%3E%3Ccircle cx='190' cy='5' r='1.8' fill='black'/%3E%3Cpath d='M192 5h68' stroke='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='10'%3E%3Cpath d='M0 5h64l6-4h44l6 4h60' fill='none' stroke='black'/%3E%3Ccircle cx='190' cy='5' r='1.8' fill='black'/%3E%3Cpath d='M192 5h68' stroke='black'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.hero + .section::before { opacity: 0.9; }
+
+/* asymmetric radii: mechanical, not bubbly */
+.btn { border-radius: 10px 4px 10px 4px; }
+.btn-small { border-radius: 8px 3px 8px 3px; }
+.badge { border-radius: 999px; }
+
+/* hero domain spec-strip */
+.hero-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin-top: 18px;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hero-domains span { display: inline-flex; align-items: center; }
+.hero-domains span + span::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  margin: 0 10px;
+  background: var(--amber);
+  transform: rotate(45deg);
+  opacity: 0.7;
+}
+
+/* mission badge: the hero's identity panel */
+.mission-badge {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(94, 130, 232, 0.05) 0%, transparent 55%),
+    var(--brand-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.mission-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+}
+.mb-tick { position: absolute; width: 14px; height: 14px; z-index: 2; }
+.mb-tl { top: 10px; left: 10px; border-top: 2px solid var(--amber); border-left: 2px solid var(--amber); }
+.mb-tr { top: 10px; right: 10px; border-top: 2px solid var(--amber); border-right: 2px solid var(--amber); }
+.mb-bl { bottom: 10px; left: 10px; border-bottom: 2px solid var(--amber); border-left: 2px solid var(--amber); }
+.mb-br { bottom: 10px; right: 10px; border-bottom: 2px solid var(--amber); border-right: 2px solid var(--amber); }
+.mb-orbit {
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 1;
+  border: 1.5px dashed rgba(148, 163, 198, 0.35);
+  border-radius: 50%;
+}
+:root[data-theme="light"] .mb-orbit { border-color: rgba(32, 43, 65, 0.3); }
+@media (prefers-reduced-motion: no-preference) {
+  .mb-orbit { animation: orbit 26s linear infinite; }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.mission-badge .ph-monogram { position: relative; z-index: 1; }
+.mb-meta {
+  position: absolute;
+  bottom: 34px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+.mb-meta span:first-child { color: var(--amber); }
+.mb-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10%;
+  height: 34%;
+  background: linear-gradient(to bottom, transparent, rgba(94, 130, 232, 0.08), transparent);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mb-scan { animation: mbscan 5.5s ease-in-out infinite; }
+}
+@keyframes mbscan {
+  0%, 100% { transform: translateY(-40%); }
+  50% { transform: translateY(320%); }
+}
+
+/* hero boot-scan sweep, one pass on load */
+@media (prefers-reduced-motion: no-preference) {
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: 0;
+    animation: bootscan 1.6s ease-out 0.3s 1;
+    pointer-events: none;
+  }
+}
+@keyframes bootscan {
+  0% { opacity: 0.9; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(72vh); }
+}
+
+/* keep the old portrait placeholder rules harmless if unused */
+.placeholder-portrait { aspect-ratio: 4 / 5; min-height: 0; }
