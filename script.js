@@ -278,43 +278,55 @@
     onTimelineScroll();
   }
 
-  /* ----- SemantiCache pre-warm: its Streamlit frontend and Render API both
-     sleep on the free tier. Pinging them when the card scrolls into view
-     (and again on click) makes both spin up in parallel, so one click on
-     "Live demo" lands on a working stack instead of a double cold start. ----- */
-  var WARM_URLS = [
-    "https://trademarkia-api-trh5.onrender.com/docs",
-    "https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app/"
-  ];
-  var lastWarm = 0;
-  function warmSemanticache() {
-    // re-ping if the visitor lingers; Render idles out after ~15 min
-    if (Date.now() - lastWarm < 4 * 60 * 1000) return;
-    lastWarm = Date.now();
-    WARM_URLS.forEach(function (url) {
-      try {
-        fetch(url, { mode: "no-cors", cache: "no-store" }).catch(function () {});
-      } catch (e) {}
+  /* ----- Demo pre-warm: SemantiCache (Streamlit + Render API) and
+     CraveConnect (Render) all sleep on free tiers. Pinging a project's
+     stack when its card scrolls into view (and again on hover/click) means
+     the services spin up while the visitor is still reading, so "Live demo"
+     lands on a working app instead of a cold start. ----- */
+  [
+    {
+      cardId: "semanticache",
+      urls: [
+        "https://trademarkia-api-trh5.onrender.com/docs",
+        "https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app/"
+      ]
+    },
+    {
+      cardId: "craveconnect",
+      urls: ["https://craveconnect.onrender.com/"]
+    }
+  ].forEach(function (target) {
+    var lastWarm = 0;
+    var warm = function () {
+      // re-ping if the visitor lingers; Render idles out after ~15 min
+      if (Date.now() - lastWarm < 4 * 60 * 1000) return;
+      lastWarm = Date.now();
+      target.urls.forEach(function (url) {
+        try {
+          fetch(url, { mode: "no-cors", cache: "no-store" }).catch(function () {});
+        } catch (e) {}
+      });
+    };
+    var card = document.getElementById(target.cardId);
+    if (!card) return;
+    if ("IntersectionObserver" in window) {
+      var warmIO = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              warm();
+              warmIO.disconnect();
+            }
+          });
+        },
+        { rootMargin: "200px 0px" }
+      );
+      warmIO.observe(card);
+    }
+    card.querySelectorAll(".project-links .btn").forEach(function (el) {
+      el.addEventListener("click", warm);
+      el.addEventListener("mouseenter", warm);
     });
-  }
-  var scCard = document.getElementById("semanticache");
-  if (scCard && "IntersectionObserver" in window) {
-    var warmIO = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            warmSemanticache();
-            warmIO.disconnect();
-          }
-        });
-      },
-      { rootMargin: "200px 0px" }
-    );
-    warmIO.observe(scCard);
-  }
-  document.querySelectorAll("[data-warm-semanticache]").forEach(function (el) {
-    el.addEventListener("click", warmSemanticache);
-    el.addEventListener("mouseenter", warmSemanticache);
   });
 
   /* ----- Mobile menu ----- */

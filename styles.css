@@ -1088,3 +1088,19 @@ ul { list-style: none; }
   pointer-events: none;
 }
 #robotics .container { position: relative; }
+
+/* ---------- Pending action + incoming cards ---------- */
+
+.btn-pending {
+  border: 1px dashed var(--line-strong);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: default;
+}
+
+.mini-incoming { border-style: dashed; }
+.incoming-line {
+  font-size: 0.74rem;
+  color: var(--accent-soft);
+  margin-bottom: 8px;
+}
