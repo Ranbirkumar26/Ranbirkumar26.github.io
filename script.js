@@ -189,10 +189,11 @@
     });
   }
 
-  /* ----- Cursor follower ring (fine pointers only) ----- */
+  /* ----- Rover-cam reticle cursor (fine pointers only) ----- */
   var ring = document.getElementById("cursorRing");
   if (ring && !reducedMotion && window.matchMedia("(pointer: fine)").matches) {
-    var rx = -100, ry = -100, tx = -100, ty = -100, ringOn = false;
+    var coords = document.getElementById("retCoords");
+    var rx = -100, ry = -100, tx = -100, ty = -100, ringOn = false, frame = 0;
     document.addEventListener("mousemove", function (e) {
       tx = e.clientX;
       ty = e.clientY;
@@ -210,12 +211,33 @@
       rx += (tx - rx) * 0.16;
       ry += (ty - ry) * 0.16;
       ring.style.transform = "translate(" + rx + "px," + ry + "px)";
+      // text updates are cheap but pointless at 60fps; every 3rd frame reads fine
+      if (coords && frame++ % 3 === 0) {
+        coords.textContent = "x:" + Math.round(rx) + "\ny:" + Math.round(ry);
+      }
       requestAnimationFrame(follow);
     })();
     document.querySelectorAll("a, button, .card, .shot, .placeholder").forEach(function (el) {
       el.addEventListener("mouseenter", function () { ring.classList.add("hovering"); });
       el.addEventListener("mouseleave", function () { ring.classList.remove("hovering"); });
     });
+  }
+
+  /* ----- Mission clock: time since joining the robotics team ----- */
+  var missionClock = document.getElementById("missionClock");
+  if (missionClock) {
+    var MISSION_START = new Date("2024-03-01T00:00:00+05:30").getTime();
+    var tickMission = function () {
+      if (document.hidden) return;
+      var s = Math.max(0, Math.floor((Date.now() - MISSION_START) / 1000));
+      var d = Math.floor(s / 86400);
+      var h = Math.floor((s % 86400) / 3600);
+      var m = Math.floor((s % 3600) / 60);
+      var sec = s % 60;
+      missionClock.textContent = d + "d " + h + "h " + m + "m " + (sec < 10 ? "0" : "") + sec + "s";
+    };
+    tickMission();
+    setInterval(tickMission, 1000);
   }
 
   /* ----- Pointer-tracked glow + tilt on media panels ----- */

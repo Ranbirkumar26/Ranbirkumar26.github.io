@@ -30,7 +30,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -153,6 +153,10 @@
             translating engineering constraints into product decisions, and have two papers under peer review.
             The through-lines are RAG systems, real-time vision and autonomous robotics.
           </p>
+          <p>
+            Off the clock it is the gym, cricket and cooking. The foodie side leaks into the work, which is
+            why a food-delivery intelligence system and a shared grocery cart app sit two sections down.
+          </p>
         </div>
         <div class="about-facts reveal">
           <div class="fact-row"><span class="fact-key mono">Degree</span><span>B.Tech CS (AI and ML), VIT Chennai, 2023 to 2027</span></div>
@@ -160,6 +164,7 @@
           <div class="fact-row"><span class="fact-key mono">Focus</span><span>AI systems, RAG, computer vision, ML, robotics</span></div>
           <div class="fact-row"><span class="fact-key mono">Now</span><span>Technical Integration Lead at iora. Intern at IAMAI. Rover Lead at Technocrats Robotics</span></div>
           <div class="fact-row"><span class="fact-key mono">Base</span><span>India (Chennai / Noida)</span></div>
+          <div class="fact-row"><span class="fact-key mono">Off-hours</span><span>Gym, cricket, cooking</span></div>
         </div>
       </div>
     </div>
@@ -449,10 +454,29 @@
   <section class="section" id="robotics">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">05 / Robotics</span>
+        <span class="section-kicker mono">Mission log / Robotics</span>
         <h2>Technocrats Robotics, VIT Chennai</h2>
         <p class="section-sub">Mechanical member since March 2024. Rover Lead since August 2025.</p>
       </div>
+
+      <aside class="telemetry reveal" aria-label="Rover mission telemetry">
+        <div class="tel-head mono">
+          <span class="tel-title">ROVER TELEMETRY</span>
+          <span class="tel-status"><span class="tel-dot" aria-hidden="true"></span>SYS: NOMINAL · LINK: ACTIVE</span>
+        </div>
+        <div class="tel-row mono">
+          <span>MISSION T+ <span id="missionClock">--</span></span>
+          <span>LAT 12.8406 N · LON 80.1534 E</span>
+        </div>
+        <ul class="mission-log mono">
+          <li><span class="log-date">2024-03</span> joined Technocrats Robotics, mechanical member</li>
+          <li><span class="log-date">2025-01</span> International Rover Challenge: 20th worldwide</li>
+          <li><span class="log-date">2025</span> DD Robocon: All-India Rank 1 in Round 1, 100/100</li>
+          <li><span class="log-date">2025-08</span> promoted to Rover Lead</li>
+          <li><span class="log-date">now</span> terrain-analysis stack under peer review</li>
+        </ul>
+      </aside>
+
       <div class="robotics-grid">
         <article class="card robo reveal">
           <div class="placeholder placeholder-wide ph-photo" aria-hidden="true">
@@ -687,12 +711,16 @@
   </div>
 </footer>
 
-<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+<div class="reticle" id="cursorRing" aria-hidden="true">
+  <span class="ret-corner ret-tl"></span><span class="ret-corner ret-tr"></span>
+  <span class="ret-corner ret-bl"></span><span class="ret-corner ret-br"></span>
+  <span class="ret-coords mono" id="retCoords"></span>
+</div>
 
 <button class="to-top" id="toTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.js?v=6"></script>
+<script src="script.js?v=7"></script>
 </body>
 </html>
