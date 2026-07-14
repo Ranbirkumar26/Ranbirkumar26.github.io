@@ -1315,3 +1315,59 @@ ul { list-style: none; }
 
 /* keep the old portrait placeholder rules harmless if unused */
 .placeholder-portrait { aspect-ratio: 4 / 5; min-height: 0; }
+
+/* ---------- Audit pass: scannable points, notes, gates ---------- */
+
+.proj-points { display: flex; flex-direction: column; gap: 9px; }
+.proj-points li {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  padding-left: 18px;
+  position: relative;
+}
+.proj-points li::before {
+  content: ">";
+  font-family: var(--font-mono);
+  position: absolute;
+  left: 0;
+  color: var(--amber);
+}
+.proj-points strong { color: var(--text); font-weight: 600; }
+
+.demo-note {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.footer-building { color: var(--text-muted); font-size: 0.74rem; }
+.footer-inner { flex-wrap: wrap; gap: 8px; }
+
+/* reticle can occlude text in narrow fine-pointer contexts */
+@media (max-width: 900px) {
+  .reticle { display: none; }
+}
+
+/* health-check downgraded badge keeps layout, loses the live glow */
+.badge[data-health].health-down { color: var(--text-muted); border-color: var(--line-strong); }
+.badge[data-health].health-down::before { display: none; }
+
+.contact-proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.contact-proof li {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 6px 12px;
+  border-radius: 8px 3px 8px 3px;
+}
+.contact-proof li::before { content: "> "; color: var(--amber); }

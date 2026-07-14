@@ -13,6 +13,9 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ranbir Kumar | AI Engineer">
+  <meta name="twitter:description" content="Production RAG systems, real-time edge vision, autonomous rovers. SIH 2025 finalist, two papers under review.">
+  <meta name="twitter:image" content="https://ranbirkumar26.github.io/assets/og.png">
   <meta name="theme-color" content="#0a0f1b">
   <link rel="canonical" href="https://ranbirkumar26.github.io/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202B41'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%238BA6F0' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
@@ -30,7 +33,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -77,7 +80,7 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   <!-- ============ HERO ============ -->
   <section class="hero">
@@ -156,7 +159,7 @@
           <p>
             The same pattern kept repeating. A computer vision internship became four pipelines running on
             Jetson hardware inside client workflows. A semantic search experiment became SemantiCache. A
-            document Q&amp;A prototype became iORA DocQA, a live product with real users. If something I build
+            document Q&amp;A prototype became iORA DocQA, a shipped product. If something I build
             works, I want it deployed, not archived in a notebook.
           </p>
           <p>
@@ -271,28 +274,25 @@
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">docqa-production.up.railway.app</span>
             </div>
-            <img src="assets/docqa-app.png" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925">
+            <img src="assets/docqa-app.webp" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925">
           </figure>
         </div>
         <div class="project-body">
           <div class="project-topline">
             <span class="mono project-index">P.01</span>
-            <span class="badge badge-live">Live</span>
+            <span class="badge badge-offline" data-health="docqa">Demo offline</span>
           </div>
           <h3>iORA DocQA</h3>
           <p class="project-tagline">Document question answering that picks its own retrieval strategy.</p>
-          <p>
-            Upload txt, csv or xlsx files and ask questions grounded in them. The system routes each query
-            automatically: direct context for small corpora, RAG with Gemini embeddings and pgvector search for
-            large ones, and a structured path for quantitative questions where the model writes SQL and DuckDB
-            executes it on the real table, so there is no LLM arithmetic. Files persist per user into one
-            queryable corpus, answers cite their source files, and a memory layer stores facts on request.
-          </p>
+          <ul class="proj-points">
+            <li><strong>Problem:</strong> answers grounded in your own documents, including the numeric questions language models get wrong.</li>
+            <li><strong>Built:</strong> automatic routing between direct context, Gemini + pgvector RAG, and model-written SQL executed by DuckDB on the real table; per-user corpus with cited sources and an opt-in memory layer.</li>
+            <li><strong>Result:</strong> a complete shipped product with auth, persistent multi-file corpora and source-cited answers.</li>
+          </ul>
           <div class="tag-row">
             <span class="tag">RAG</span><span class="tag">Gemini</span><span class="tag">pgvector</span><span class="tag">DuckDB</span><span class="tag">PostgreSQL</span><span class="tag">Railway</span>
           </div>
           <div class="project-links">
-            <a class="btn btn-small btn-primary" href="https://docqa-production.up.railway.app" target="_blank" rel="noopener">Open live app</a>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/iora-docqa" target="_blank" rel="noopener">Code</a>
           </div>
         </div>
@@ -318,17 +318,15 @@
         <div class="project-body">
           <div class="project-topline">
             <span class="mono project-index">P.02</span>
-            <span class="badge badge-live">Live demo</span>
+            <span class="badge badge-live" data-health="semanticache">Live demo</span>
           </div>
           <h3>SemantiCache</h3>
           <p class="project-tagline">Semantic retrieval with a cache that understands meaning, not strings.</p>
-          <p>
-            A production-structured semantic search backend. Queries are embedded, routed through GMM fuzzy
-            clustering, and checked against a cluster-partitioned semantic cache before touching the FAISS
-            index, cutting redundant lookups by about 40 percent. Validated end to end as a RAG pipeline at
-            roughly 480 ms p95 latency, with LangChain and LlamaIndex compatibility. FastAPI service,
-            containerized with Docker, Streamlit frontend.
-          </p>
+          <ul class="proj-points">
+            <li><strong>Problem:</strong> semantically similar queries keep paying full vector-search cost.</li>
+            <li><strong>Built:</strong> a GMM cluster-partitioned semantic cache in front of FAISS; FastAPI service, Dockerized, LangChain and LlamaIndex compatible.</li>
+            <li><strong>Result:</strong> about 40 percent fewer redundant lookups, roughly 480 ms p95 validated end to end as a RAG pipeline.</li>
+          </ul>
           <div class="tag-row">
             <span class="tag">FAISS</span><span class="tag">GMM clustering</span><span class="tag">Semantic caching</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
           </div>
@@ -337,6 +335,7 @@
             <a class="btn btn-small btn-ghost" href="https://trademarkia-api-trh5.onrender.com/docs" target="_blank" rel="noopener">API docs</a>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/SemantiCache" target="_blank" rel="noopener">Code</a>
           </div>
+          <p class="demo-note mono">Free-tier hosting sleeps between visits; first load can take about a minute.</p>
         </div>
       </article>
 
@@ -355,19 +354,15 @@
           </div>
           <h3>Annadata</h3>
           <p class="project-tagline">An agricultural AI platform built around an autonomous Agribot.</p>
-          <p>
-            Smart India Hackathon 2025 Grand Finale project, selected among the top 5 teams nationally in the
-            Robotics and Drones category. A two-stage vision pipeline pairs a custom-trained YOLOv8 detector
-            with a ResNet-34 classifier for 91 percent leaf disease classification accuracy, alongside 97
-            percent soil health prediction and weed detection. Every detection is GPS-tagged through
-            asynchronous pipelines, feeding a platform where farmers rent the robot, watch its live POV feed,
-            and track field reports in real time.
-          </p>
+          <ul class="proj-points">
+            <li><strong>Problem:</strong> crop disease detection that actually reaches farmers in the field.</li>
+            <li><strong>Built:</strong> two-stage vision (custom YOLOv8 + ResNet-34), GPS-tagged async pipelines, and a rental platform with the Agribot's live POV feed.</li>
+            <li><strong>Result:</strong> 91 percent disease classification, 97 percent soil-health prediction; SIH 2025 Grand Finale, top 5 nationally in Robotics and Drones.</li>
+          </ul>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">ResNet-34</span><span class="tag">GPS pipelines</span><span class="tag">Flask</span><span class="tag">Python</span>
           </div>
           <div class="project-links">
-            <span class="btn btn-small btn-pending" id="annadataVideo" title="Video link being added">Demo video · soon</span>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/agri-monitor" target="_blank" rel="noopener">Code</a>
           </div>
         </div>
@@ -381,26 +376,22 @@
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">craveconnect · intelligence dashboard</span>
             </div>
-            <img src="assets/craveconnect-app.png" alt="CraveConnect prediction results: upgrade probability gauge, customer segment with recommended action, top drivers, SHAP global feature importance and LIME local explanation panels" width="1600" height="1121" loading="lazy">
+            <img src="assets/craveconnect-app.webp" alt="CraveConnect prediction results: upgrade probability gauge, customer segment with recommended action, top drivers, SHAP global feature importance and LIME local explanation panels" width="1600" height="1121" loading="lazy">
           </figure>
         </div>
         <div class="project-body">
           <div class="project-topline">
             <span class="mono project-index">P.04</span>
             <span class="badge badge-award">Insightify 6.0 National Finalist</span>
-            <span class="badge badge-live">Live</span>
+            <span class="badge badge-live" data-health="craveconnect">Live</span>
           </div>
           <h3>CraveConnect</h3>
           <p class="project-tagline">Explainable customer intelligence, built under national-competition pressure.</p>
-          <p>
-            Built for Insightify 6.0, the national analytics competition run by BizTech at IIM Lucknow, where
-            team DataQuants ranked 1st nationally in round one and 2nd in the ML case-study round on the way to
-            the grand finale. The system predicts which customers of a food delivery platform are likely to
-            upgrade their membership tier: engineered behavioral features, gradient-boosted models benchmarked
-            with XGBoost and shipped as a tuned scikit-learn gradient-boosting classifier, SHAP global and
-            LIME local explanations for every prediction, customer segmentation, and a Power BI layer for
-            decision-makers, all served through a Flask API.
-          </p>
+          <ul class="proj-points">
+            <li><strong>Problem:</strong> predict which food-delivery customers will upgrade, and explain every single prediction to decision-makers.</li>
+            <li><strong>Built:</strong> engineered behavioral features, a tuned gradient-boosting classifier (XGBoost benchmarked), SHAP global + LIME local explanations, segmentation and a Power BI layer over a Flask API.</li>
+            <li><strong>Result:</strong> 1st nationally in round one and 2nd in the ML case study at Insightify 6.0 (IIM Lucknow), on the way to the grand finale.</li>
+          </ul>
           <div class="tag-row">
             <span class="tag">Gradient boosting</span><span class="tag">SHAP</span><span class="tag">LIME</span><span class="tag">Power BI</span><span class="tag">Flask</span>
           </div>
@@ -595,16 +586,6 @@
           </p>
           <div class="tag-row"><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">WebSockets</span></div>
         </article>
-        <article class="card mini mini-incoming reveal">
-          <div class="mini-top"><h3>Web build</h3><span class="badge badge-local">Incoming</span></div>
-          <p class="mono incoming-line">> payload received, docking with this page shortly.</p>
-          <p>A full website build being readied for launch here. Repo and writeup land soon.</p>
-        </article>
-        <article class="card mini mini-incoming reveal">
-          <div class="mini-top"><h3>Map feature</h3><span class="badge badge-local">Incoming</span></div>
-          <p class="mono incoming-line">> coordinates locked, telemetry pending.</p>
-          <p>An interactive mapping feature being readied for launch here. Repo and writeup land soon.</p>
-        </article>
       </div>
     </div>
   </section>
@@ -717,6 +698,12 @@
         Open to internships, research collaborations and full-time roles in AI, RAG systems, computer vision
         and robotics. Email is the fastest way to reach me.
       </p>
+      <ul class="contact-proof mono" aria-label="Reasons to reach out">
+        <li>Shipped RAG products end to end</li>
+        <li>Sub-40 ms vision on Jetson, in client workflows</li>
+        <li>Rover lead · IRC 20th worldwide · Robocon AIR 1 (R1)</li>
+        <li>SIH 2025 Grand Finalist · 2 papers under review</li>
+      </ul>
       <div class="hero-actions contact-actions">
         <a class="btn btn-primary btn-big" href="mailto:rk26.ftw@gmail.com">rk26.ftw@gmail.com</a>
         <a class="btn btn-ghost" href="https://github.com/Ranbirkumar26" target="_blank" rel="noopener">GitHub</a>
@@ -731,7 +718,7 @@
 <footer class="footer">
   <div class="container footer-inner">
     <span class="mono">// I like to build stuff.</span>
-    <span>Ranbir Kumar</span>
+    <span class="mono footer-building">// currently building: a web platform + a mapping feature</span>
     <span class="mono footer-eot">// end of transmission</span>
   </div>
 </footer>
@@ -746,6 +733,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.js?v=8"></script>
+<script src="script.js?v=9"></script>
 </body>
 </html>

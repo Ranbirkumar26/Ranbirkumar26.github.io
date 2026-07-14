@@ -1,22 +1,25 @@
 name: Keep demos warm
 
-# The SemantiCache demo runs on free tiers that sleep when idle: the
-# Streamlit frontend hibernates without visits and the Render API spins
-# down after 15 idle minutes. Pinging both every 10 minutes keeps that
-# stack answering instantly for portfolio visitors.
-#
-# CraveConnect is deliberately NOT pinged here: keeping two Render
-# services warm 24/7 (~1440 instance-hours/month) would blow through the
-# 750 free hours and get both suspended. It pre-warms from the portfolio
-# page instead, only when a visitor actually views its card.
+# Two jobs in one workflow:
+# 1. Every 10 minutes: ping the SemantiCache stack so its free-tier hosts
+#    stay awake for visitors. CraveConnect is deliberately not kept warm
+#    (two always-on Render services would exceed the 750 free
+#    instance-hours per month); it pre-warms from the page on view instead.
+# 2. Every hour: probe every demo and publish status.json, which the page
+#    reads to downgrade any "Live" badge whose demo is actually down.
 
 on:
   schedule:
     - cron: "*/10 * * * *"
+    - cron: "7 * * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   ping:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '*/10 * * * *'
     runs-on: ubuntu-latest
     steps:
       - name: Ping SemantiCache frontend and API
@@ -25,3 +28,35 @@ jobs:
             "https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app/" || true
           curl -s -o /dev/null -w "render api: %{http_code}\n" --max-time 120 \
             "https://trademarkia-api-trh5.onrender.com/docs" || true
+
+  health:
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '7 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe demos and publish status.json
+        run: |
+          check () {
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 150 -L "$1" || echo 000)
+            case "$code" in
+              2*|3*) echo true ;;
+              *) echo false ;;
+            esac
+          }
+          docqa=$(check "https://docqa-production.up.railway.app/")
+          semanticache=$(check "https://trademarkia-api-trh5.onrender.com/docs")
+          craveconnect=$(check "https://craveconnect.onrender.com/")
+          printf '{\n  "checked": "%s",\n  "docqa": { "up": %s },\n  "semanticache": { "up": %s },\n  "craveconnect": { "up": %s }\n}\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$docqa" "$semanticache" "$craveconnect" > status.json
+          cat status.json
+      - name: Commit if the status changed
+        run: |
+          if git diff --quiet -I'"checked"' -- status.json; then
+            echo "no status change"
+            exit 0
+          fi
+          git config user.name "status-bot"
+          git config user.email "actions@github.com"
+          git add status.json
+          git commit -m "Update demo health status"
+          git push

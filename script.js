@@ -110,10 +110,10 @@
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           navLinks.forEach(function (link) {
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === "#" + entry.target.id
-            );
+            var isActive = link.getAttribute("href") === "#" + entry.target.id;
+            link.classList.toggle("active", isActive);
+            if (isActive) link.setAttribute("aria-current", "true");
+            else link.removeAttribute("aria-current");
           });
         });
       },
@@ -164,6 +164,8 @@
   if (toTop) {
     toTop.addEventListener("click", function () {
       animateScrollTo(0);
+      // leave no stale #section hash after returning to the top
+      if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
     });
   }
 
@@ -328,6 +330,28 @@
       el.addEventListener("mouseenter", warm);
     });
   });
+
+  /* ----- Demo health badges: status.json is refreshed by a scheduled
+     GitHub Action that curls each demo. Badges only downgrade (Live ->
+     Demo offline); they never upgrade a hand-set offline badge, so a
+     stale JSON can't oversell anything. ----- */
+  fetch("status.json", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (status) {
+      if (!status) return;
+      document.querySelectorAll("[data-health]").forEach(function (badge) {
+        var state = status[badge.getAttribute("data-health")];
+        if (!state) return;
+        if (state.up === false && badge.classList.contains("badge-live")) {
+          badge.classList.add("health-down");
+          badge.textContent = "Demo offline";
+        }
+        if (status.checked) {
+          badge.title = "Demo health last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC";
+        }
+      });
+    })
+    .catch(function () {});
 
   /* ----- Mobile menu ----- */
   var burger = document.getElementById("navBurger");
