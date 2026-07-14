@@ -364,7 +364,7 @@
           if (!state) return;
           var el = document.createElement("span");
           el.className = "sys " + (state.up ? "sys-up" : "sys-down");
-          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (state.up ? "online" : "offline");
+          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (state.label || (state.up ? "online" : "offline"));
           board.appendChild(el);
         });
         if (status.checked) {

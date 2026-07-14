@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ranbir Kumar | AI Engineer</title>
-  <meta name="description" content="CS (AI and ML) undergrad at VIT Chennai building production RAG systems, real-time edge vision, and autonomous rovers. SIH 2025 finalist, two papers under review.">
+  <meta name="description" content="Ranbir Kumar builds intelligent systems that leave the notebook: production RAG products, real-time edge vision, rover autonomy, and research-backed AI.">
   <meta property="og:title" content="Ranbir Kumar | AI Engineer">
   <meta property="og:description" content="CS (AI and ML) undergrad at VIT Chennai building production RAG systems, real-time edge vision, and autonomous rovers. SIH 2025 finalist, two papers under review.">
   <meta property="og:type" content="website">
@@ -21,7 +21,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202B41'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%238BA6F0' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=optional" rel="stylesheet">
   <!-- Arms the scroll-reveal animations; without JS the content stays visible.
        Theme is applied here, before first paint, to avoid a flash. -->
   <script>
@@ -33,7 +33,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.min.css?v=12">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,8 +55,9 @@
 </head>
 <body>
 <div class="bg-field" aria-hidden="true">
-  <span class="bg-blob bg-blob-a"></span>
-  <span class="bg-blob bg-blob-b"></span>
+  <span class="bg-trace bg-trace-a"></span>
+  <span class="bg-trace bg-trace-b"></span>
+  <span class="bg-topo"></span>
 </div>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -92,13 +93,13 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="hero-eyebrow mono">// I like to build stuff.</p>
+        <p class="hero-eyebrow mono">// AI systems · edge vision · rover autonomy</p>
         <h1 class="hero-title">
-          Building AI systems that make it to
-          <span class="accent">production</span>, not just notebooks.
+          I build intelligent systems that survive
+          <span class="accent">deployment</span>, users and rough terrain.
         </h1>
         <p class="hero-sub">
-          CS (AI and ML) undergrad at VIT Chennai. I work on
+          CS (AI and ML) undergrad at VIT Chennai. I build
           <span class="hero-rotator-wrap"><span id="heroRotator" class="hero-rotator accent-soft">RAG pipelines</span></span><br>
           from semantic retrieval backends to sub-40 ms vision inference on Jetson-class edge hardware.
         </p>
@@ -125,6 +126,11 @@
           <div class="stat"><span class="stat-top">AIR 1</span><span class="stat-bottom">DD Robocon, Round 1</span></div>
           <div class="stat"><span class="stat-top">20th worldwide</span><span class="stat-bottom">Intl. Rover Challenge 2025</span></div>
           <div class="stat"><span class="stat-top">2 papers</span><span class="stat-bottom">under peer review</span></div>
+        </div>
+        <div class="hero-proof-rail mono" aria-label="Fast proof">
+          <a href="#projects"><span>01</span><strong>RAG product shipped</strong><em>multi-file DocQA, pgvector, DuckDB SQL path</em></a>
+          <a href="#experience"><span>02</span><strong>Edge CV deployed</strong><em>4 Jetson pipelines under 40 ms inference</em></a>
+          <a href="#robotics"><span>03</span><strong>Rover systems lead</strong><em>terrain perception, IRC, Robocon proof</em></a>
         </div>
       </div>
       <div class="hero-visual">
@@ -155,6 +161,9 @@
       </div>
       <div class="about-grid">
         <div class="card about-story reveal">
+          <p class="story-thesis mono">
+            Thesis: I am strongest where models, hardware, product constraints and deployment all collide.
+          </p>
           <p>
             My route into AI ran through hardware. I joined Technocrats Robotics as a mechanical member in my
             first year, and the problems that pulled me in kept moving up the stack: from the rover's frame to
@@ -185,6 +194,7 @@
           <div class="fact-row"><span class="fact-key mono">Now</span><span>Founder's Office (Technology and AI) at iora. Intern at IAMAI. Rover Lead at Technocrats Robotics</span></div>
           <div class="fact-row"><span class="fact-key mono">Base</span><span>India (Chennai / Noida)</span></div>
           <div class="fact-row"><span class="fact-key mono">Off-hours</span><span>Gym, cricket, cooking</span></div>
+          <div class="fact-row fact-strong"><span class="fact-key mono">Signal</span><span>Not a notebook-only AI profile: shipped RAG, edge CV, embedded product work and rover autonomy.</span></div>
         </div>
       </div>
     </div>
@@ -211,6 +221,11 @@
               <li>Test web applications end to end: identify bugs, check performance, document findings, and improve reliability and user experience.</li>
               <li>Contribute to development of a GIS-based mapping platform: map features, level-of-detail visualization, and feature validation.</li>
             </ul>
+            <div class="impact-strip mono">
+              <span><strong>QA lens</strong> E2E flows</span>
+              <span><strong>Product lens</strong> GIS validation</span>
+              <span><strong>Outcome</strong> reliability notes that ship</span>
+            </div>
             <div class="tag-row">
               <span class="tag">Software testing</span><span class="tag">Selenium</span><span class="tag">GIS</span><span class="tag">Product development</span>
             </div>
@@ -230,6 +245,11 @@
               <li>Work directly with PCB designers and firmware engineers to track progress, surface blockers early, and keep hardware and firmware workstreams coherent with product direction.</li>
               <li>Review technical constraints before they become product commitments and translate engineering reality into decisions the founding team can act on.</li>
             </ul>
+            <div class="impact-strip mono">
+              <span><strong>Bridge</strong> founders to firmware</span>
+              <span><strong>Review</strong> PCB + constraints</span>
+              <span><strong>Outcome</strong> product decisions grounded in engineering</span>
+            </div>
             <div class="tag-row">
               <span class="tag">Embedded systems</span><span class="tag">PCB design review</span><span class="tag">Firmware integration</span><span class="tag">Product strategy</span>
             </div>
@@ -247,6 +267,11 @@
               <li>Designed and deployed 4 production CV pipelines: speed monitoring, pothole detection, fire detection, and workplace safety analytics.</li>
               <li>Ran them on NVIDIA Jetson Xavier NX at under 40 ms real-time inference latency, replacing manual monitoring with automated real-time decisions in client workflows.</li>
             </ul>
+            <div class="impact-strip mono">
+              <span><strong>4</strong> production CV pipelines</span>
+              <span><strong>&lt;40 ms</strong> Jetson inference</span>
+              <span><strong>Shift</strong> manual monitoring to real-time decisions</span>
+            </div>
             <div class="tag-row">
               <span class="tag">NVIDIA Jetson</span><span class="tag">Real-time inference</span><span class="tag">Edge deployment</span><span class="tag">Object detection</span>
             </div>
@@ -297,6 +322,11 @@
             <li><strong>Result:</strong> a complete shipped product with auth, persistent multi-file corpora and source-cited answers.</li>
           </ul>
           <p class="owned mono"><span>Owned:</span> everything, solo build: architecture, retrieval routing, SQL path, auth, deployment.</p>
+          <div class="proof-metrics mono" aria-label="iORA DocQA evidence">
+            <span><strong>Routing</strong> direct context / RAG / SQL</span>
+            <span><strong>Grounding</strong> cited source files</span>
+            <span><strong>Status</strong> code public, demo paused</span>
+          </div>
           <div class="tag-row">
             <span class="tag">RAG</span><span class="tag">Gemini</span><span class="tag">pgvector</span><span class="tag">DuckDB</span><span class="tag">PostgreSQL</span><span class="tag">Railway</span>
           </div>
@@ -336,6 +366,11 @@
             <li><strong>Result:</strong> about 40 percent fewer redundant lookups, roughly 480 ms p95 measured end to end on the 20 Newsgroups demo corpus.</li>
           </ul>
           <p class="owned mono"><span>Owned:</span> everything, solo build: cache design, clustering, API, Docker packaging, demo.</p>
+          <div class="proof-metrics mono" aria-label="SemantiCache evidence">
+            <span><strong>-40%</strong> redundant lookups</span>
+            <span><strong>480 ms</strong> p95 demo RAG path</span>
+            <span><strong>Stack</strong> FastAPI + FAISS + Docker</span>
+          </div>
           <div class="tag-row">
             <span class="tag">FAISS</span><span class="tag">GMM clustering</span><span class="tag">Semantic caching</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
           </div>
@@ -351,9 +386,21 @@
       <!-- Annadata -->
       <article class="project reveal">
         <div class="project-media">
-          <div class="placeholder ph-photo" aria-hidden="true">
-            <svg class="ph-icon" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 16 5-4 4 3 4-4 5 5"/></svg>
-            <span class="mono ph-label">ANNADATA · FIELD AI</span>
+          <div class="field-ai-diagram" role="img" aria-label="Annadata field AI flow: Agribot captures a field frame, YOLOv8 detects disease regions, ResNet classifies disease, GPS tags the report, and the farmer receives a field dashboard.">
+            <div class="field-grid mono">
+              <span class="field-node bot">Agribot POV</span>
+              <span class="field-link"></span>
+              <span class="field-node vision">YOLOv8 detect</span>
+              <span class="field-link"></span>
+              <span class="field-node classify">ResNet-34 classify</span>
+              <span class="field-link"></span>
+              <span class="field-node gps">GPS report</span>
+            </div>
+            <div class="field-readout mono">
+              <span>leaf disease: 91%</span>
+              <span>soil health: 97%</span>
+              <span>SIH robotics top 5</span>
+            </div>
           </div>
         </div>
         <div class="project-body">
@@ -369,6 +416,11 @@
             <li><strong>Result:</strong> 91 percent disease classification, 97 percent soil-health prediction; SIH 2025 Grand Finale, top 5 nationally in Robotics and Drones.</li>
           </ul>
           <p class="owned mono"><span>Owned:</span> the vision stack: YOLOv8 + ResNet-34 pipeline and the GPS-tagged async detection flow, within the SIH team.</p>
+          <div class="proof-metrics mono" aria-label="Annadata evidence">
+            <span><strong>91%</strong> disease classification</span>
+            <span><strong>97%</strong> soil-health prediction</span>
+            <span><strong>Top 5</strong> SIH Robotics &amp; Drones</span>
+          </div>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">ResNet-34</span><span class="tag">GPS pipelines</span><span class="tag">Flask</span><span class="tag">Python</span>
           </div>
@@ -404,6 +456,11 @@
             <li><strong>Result:</strong> 1st nationally in round one and 2nd in the ML case study at Insightify 6.0 (IIM Lucknow), on the way to the grand finale.</li>
           </ul>
           <p class="owned mono"><span>Owned:</span> modeling, explainability and serving: features, classifier, SHAP/LIME layer, Flask API, within team DataQuants.</p>
+          <div class="proof-metrics mono" aria-label="CraveConnect evidence">
+            <span><strong>ROC-AUC</strong> 0.784</span>
+            <span><strong>PR-AUC</strong> 0.665</span>
+            <span><strong>Explains</strong> SHAP + LIME</span>
+          </div>
           <div class="tag-row">
             <span class="tag">Gradient boosting</span><span class="tag">SHAP</span><span class="tag">LIME</span><span class="tag">Power BI</span><span class="tag">Flask</span>
           </div>
@@ -434,6 +491,11 @@
             Grad-CAM attribution so every prediction is interpretable for clinical review.
             <span class="paper-share">Shareable now: companion code. Abstract and figures follow the journal decision.</span>
           </p>
+          <div class="research-proof mono">
+            <span><strong>Method</strong> Prototypical Networks + ResNet-18</span>
+            <span><strong>Explainability</strong> LIME, SHAP, Grad-CAM</span>
+            <span><strong>Caveat</strong> venue hidden until decision</span>
+          </div>
           <div class="tag-row">
             <span class="tag">Few-shot learning</span><span class="tag">Prototypical Networks</span><span class="tag">Grad-CAM</span><span class="tag">Medical imaging</span>
           </div>
@@ -450,6 +512,11 @@
             Born from rover work, hardened into research.
             <span class="paper-share">Shareable now: the rover terrain stack it grew from. Abstract follows the journal decision.</span>
           </p>
+          <div class="research-proof mono">
+            <span><strong>Perception</strong> YOLOv8 + MiDaS</span>
+            <span><strong>Platform</strong> embedded edge hardware</span>
+            <span><strong>Origin</strong> rover autonomy work</span>
+          </div>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">MiDaS</span><span class="tag">Depth estimation</span><span class="tag">Edge deployment</span>
           </div>
@@ -461,6 +528,11 @@
             A patent filing on an autonomous patrolling robot for automated security rounds. Specifics stay
             confidential until the filing is public.
           </p>
+          <div class="research-proof mono">
+            <span><strong>Status</strong> in process</span>
+            <span><strong>Scope</strong> autonomous patrol rounds</span>
+            <span><strong>Disclosure</strong> limited until public filing</span>
+          </div>
           <div class="tag-row">
             <span class="tag">Robotics</span><span class="tag">Autonomous navigation</span><span class="tag">Patent</span>
           </div>
@@ -496,11 +568,19 @@
         </ul>
       </aside>
 
+      <div class="robo-proof-grid reveal" aria-label="Robotics proof snapshot">
+        <div class="robo-proof mono"><strong>Role</strong><span>Rover Lead, Aug 2025 onward</span></div>
+        <div class="robo-proof mono"><strong>System</strong><span>Terrain perception for unstructured ground</span></div>
+        <div class="robo-proof mono"><strong>Competition</strong><span>IRC 20th worldwide · Robocon AIR 1 R1</span></div>
+      </div>
+
       <div class="robotics-grid">
         <article class="card robo reveal">
-          <div class="placeholder placeholder-wide ph-photo" aria-hidden="true">
-            <svg class="ph-icon" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 16 5-4 4 3 4-4 5 5"/></svg>
-            <span class="mono ph-label">ROVER ABHIMANYU</span>
+          <div class="robo-diagram rover-diagram" role="img" aria-label="Rover Abhimanyu module showing chassis, perception mast, sensor fusion and terrain classifier">
+            <span class="rover-wheel w1"></span><span class="rover-wheel w2"></span>
+            <span class="rover-body"></span><span class="rover-mast"></span>
+            <span class="rover-scan"></span>
+            <span class="robo-caption mono">PERCEPTION STACK</span>
           </div>
           <h3>Rover Abhimanyu</h3>
           <p>
@@ -511,9 +591,11 @@
           </p>
         </article>
         <article class="card robo reveal">
-          <div class="placeholder placeholder-wide ph-photo" aria-hidden="true">
-            <svg class="ph-icon" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 16 5-4 4 3 4-4 5 5"/></svg>
-            <span class="mono ph-label">IRC 2025 · 20TH WORLDWIDE</span>
+          <div class="robo-diagram rank-diagram" role="img" aria-label="International Rover Challenge placement module: 20th worldwide and finalist again for 2026">
+            <span class="rank-number mono">20</span>
+            <span class="rank-label mono">WORLDWIDE</span>
+            <span class="rank-orbit"></span>
+            <span class="robo-caption mono">IRC 2025</span>
           </div>
           <h3>International Rover Challenge</h3>
           <p>
@@ -522,9 +604,11 @@
           </p>
         </article>
         <article class="card robo reveal">
-          <div class="placeholder placeholder-wide ph-photo" aria-hidden="true">
-            <svg class="ph-icon" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 16 5-4 4 3 4-4 5 5"/></svg>
-            <span class="mono ph-label">DD ROBOCON · AIR 1, R1</span>
+          <div class="robo-diagram robocon-diagram" role="img" aria-label="DD Robocon score module: AIR 1 in round one with 100 out of 100">
+            <span class="score-ring mono">100</span>
+            <span class="score-label mono">AIR 1 · R1</span>
+            <span class="score-court"></span>
+            <span class="robo-caption mono">DD ROBOCON</span>
           </div>
           <h3>DD Robocon</h3>
           <p>
@@ -542,6 +626,7 @@
       <div class="section-head reveal">
         <span class="section-kicker mono">SEC.06 // More builds</span>
         <h2>Smaller projects and experiments</h2>
+        <p class="section-sub">A compact lab of useful builds; each one stays here only if it adds a different engineering signal.</p>
       </div>
       <div class="grid-2">
         <article class="card mini reveal">
@@ -552,6 +637,7 @@
             precision agriculture. Supports LLM-assisted decision-making. Packaged as a Docker Space.
           </p>
           <div class="tag-row"><span class="tag">RL environments</span><span class="tag">Agents</span><span class="tag">Docker</span></div>
+          <p class="mini-proof mono">Signal: robotics agents + constrained planning.</p>
           <div class="project-links">
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/fieldopsenv-openenv" target="_blank" rel="noopener">Code</a>
           </div>
@@ -564,6 +650,7 @@
             interface for real-time predictions.
           </p>
           <div class="tag-row"><span class="tag">SVC</span><span class="tag">SMOTE</span><span class="tag">Flask</span></div>
+          <p class="mini-proof mono">Signal: classical ML pipeline end to end.</p>
           <div class="project-links">
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/apple_q_detection" target="_blank" rel="noopener">Code</a>
           </div>
@@ -576,6 +663,7 @@
             backend with auth.
           </p>
           <div class="tag-row"><span class="tag">TypeScript</span><span class="tag">Convex</span><span class="tag">Vite</span></div>
+          <p class="mini-proof mono">Signal: product UX + realtime shared state.</p>
           <div class="project-links">
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/sharekart" target="_blank" rel="noopener">Code</a>
           </div>
@@ -588,6 +676,7 @@
             Grad-CAM for interpretable eye disease diagnosis.
           </p>
           <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">Few-shot</span><span class="tag">Grad-CAM</span></div>
+          <p class="mini-proof mono">Signal: research implementation and interpretability.</p>
           <div class="project-links">
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/Explainable-Fewshot" target="_blank" rel="noopener">Code</a>
           </div>
@@ -599,6 +688,7 @@
             notifications and Pandas/NumPy analytics. Functional end to end, not yet deployed.
           </p>
           <div class="tag-row"><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">WebSockets</span></div>
+          <p class="mini-proof mono">Signal: full-stack API, persistence and realtime events.</p>
         </article>
       </div>
     </div>
@@ -610,6 +700,7 @@
       <div class="section-head reveal">
         <span class="section-kicker mono">SEC.07 // Skills</span>
         <h2>Tools I reach for</h2>
+        <p class="section-sub">Skills are grouped by where they have been used, not by buzzword density.</p>
       </div>
       <div class="skills-grid">
         <div class="card skill-group reveal">
@@ -658,6 +749,28 @@
         <span class="section-kicker mono">SEC.08 // Achievements</span>
         <h2>Proof of work</h2>
       </div>
+      <div class="proof-wall reveal" aria-label="Achievement summary">
+        <article class="proof-tile">
+          <span class="proof-rank mono">TOP 5</span>
+          <h3>SIH Robotics &amp; Drones</h3>
+          <p>Grand Finalist nationally after clearing college-level selection from nearly 800 teams.</p>
+        </article>
+        <article class="proof-tile">
+          <span class="proof-rank mono">AIR 1</span>
+          <h3>DD Robocon R1</h3>
+          <p>Perfect 100/100 in stage one with Technocrats Robotics.</p>
+        </article>
+        <article class="proof-tile">
+          <span class="proof-rank mono">#20</span>
+          <h3>IRC Worldwide</h3>
+          <p>International Rover Challenge 2025, among 100+ applying teams.</p>
+        </article>
+        <article class="proof-tile">
+          <span class="proof-rank mono">FINALIST</span>
+          <h3>Insightify 6.0</h3>
+          <p>IIM Lucknow analytics competition; 1st nationally in round one and 2nd in ML case-study round.</p>
+        </article>
+      </div>
       <div class="ach-list">
         <div class="ach reveal"><span class="ach-year mono">2025</span><p><strong>Smart India Hackathon, Grand Finalist.</strong> Top 5 teams nationally in the Robotics and Drones category out of 500 plus, after placing in the top 3 of nearly 800 teams at college level.</p></div>
         <div class="ach reveal"><span class="ach-year mono">2025</span><p><strong>DD Robocon, All-India Rank 1 in Round 1.</strong> Perfect 100 out of 100 in stage one with Technocrats Robotics.</p></div>
@@ -704,6 +817,11 @@
           Relevant coursework: Machine Learning, Deep Learning, Natural Language Processing, Data Structures and
           Algorithms, Probability and Statistics, Computer Vision, Database Management (SQL).
         </p>
+        <div class="course-clusters mono" aria-label="Coursework clusters">
+          <span>AI core: ML · DL · NLP · CV</span>
+          <span>Systems core: DSA · DBMS · SQL</span>
+          <span>Math core: Probability · Statistics</span>
+        </div>
       </article>
     </div>
   </section>
@@ -723,6 +841,12 @@
         <li>Rover lead · IRC 20th worldwide · Robocon AIR 1 (R1)</li>
         <li>SIH 2025 Grand Finalist · 2 papers under review</li>
       </ul>
+      <div class="role-fit-grid">
+        <span>AI/ML Engineering</span>
+        <span>Computer Vision</span>
+        <span>Robotics Software</span>
+        <span>RAG / Backend</span>
+      </div>
       <div class="hero-actions contact-actions">
         <a class="btn btn-primary btn-big" href="mailto:rk26.ftw@gmail.com">rk26.ftw@gmail.com</a>
         <a class="btn btn-ghost" href="https://github.com/Ranbirkumar26" target="_blank" rel="noopener">GitHub</a>
@@ -752,6 +876,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.js?v=10"></script>
+<script src="script.min.js?v=12"></script>
 </body>
 </html>
