@@ -1437,3 +1437,90 @@ ul { list-style: none; }
   descent-override: 22%;
   line-gap-override: 0%;
 }
+
+/* =========================================================
+   Ambient background field: blueprint grid + aurora blobs +
+   star dust. Fixed layer under everything; alt sections go
+   slightly translucent so the field reads through the page.
+   ========================================================= */
+
+:root {
+  --bgf-grid: rgba(148, 163, 198, 0.055);
+  --bgf-dot: rgba(200, 214, 245, 0.5);
+  --bgf-dot-op: 0.35;
+  --bgf-blob-blue: rgba(94, 130, 232, 0.14);
+  --bgf-blob-amber: rgba(217, 160, 63, 0.1);
+}
+:root[data-theme="light"] {
+  --bgf-grid: rgba(32, 43, 65, 0.05);
+  --bgf-dot: rgba(32, 43, 65, 0.4);
+  --bgf-dot-op: 0;
+  --bgf-blob-blue: rgba(61, 99, 217, 0.1);
+  --bgf-blob-amber: rgba(162, 105, 15, 0.09);
+}
+
+.bg-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* blueprint grid, faded at the edges so it never feels like wallpaper */
+.bg-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--bgf-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bgf-grid) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 8%, black 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 8%, black 30%, transparent 78%);
+}
+/* sparse star dust (two offset tiles so it doesn't read as a pattern) */
+.bg-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--bgf-dot-op);
+  background-image:
+    radial-gradient(1px 1px at 22px 34px, var(--bgf-dot) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88px 112px, var(--bgf-dot) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 156px 58px, var(--bgf-dot) 50%, transparent 51%),
+    radial-gradient(1px 1px at 205px 160px, var(--bgf-dot) 50%, transparent 51%);
+  background-size: 240px 200px;
+}
+.bg-blob {
+  position: absolute;
+  width: 62vmax;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  will-change: transform;
+}
+.bg-blob-a {
+  top: -28vmax;
+  right: -18vmax;
+  background: radial-gradient(circle, var(--bgf-blob-blue) 0%, transparent 62%);
+}
+.bg-blob-b {
+  bottom: -30vmax;
+  left: -20vmax;
+  background: radial-gradient(circle, var(--bgf-blob-amber) 0%, transparent 62%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bg-blob-a { animation: blobdrift-a 38s ease-in-out infinite alternate; }
+  .bg-blob-b { animation: blobdrift-b 46s ease-in-out infinite alternate; }
+}
+@keyframes blobdrift-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-9vmax, 7vmax) scale(1.12); }
+}
+@keyframes blobdrift-b {
+  from { transform: translate(0, 0) scale(1.08); }
+  to { transform: translate(8vmax, -6vmax) scale(1); }
+}
+
+/* let the field read through the alternating sections and footer */
+.section-alt { background: color-mix(in srgb, var(--bg-alt) 86%, transparent); }
+.footer { background: color-mix(in srgb, var(--bg) 70%, transparent); }
