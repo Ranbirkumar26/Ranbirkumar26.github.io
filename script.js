@@ -350,6 +350,31 @@
           badge.title = "Demo health last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC";
         }
       });
+
+      // live systems board in the projects head
+      var board = document.getElementById("systemsBoard");
+      if (board) {
+        var systems = [
+          ["iORA DocQA", "docqa"],
+          ["SemantiCache", "semanticache"],
+          ["CraveConnect", "craveconnect"]
+        ];
+        systems.forEach(function (sys) {
+          var state = status[sys[1]];
+          if (!state) return;
+          var el = document.createElement("span");
+          el.className = "sys " + (state.up ? "sys-up" : "sys-down");
+          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (state.up ? "online" : "offline");
+          board.appendChild(el);
+        });
+        if (status.checked) {
+          var when = document.createElement("span");
+          when.className = "sys-checked";
+          when.textContent = "checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC";
+          board.appendChild(when);
+        }
+        board.hidden = board.children.length === 0;
+      }
     })
     .catch(function () {});
 

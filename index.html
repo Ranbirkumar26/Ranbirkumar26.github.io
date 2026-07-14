@@ -33,7 +33,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,6 +67,7 @@
       <a href="#research">Research</a>
       <a href="#robotics">Robotics</a>
       <a href="#skills">Skills</a>
+      <a href="#achievements">Proof</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Switch color theme">
@@ -264,6 +265,7 @@
           <span class="badge badge-local">Running locally</span> functional, not yet deployed ·
           <span class="badge badge-offline">Demo offline</span> code public, hosted demo down.
         </p>
+        <div class="systems-board mono" id="systemsBoard" hidden aria-label="Live demo health"></div>
       </div>
 
       <!-- iORA DocQA -->
@@ -274,7 +276,8 @@
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">docqa-production.up.railway.app</span>
             </div>
-            <img src="assets/docqa-app.webp" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925">
+            <a href="https://github.com/Ranbirkumar26/iora-docqa" target="_blank" rel="noopener" aria-label="iORA DocQA repository">
+            <img src="assets/docqa-app.webp" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925"></a>
           </figure>
         </div>
         <div class="project-body">
@@ -289,6 +292,7 @@
             <li><strong>Built:</strong> automatic routing between direct context, Gemini + pgvector RAG, and model-written SQL executed by DuckDB on the real table; per-user corpus with cited sources and an opt-in memory layer.</li>
             <li><strong>Result:</strong> a complete shipped product with auth, persistent multi-file corpora and source-cited answers.</li>
           </ul>
+          <p class="owned mono"><span>Owned:</span> everything, solo build: architecture, retrieval routing, SQL path, auth, deployment.</p>
           <div class="tag-row">
             <span class="tag">RAG</span><span class="tag">Gemini</span><span class="tag">pgvector</span><span class="tag">DuckDB</span><span class="tag">PostgreSQL</span><span class="tag">Railway</span>
           </div>
@@ -325,8 +329,9 @@
           <ul class="proj-points">
             <li><strong>Problem:</strong> semantically similar queries keep paying full vector-search cost.</li>
             <li><strong>Built:</strong> a GMM cluster-partitioned semantic cache in front of FAISS; FastAPI service, Dockerized, LangChain and LlamaIndex compatible.</li>
-            <li><strong>Result:</strong> about 40 percent fewer redundant lookups, roughly 480 ms p95 validated end to end as a RAG pipeline.</li>
+            <li><strong>Result:</strong> about 40 percent fewer redundant lookups, roughly 480 ms p95 measured end to end on the 20 Newsgroups demo corpus.</li>
           </ul>
+          <p class="owned mono"><span>Owned:</span> everything, solo build: cache design, clustering, API, Docker packaging, demo.</p>
           <div class="tag-row">
             <span class="tag">FAISS</span><span class="tag">GMM clustering</span><span class="tag">Semantic caching</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
           </div>
@@ -359,6 +364,7 @@
             <li><strong>Built:</strong> two-stage vision (custom YOLOv8 + ResNet-34), GPS-tagged async pipelines, and a rental platform with the Agribot's live POV feed.</li>
             <li><strong>Result:</strong> 91 percent disease classification, 97 percent soil-health prediction; SIH 2025 Grand Finale, top 5 nationally in Robotics and Drones.</li>
           </ul>
+          <p class="owned mono"><span>Owned:</span> the vision stack: YOLOv8 + ResNet-34 pipeline and the GPS-tagged async detection flow, within the SIH team.</p>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">ResNet-34</span><span class="tag">GPS pipelines</span><span class="tag">Flask</span><span class="tag">Python</span>
           </div>
@@ -376,7 +382,8 @@
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">craveconnect · intelligence dashboard</span>
             </div>
-            <img src="assets/craveconnect-app.webp" alt="CraveConnect prediction results: upgrade probability gauge, customer segment with recommended action, top drivers, SHAP global feature importance and LIME local explanation panels" width="1600" height="1121" loading="lazy">
+            <a href="https://craveconnect.onrender.com" target="_blank" rel="noopener" aria-label="Open the CraveConnect live app">
+            <img src="assets/craveconnect-app.webp" alt="CraveConnect prediction results: upgrade probability gauge, customer segment with recommended action, top drivers, SHAP global feature importance and LIME local explanation panels" width="1600" height="1121" loading="lazy"></a>
           </figure>
         </div>
         <div class="project-body">
@@ -392,6 +399,7 @@
             <li><strong>Built:</strong> engineered behavioral features, a tuned gradient-boosting classifier (XGBoost benchmarked), SHAP global + LIME local explanations, segmentation and a Power BI layer over a Flask API.</li>
             <li><strong>Result:</strong> 1st nationally in round one and 2nd in the ML case study at Insightify 6.0 (IIM Lucknow), on the way to the grand finale.</li>
           </ul>
+          <p class="owned mono"><span>Owned:</span> modeling, explainability and serving: features, classifier, SHAP/LIME layer, Flask API, within team DataQuants.</p>
           <div class="tag-row">
             <span class="tag">Gradient boosting</span><span class="tag">SHAP</span><span class="tag">LIME</span><span class="tag">Power BI</span><span class="tag">Flask</span>
           </div>
@@ -417,9 +425,10 @@
           <span class="badge badge-review">Under peer review</span>
           <h3>Few-Shot Learning with Explainable AI</h3>
           <p>
-            An N-way K-shot classifier for low-data medical diagnosis on hospital-sourced imagery, reaching 93
-            percent diagnostic accuracy. Prototypical Networks over a ResNet-18 encoder, with LIME, SHAP and
-            Grad-CAM attribution so every prediction is fully interpretable for clinical review.
+            An N-way K-shot classifier for low-data medical diagnosis, reaching 93 percent accuracy on
+            hospital-sourced eye imagery. Prototypical Networks over a ResNet-18 encoder, with LIME, SHAP and
+            Grad-CAM attribution so every prediction is interpretable for clinical review.
+            <span class="paper-share">Shareable now: companion code. Abstract and figures follow the journal decision.</span>
           </p>
           <div class="tag-row">
             <span class="tag">Few-shot learning</span><span class="tag">Prototypical Networks</span><span class="tag">Grad-CAM</span><span class="tag">Medical imaging</span>
@@ -435,6 +444,7 @@
             A real-time multi-model perception system for terrain classification in autonomous navigation,
             combining YOLOv8 detection with MiDaS depth estimation and deployed on embedded edge hardware.
             Born from rover work, hardened into research.
+            <span class="paper-share">Shareable now: the rover terrain stack it grew from. Abstract follows the journal decision.</span>
           </p>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">MiDaS</span><span class="tag">Depth estimation</span><span class="tag">Edge deployment</span>
@@ -603,30 +613,35 @@
           <div class="tag-row">
             <span class="tag">RAG pipeline design</span><span class="tag">Semantic search</span><span class="tag">Vector embeddings</span><span class="tag">LangChain</span><span class="tag">LlamaIndex</span><span class="tag">Prompt engineering</span><span class="tag">Explainable AI (SHAP, LIME)</span><span class="tag">Few-shot learning</span>
           </div>
+          <p class="proven mono">Proven in: <a href="#projects">iORA DocQA</a> · <a href="#semanticache">SemantiCache</a></p>
         </div>
         <div class="card skill-group reveal">
           <h3 class="mono">Computer vision</h3>
           <div class="tag-row">
             <span class="tag">YOLOv8</span><span class="tag">ResNet</span><span class="tag">MiDaS</span><span class="tag">Object detection</span><span class="tag">Depth estimation</span><span class="tag">Real-time inference</span><span class="tag">Edge deployment (Jetson Xavier NX)</span>
           </div>
+          <p class="proven mono">Proven in: <a href="#projects">Annadata</a> · <a href="#experience">Proeffico pipelines</a> · <a href="#robotics">rover terrain stack</a></p>
         </div>
         <div class="card skill-group reveal">
           <h3 class="mono">ML frameworks</h3>
           <div class="tag-row">
             <span class="tag">PyTorch</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">HuggingFace Transformers</span><span class="tag">FAISS</span>
           </div>
+          <p class="proven mono">Proven in: <a href="#research">both papers</a> · <a href="#craveconnect">CraveConnect</a></p>
         </div>
         <div class="card skill-group reveal">
           <h3 class="mono">Backend and deployment</h3>
           <div class="tag-row">
             <span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">Docker</span><span class="tag">REST APIs</span><span class="tag">Microservices</span><span class="tag">PostgreSQL + pgvector</span>
           </div>
+          <p class="proven mono">Proven in: <a href="#projects">DocQA</a> · <a href="#semanticache">SemantiCache</a> · <a href="#craveconnect">CraveConnect</a></p>
         </div>
         <div class="card skill-group reveal">
           <h3 class="mono">Data and tooling</h3>
           <div class="tag-row">
             <span class="tag">Power BI (DAX, data modeling)</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">SQL</span><span class="tag">Git</span><span class="tag">Linux</span><span class="tag">Selenium</span>
           </div>
+          <p class="proven mono">Proven in: <a href="#craveconnect">CraveConnect</a> · <a href="#experience">IAMAI GIS work</a></p>
         </div>
       </div>
     </div>
@@ -718,7 +733,7 @@
 <footer class="footer">
   <div class="container footer-inner">
     <span class="mono">// I like to build stuff.</span>
-    <span class="mono footer-building">// currently building: a web platform + a mapping feature</span>
+    <span class="mono footer-building">// currently building: a web platform + a mapping feature · updated July 2026</span>
     <span class="mono footer-eot">// end of transmission</span>
   </div>
 </footer>
@@ -733,6 +748,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.js?v=9"></script>
+<script src="script.js?v=10"></script>
 </body>
 </html>
