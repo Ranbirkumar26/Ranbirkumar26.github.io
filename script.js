@@ -219,7 +219,7 @@
       }
       requestAnimationFrame(follow);
     })();
-    document.querySelectorAll("a, button, .card, .shot, .placeholder").forEach(function (el) {
+    document.querySelectorAll("a, button, .card, .shot, .placeholder, .motion-panel").forEach(function (el) {
       el.addEventListener("mouseenter", function () { ring.classList.add("hovering"); });
       el.addEventListener("mouseleave", function () { ring.classList.remove("hovering"); });
     });
@@ -252,7 +252,7 @@
         el.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
       });
     });
-    document.querySelectorAll(".project-media .shot, .project-media .placeholder").forEach(function (el) {
+    document.querySelectorAll(".project-media .shot, .project-media .placeholder, .project-media .field-ai-diagram").forEach(function (el) {
       el.classList.add("tilt");
       el.addEventListener("mousemove", function (e) {
         var r = el.getBoundingClientRect();
@@ -265,6 +265,54 @@
         el.style.transform = "";
       });
     });
+  }
+
+  /* ----- Project scenes: boot-on-view, hover intensity and tiny parallax ----- */
+  var scenePanels = document.querySelectorAll("[data-scene-panel]");
+  if (scenePanels.length) {
+    if (!reducedMotion && window.matchMedia("(pointer: fine)").matches) {
+      scenePanels.forEach(function (panel) {
+        panel.classList.add("scene-ready");
+        panel.addEventListener("mouseenter", function () {
+          panel.classList.add("scene-active");
+        });
+        panel.addEventListener("mouseleave", function () {
+          panel.classList.remove("scene-active");
+          panel.style.setProperty("--scene-dx", "0px");
+          panel.style.setProperty("--scene-dy", "0px");
+        });
+        panel.addEventListener("mousemove", function (e) {
+          var r = panel.getBoundingClientRect();
+          var dx = ((e.clientX - r.left) / r.width - 0.5) * 12;
+          var dy = ((e.clientY - r.top) / r.height - 0.5) * 10;
+          panel.style.setProperty("--scene-dx", dx.toFixed(1) + "px");
+          panel.style.setProperty("--scene-dy", dy.toFixed(1) + "px");
+        });
+      });
+
+      if ("IntersectionObserver" in window) {
+        var sceneIO = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("scene-booted");
+              sceneIO.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.28, rootMargin: "0px 0px -70px 0px" }
+        );
+        scenePanels.forEach(function (panel) { sceneIO.observe(panel); });
+      } else {
+        scenePanels.forEach(function (panel) { panel.classList.add("scene-booted"); });
+      }
+
+      document.addEventListener("visibilitychange", function () {
+        document.documentElement.classList.toggle("scene-paused", document.hidden);
+      });
+      document.documentElement.classList.toggle("scene-paused", document.hidden);
+    } else {
+      scenePanels.forEach(function (panel) { panel.classList.add("scene-static"); });
+    }
   }
 
   /* ----- Experience timeline draws with scroll ----- */

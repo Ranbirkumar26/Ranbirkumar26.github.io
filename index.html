@@ -33,7 +33,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.min.css?v=12">
+  <link rel="stylesheet" href="styles.min.css?v=13">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -79,7 +79,7 @@
       <svg class="icon-moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.4 14.2A8.5 8.5 0 0 1 9.8 3.6a8.5 8.5 0 1 0 10.6 10.6Z"/></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg>
     </button>
-    <a class="btn btn-small btn-primary nav-cta" href="assets/Ranbir_Kumar_Resume.pdf" download>Resume</a>
+    <a class="btn btn-small btn-primary nav-cta" href="assets/Ranbir_Kumar_Resume.pdf" target="_blank" rel="noopener">Resume</a>
     <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -108,7 +108,7 @@
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#projects">View projects</a>
-          <a class="btn btn-ghost" href="assets/Ranbir_Kumar_Resume.pdf" download>Download resume</a>
+          <a class="btn btn-ghost" href="assets/Ranbir_Kumar_Resume.pdf" target="_blank" rel="noopener">View resume</a>
           <div class="hero-socials">
             <a href="https://github.com/Ranbirkumar26" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.66.41.36.78 1.05.78 2.13v3.16c0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
@@ -300,13 +300,24 @@
       <!-- iORA DocQA -->
       <article class="project reveal">
         <div class="project-media">
-          <figure class="shot ph-browser">
+          <figure class="shot ph-browser motion-panel" data-scene-panel>
             <div class="phb-bar" aria-hidden="true">
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">docqa-production.up.railway.app</span>
             </div>
             <a href="https://github.com/Ranbirkumar26/iora-docqa" target="_blank" rel="noopener" aria-label="iORA DocQA repository">
             <img src="assets/docqa-app.webp" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925"></a>
+            <div class="project-scene scene-docqa" aria-hidden="true">
+              <span class="doc-node doc-upload mono">PDF</span>
+              <span class="doc-node doc-table mono">CSV</span>
+              <span class="doc-node doc-memory mono">MEM</span>
+              <span class="doc-route route-rag"></span>
+              <span class="doc-route route-sql"></span>
+              <span class="doc-core mono">RAG</span>
+              <span class="doc-core doc-core-sql mono">SQL</span>
+              <span class="doc-pulse pulse-a"></span>
+              <span class="doc-pulse pulse-b"></span>
+            </div>
           </figure>
         </div>
         <div class="project-body">
@@ -339,7 +350,14 @@
       <!-- SemantiCache -->
       <article class="project project-flip reveal" id="semanticache">
         <div class="project-media">
-          <div class="placeholder ph-diagram" role="img" aria-label="SemantiCache architecture: a query is embedded, routed through GMM clustering and a semantic cache, and only on a cache miss reaches the FAISS top-k search">
+          <div class="placeholder ph-diagram motion-panel" data-scene-panel role="img" aria-label="SemantiCache architecture: a query is embedded, routed through GMM clustering and a semantic cache, and only on a cache miss reaches the FAISS top-k search">
+            <div class="project-scene scene-cache" aria-hidden="true">
+              <span class="cache-ring"></span>
+              <span class="cache-particle cp-a"></span>
+              <span class="cache-particle cp-b"></span>
+              <span class="cache-particle cp-c"></span>
+              <span class="cache-hit mono">HIT</span>
+            </div>
             <div class="phd-flow" aria-hidden="true">
               <span class="phd-node mono">Query</span>
               <span class="phd-arrow"></span>
@@ -386,7 +404,14 @@
       <!-- Annadata -->
       <article class="project reveal">
         <div class="project-media">
-          <div class="field-ai-diagram" role="img" aria-label="Annadata field AI flow: Agribot captures a field frame, YOLOv8 detects disease regions, ResNet classifies disease, GPS tags the report, and the farmer receives a field dashboard.">
+          <div class="field-ai-diagram motion-panel" data-scene-panel role="img" aria-label="Annadata field AI flow: Agribot captures a field frame, YOLOv8 detects disease regions, ResNet classifies disease, GPS tags the report, and the farmer receives a field dashboard.">
+            <div class="project-scene scene-field" aria-hidden="true">
+              <span class="field-scan"></span>
+              <span class="field-box fb-a"></span>
+              <span class="field-box fb-b"></span>
+              <span class="field-box fb-c"></span>
+              <span class="gps-ping"></span>
+            </div>
             <div class="field-grid mono">
               <span class="field-node bot">Agribot POV</span>
               <span class="field-link"></span>
@@ -433,13 +458,22 @@
       <!-- CraveConnect -->
       <article class="project project-flip reveal" id="craveconnect">
         <div class="project-media">
-          <figure class="shot ph-browser">
+          <figure class="shot ph-browser motion-panel" data-scene-panel>
             <div class="phb-bar" aria-hidden="true">
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
               <span class="phb-url mono">craveconnect · intelligence dashboard</span>
             </div>
             <a href="https://craveconnect.onrender.com" target="_blank" rel="noopener" aria-label="Open the CraveConnect live app">
             <img src="assets/craveconnect-app.webp" alt="CraveConnect prediction results: upgrade probability gauge, customer segment with recommended action, top drivers, SHAP global feature importance and LIME local explanation panels" width="1600" height="1121" loading="lazy"></a>
+            <div class="project-scene scene-crave" aria-hidden="true">
+              <span class="driver-bar db-a"></span>
+              <span class="driver-bar db-b"></span>
+              <span class="driver-bar db-c"></span>
+              <span class="driver-bar db-d"></span>
+              <span class="decision-dot"></span>
+              <span class="explain-path ep-a"></span>
+              <span class="explain-path ep-b"></span>
+            </div>
           </figure>
         </div>
         <div class="project-body">
@@ -576,7 +610,18 @@
 
       <div class="robotics-grid">
         <article class="card robo reveal">
-          <div class="robo-diagram rover-diagram" role="img" aria-label="Rover Abhimanyu module showing chassis, perception mast, sensor fusion and terrain classifier">
+          <div class="robo-diagram rover-diagram motion-panel" data-scene-panel role="img" aria-label="Rover Abhimanyu module showing chassis, perception mast, sensor fusion and terrain classifier">
+            <div class="project-scene scene-rover-run" aria-hidden="true">
+              <span class="terrain-strip"></span>
+              <span class="runner-rover">
+                <span class="runner-body"></span>
+                <span class="runner-mast"></span>
+                <span class="runner-wheel rw-a"></span>
+                <span class="runner-wheel rw-b"></span>
+              </span>
+              <span class="runner-dust dust-a"></span>
+              <span class="runner-dust dust-b"></span>
+            </div>
             <span class="rover-wheel w1"></span><span class="rover-wheel w2"></span>
             <span class="rover-body"></span><span class="rover-mast"></span>
             <span class="rover-scan"></span>
@@ -851,7 +896,8 @@
         <a class="btn btn-primary btn-big" href="mailto:rk26.ftw@gmail.com">rk26.ftw@gmail.com</a>
         <a class="btn btn-ghost" href="https://github.com/Ranbirkumar26" target="_blank" rel="noopener">GitHub</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/ranbir-kumar-a705551b5/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="assets/Ranbir_Kumar_Resume.pdf" download>Resume</a>
+        <a class="btn btn-ghost" href="assets/Ranbir_Kumar_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+        <a class="btn btn-ghost" href="assets/Ranbir_Kumar_Resume.pdf" download>Download PDF</a>
       </div>
     </div>
   </section>
@@ -876,6 +922,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.min.js?v=12"></script>
+<script src="script.min.js?v=13"></script>
 </body>
 </html>
