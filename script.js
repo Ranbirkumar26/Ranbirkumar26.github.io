@@ -73,15 +73,30 @@
   /* ----- Scroll reveal (batch-staggered: items revealed in the same
      observer tick cascade instead of appearing at once) ----- */
   var revealEls = document.querySelectorAll(".reveal");
+  var io = null;
+  function revealElement(el, batch) {
+    el.style.setProperty("--stagger", Math.min(batch, 5) * 90 + "ms");
+    el.classList.add("in");
+    if (io) io.unobserve(el);
+  }
+  function revealVisibleNow() {
+    var batch = 0;
+    revealEls.forEach(function (el) {
+      if (el.classList.contains("in")) return;
+      var rect = el.getBoundingClientRect();
+      if (rect.bottom >= NAV_OFFSET && rect.top <= window.innerHeight - 40) {
+        revealElement(el, batch);
+        batch++;
+      }
+    });
+  }
   if ("IntersectionObserver" in window && !reducedMotion) {
-    var io = new IntersectionObserver(
+    io = new IntersectionObserver(
       function (entries) {
         var batch = 0;
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            entry.target.style.setProperty("--stagger", Math.min(batch, 5) * 90 + "ms");
-            entry.target.classList.add("in");
-            io.unobserve(entry.target);
+            revealElement(entry.target, batch);
             batch++;
           }
         });
@@ -89,6 +104,12 @@
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
     revealEls.forEach(function (el) { io.observe(el); });
+    revealVisibleNow();
+    requestAnimationFrame(revealVisibleNow);
+    setTimeout(revealVisibleNow, 360);
+    window.addEventListener("pageshow", revealVisibleNow);
+    window.addEventListener("hashchange", function () { setTimeout(revealVisibleNow, 160); });
+    window.addEventListener("popstate", function () { setTimeout(revealVisibleNow, 160); });
   } else {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
