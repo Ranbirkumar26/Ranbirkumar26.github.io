@@ -2314,6 +2314,8 @@ html.scene-paused .project-scene::after {
 /* health-check downgraded badge keeps layout, loses the live glow */
 .badge[data-health].health-down { color: var(--text-muted); border-color: var(--line-strong); }
 .badge[data-health].health-down::before { display: none; }
+.badge[data-health].health-stale { color: var(--amber); border-color: rgba(217, 160, 63, 0.4); }
+.badge[data-health].health-stale::before { background: var(--amber); box-shadow: 0 0 7px var(--amber); }
 
 .contact-proof {
   display: flex;
@@ -2376,6 +2378,7 @@ html.scene-paused .project-scene::after {
 .systems-board .sys-dot { width: 7px; height: 7px; border-radius: 50%; }
 .systems-board .sys-up .sys-dot { background: var(--live); box-shadow: 0 0 7px var(--live); }
 .systems-board .sys-down .sys-dot { background: var(--text-muted); opacity: 0.6; }
+.systems-board .sys-stale .sys-dot { background: var(--amber); box-shadow: 0 0 7px var(--amber); }
 .systems-board .sys-checked { color: var(--text-muted); opacity: 0.75; margin-left: auto; }
 .github-board .gh { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); }
 .github-board .gh-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 7px var(--accent); }

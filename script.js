@@ -408,6 +408,8 @@
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (status) {
       if (!status) return;
+      var checkedAt = status.checked ? Date.parse(status.checked) : 0;
+      var healthStale = !checkedAt || Date.now() - checkedAt > 2 * 60 * 60 * 1000;
       document.querySelectorAll("[data-health]").forEach(function (badge) {
         var state = status[badge.getAttribute("data-health")];
         if (!state) return;
@@ -415,8 +417,12 @@
           badge.classList.add("health-down");
           badge.textContent = "Demo offline";
         }
+        if (healthStale && state.up !== false && badge.classList.contains("badge-live")) {
+          badge.classList.add("health-stale");
+          badge.textContent = "Status stale";
+        }
         if (status.checked) {
-          badge.title = "Demo health last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC";
+          badge.title = "Demo health last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC" + (healthStale ? " (stale)" : "");
         }
       });
 
@@ -432,14 +438,15 @@
           var state = status[sys[1]];
           if (!state) return;
           var el = document.createElement("span");
-          el.className = "sys " + (state.up ? "sys-up" : "sys-down");
-          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (state.label || (state.up ? "online" : "offline"));
+          var staleOnline = healthStale && state.up !== false;
+          el.className = "sys " + (staleOnline ? "sys-stale" : (state.up ? "sys-up" : "sys-down"));
+          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (staleOnline ? "status stale" : (state.label || (state.up ? "online" : "offline")));
           board.appendChild(el);
         });
         if (status.checked) {
           var when = document.createElement("span");
           when.className = "sys-checked";
-          when.textContent = "checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC";
+          when.textContent = (healthStale ? "stale " : "checked ") + status.checked.slice(0, 16).replace("T", " ") + " UTC";
           board.appendChild(when);
         }
         board.hidden = board.children.length === 0;
