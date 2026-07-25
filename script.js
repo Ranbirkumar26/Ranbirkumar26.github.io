@@ -426,6 +426,102 @@
     })
     .catch(function () {});
 
+  /* ----- Contact relay: if a Supabase Edge Function URL is configured on
+     the form, post there; otherwise fall back to a prefilled email. ----- */
+  var contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    var contactStatus = document.getElementById("contactStatus");
+    var contactButton = contactForm.querySelector('button[type="submit"]');
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function cleanContactValue(value) {
+      return String(value || "").trim();
+    }
+
+    function setContactStatus(message) {
+      if (contactStatus) contactStatus.textContent = message || "";
+    }
+
+    function buildMailto(payload) {
+      var to = cleanContactValue(contactForm.getAttribute("data-contact-email")) || "rk26.ftw@gmail.com";
+      var subject = "Portfolio message from " + (payload.name || "website visitor");
+      var body = [
+        "Name: " + payload.name,
+        "Email: " + payload.email,
+        "",
+        payload.message,
+        "",
+        "Source: " + payload.page
+      ].join("\n");
+      return "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    }
+
+    function openEmailFallback(payload) {
+      window.location.href = buildMailto(payload);
+    }
+
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var formData = new FormData(contactForm);
+      if (cleanContactValue(formData.get("company"))) return;
+
+      var payload = {
+        name: cleanContactValue(formData.get("name")),
+        email: cleanContactValue(formData.get("email")),
+        message: cleanContactValue(formData.get("message")),
+        source: "portfolio-contact",
+        page: location.href,
+        sentAt: new Date().toISOString()
+      };
+
+      if (!payload.name || !payload.email || !payload.message) {
+        setContactStatus("Add your name, email and message.");
+        if (contactForm.reportValidity) contactForm.reportValidity();
+        return;
+      }
+      if (!emailPattern.test(payload.email)) {
+        setContactStatus("Use a valid email so I can reply.");
+        var emailField = contactForm.querySelector('[name="email"]');
+        if (emailField && emailField.focus) emailField.focus();
+        return;
+      }
+
+      var endpoint = cleanContactValue(contactForm.getAttribute("data-supabase-endpoint"));
+      var anonKey = cleanContactValue(contactForm.getAttribute("data-supabase-anon-key"));
+      if (!endpoint) {
+        setContactStatus("Opening a prefilled email...");
+        openEmailFallback(payload);
+        return;
+      }
+
+      var headers = { "Content-Type": "application/json" };
+      if (anonKey) {
+        headers.apikey = anonKey;
+        headers.Authorization = "Bearer " + anonKey;
+      }
+      if (contactButton) contactButton.disabled = true;
+      setContactStatus("Sending...");
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(payload)
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Contact endpoint returned " + response.status);
+          contactForm.reset();
+          setContactStatus("Message sent. I will reply soon.");
+        })
+        .catch(function () {
+          setContactStatus("Could not send here. Opening email instead...");
+          openEmailFallback(payload);
+        })
+        .finally(function () {
+          if (contactButton) contactButton.disabled = false;
+        });
+    });
+  }
+
   /* ----- Mobile menu ----- */
   var burger = document.getElementById("navBurger");
   var links = document.getElementById("navLinks");
