@@ -426,6 +426,170 @@
     })
     .catch(function () {});
 
+  /* ----- GitHub repo status: cards read public repository metadata directly
+     from GitHub, with a short local cache to avoid noisy API traffic. ----- */
+  var githubCards = Array.prototype.slice.call(document.querySelectorAll(".project, .mini")).map(function (card) {
+    var link = card.querySelector('a[href*="github.com/"]');
+    if (!link) return null;
+    var match = link.href.match(/github\.com\/([^\/?#]+)\/([^\/?#]+)/i);
+    if (!match) return null;
+    var repo = match[1] + "/" + match[2].replace(/\.git$/i, "");
+    var target = document.createElement("a");
+    target.className = "github-meta github-meta-loading mono";
+    target.href = link.href;
+    target.target = "_blank";
+    target.rel = "noopener";
+    target.textContent = "GitHub - syncing...";
+    var anchor = card.querySelector(".project-links") || card.querySelector(".mini-proof") || card.querySelector(".tag-row");
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(target, anchor.nextSibling);
+    return { card: card, link: link, repo: repo, target: target };
+  }).filter(Boolean);
+
+  if (githubCards.length) {
+    var GITHUB_CACHE_KEY = "rk-github-status-v1";
+    var GITHUB_CACHE_TTL = 30 * 60 * 1000;
+
+    function uniqueRepos(cards) {
+      return cards.reduce(function (list, item) {
+        if (list.indexOf(item.repo) === -1) list.push(item.repo);
+        return list;
+      }, []);
+    }
+
+    function readGitHubCache() {
+      try {
+        var cached = JSON.parse(localStorage.getItem(GITHUB_CACHE_KEY) || "null");
+        if (!cached || !cached.repos || Date.now() - cached.fetchedAt > GITHUB_CACHE_TTL) return null;
+        if (!repoMapHasData(cached.repos)) return null;
+        return cached;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function writeGitHubCache(repos) {
+      if (!repoMapHasData(repos)) return;
+      try {
+        localStorage.setItem(GITHUB_CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), repos: repos }));
+      } catch (e) {}
+    }
+
+    function repoMapHasData(repoMap) {
+      return Object.keys(repoMap || {}).some(function (name) {
+        return repoMap[name] && !repoMap[name].error;
+      });
+    }
+
+    function daysSince(dateString) {
+      var stamp = Date.parse(dateString || "");
+      if (!stamp) return null;
+      return Math.max(0, Math.floor((Date.now() - stamp) / 86400000));
+    }
+
+    function relativePush(dateString) {
+      var days = daysSince(dateString);
+      var date = new Date(dateString || "");
+      if (days === null || isNaN(date.getTime())) return "push unknown";
+      if (days === 0) return "pushed today";
+      if (days < 60) return "pushed " + days + "d ago";
+      return "pushed " + date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    function repoIsActive(repo) {
+      var days = daysSince(repo && repo.pushed_at);
+      return !!repo && !repo.archived && days !== null && days <= 180;
+    }
+
+    function renderGitHubStatus(repoMap, fetchedAt) {
+      githubCards.forEach(function (item) {
+        var repo = repoMap[item.repo];
+        item.target.className = "github-meta mono";
+        if (!repo || repo.error) {
+          item.target.classList.add("github-meta-unavailable");
+          item.target.textContent = "GitHub - status unavailable";
+          item.target.title = "GitHub metadata could not be loaded for " + item.repo + ".";
+          return;
+        }
+        var status = repo.archived ? "archived" : (repoIsActive(repo) ? "active" : "quiet");
+        item.target.classList.add(repo.archived ? "github-meta-archived" : (status === "active" ? "github-meta-active" : "github-meta-quiet"));
+        item.target.textContent = [
+          "GitHub",
+          status,
+          relativePush(repo.pushed_at),
+          repo.language || "",
+          repo.stargazers_count ? repo.stargazers_count + " stars" : ""
+        ].filter(Boolean).join(" - ");
+        if (fetchedAt) {
+          item.target.title = "GitHub status refreshed " + new Date(fetchedAt).toLocaleString();
+        }
+      });
+
+      var board = document.getElementById("githubStatusBoard");
+      if (!board) return;
+      board.innerHTML = "";
+      var repoNames = uniqueRepos(githubCards);
+      var publicRepos = repoNames.filter(function (name) { return repoMap[name] && !repoMap[name].error; });
+      var activeRepos = publicRepos.filter(function (name) { return repoIsActive(repoMap[name]); });
+      var unavailable = repoNames.length - publicRepos.length;
+      var main = document.createElement("span");
+      main.className = "gh";
+      main.innerHTML = '<span class="gh-dot"></span>GitHub: ' + activeRepos.length + "/" + publicRepos.length + " active public repos";
+      board.appendChild(main);
+      if (unavailable) {
+        var miss = document.createElement("span");
+        miss.className = "gh";
+        miss.textContent = unavailable + " unavailable";
+        board.appendChild(miss);
+      }
+      var checked = document.createElement("span");
+      checked.className = "gh-checked";
+      checked.textContent = "refreshed " + new Date(fetchedAt || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      board.appendChild(checked);
+      board.hidden = false;
+    }
+
+    function fetchGitHubRepo(repoName) {
+      var parts = repoName.split("/");
+      return fetch("https://api.github.com/repos/" + encodeURIComponent(parts[0]) + "/" + encodeURIComponent(parts[1]), {
+        headers: {
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28"
+        }
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("GitHub returned " + response.status);
+          return response.json();
+        })
+        .then(function (repo) {
+          return {
+            full_name: repo.full_name,
+            archived: !!repo.archived,
+            pushed_at: repo.pushed_at,
+            language: repo.language,
+            stargazers_count: repo.stargazers_count || 0
+          };
+        })
+        .catch(function () {
+          return { error: true };
+        });
+    }
+
+    var cachedGitHub = readGitHubCache();
+    if (cachedGitHub) {
+      renderGitHubStatus(cachedGitHub.repos, cachedGitHub.fetchedAt);
+    } else {
+      var reposToLoad = uniqueRepos(githubCards);
+      Promise.all(reposToLoad.map(fetchGitHubRepo)).then(function (results) {
+        var repoMap = {};
+        reposToLoad.forEach(function (name, index) {
+          repoMap[name] = results[index];
+        });
+        writeGitHubCache(repoMap);
+        renderGitHubStatus(repoMap, Date.now());
+      });
+    }
+  }
+
   /* ----- Contact relay: if a Supabase Edge Function URL is configured on
      the form, post there; otherwise fall back to a prefilled email. ----- */
   var contactForm = document.getElementById("contactForm");

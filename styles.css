@@ -583,6 +583,33 @@ ul { list-style: none; }
 .project-tagline { color: var(--text); font-weight: 500; margin-bottom: 12px; }
 .project-body > p:not(.project-tagline) { font-size: 0.96rem; }
 .project-links { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.github-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--line);
+  border-radius: 8px 3px 8px 3px;
+  background: var(--surface);
+  padding: 7px 10px;
+}
+.github-meta::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.65;
+}
+.github-meta-active { color: var(--text); border-color: rgba(63, 206, 143, 0.28); }
+.github-meta-active::before { background: var(--live); box-shadow: 0 0 7px var(--live); opacity: 1; }
+.github-meta-quiet { border-color: rgba(217, 160, 63, 0.3); }
+.github-meta-quiet::before { background: var(--amber); opacity: 0.9; }
+.github-meta-archived,
+.github-meta-unavailable { opacity: 0.78; }
 .proof-metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2330,7 +2357,8 @@ html.scene-paused .project-scene::after {
   color: var(--amber);
 }
 
-.systems-board {
+.systems-board,
+.github-board {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -2343,11 +2371,15 @@ html.scene-paused .project-scene::after {
   font-size: 0.7rem;
   letter-spacing: 0.06em;
 }
+.github-board { margin-top: 10px; }
 .systems-board .sys { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); }
 .systems-board .sys-dot { width: 7px; height: 7px; border-radius: 50%; }
 .systems-board .sys-up .sys-dot { background: var(--live); box-shadow: 0 0 7px var(--live); }
 .systems-board .sys-down .sys-dot { background: var(--text-muted); opacity: 0.6; }
 .systems-board .sys-checked { color: var(--text-muted); opacity: 0.75; margin-left: auto; }
+.github-board .gh { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); }
+.github-board .gh-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 7px var(--accent); }
+.github-board .gh-checked { color: var(--text-muted); opacity: 0.75; margin-left: auto; }
 
 /* mobile: copy and CTA before the identity card */
 @media (max-width: 920px) {
@@ -2532,5 +2564,6 @@ html.scene-paused .project-scene::after {
   }
   .proof-tile { padding: 16px; }
   .field-ai-diagram { min-height: 360px; }
-  .systems-board .sys-checked { margin-left: 0; flex-basis: 100%; }
+  .systems-board .sys-checked,
+  .github-board .gh-checked { margin-left: 0; flex-basis: 100%; }
 }
