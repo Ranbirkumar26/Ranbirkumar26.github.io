@@ -33,7 +33,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.min.css?v=18">
+  <link rel="stylesheet" href="styles.min.css?v=19">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -291,6 +291,7 @@
         <p class="section-sub">
           Status is stated honestly:
           <span class="badge badge-live">Live</span> deployed and reachable ·
+          <span class="badge badge-local">Access-gated</span> deployed, but not a public demo ·
           <span class="badge badge-local">Running locally</span> functional, not yet deployed ·
           <span class="badge badge-offline">Demo offline</span> code public, hosted demo down.
           Repo activity refreshes from GitHub.
@@ -305,7 +306,7 @@
           <figure class="shot ph-browser motion-panel" data-scene-panel>
             <div class="phb-bar" aria-hidden="true">
               <span class="phb-dot"></span><span class="phb-dot"></span><span class="phb-dot"></span>
-              <span class="phb-url mono">docqa-production.up.railway.app</span>
+              <span class="phb-url mono">docqa-chi.vercel.app</span>
             </div>
             <a href="https://github.com/Ranbirkumar26/iora-docqa" target="_blank" rel="noopener" aria-label="iORA DocQA repository">
             <img src="assets/docqa-app.webp" alt="iORA DocQA interface: document upload panel with file and token counters on the left, Ask and Summarize tabs with a grounded-answer area on the right" width="1600" height="925"></a>
@@ -325,7 +326,7 @@
         <div class="project-body">
           <div class="project-topline">
             <span class="mono project-index">P.01</span>
-            <span class="badge badge-offline" data-health="docqa">Demo offline</span>
+            <span class="badge badge-local">Access-gated deployment</span>
           </div>
           <h3>iORA DocQA</h3>
           <p class="project-tagline">Document question answering that picks its own retrieval strategy.</p>
@@ -338,12 +339,13 @@
           <div class="proof-metrics mono" aria-label="iORA DocQA evidence">
             <span><strong>Routing</strong> direct context / RAG / SQL</span>
             <span><strong>Grounding</strong> cited source files</span>
-            <span><strong>Status</strong> code public, demo paused</span>
+            <span><strong>Status</strong> code public, deployment access-gated</span>
           </div>
           <div class="tag-row">
             <span class="tag">RAG</span><span class="tag">Gemini</span><span class="tag">pgvector</span><span class="tag">DuckDB</span><span class="tag">PostgreSQL</span><span class="tag">Railway</span>
           </div>
           <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://docqa-chi.vercel.app" target="_blank" rel="noopener">Deployment</a>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/iora-docqa" target="_blank" rel="noopener">Code</a>
           </div>
         </div>
@@ -376,7 +378,7 @@
         <div class="project-body">
           <div class="project-topline">
             <span class="mono project-index">P.02</span>
-            <span class="badge badge-live" data-health="semanticache">Live demo</span>
+            <span class="badge badge-offline" data-health="semanticache">Demo offline</span>
           </div>
           <h3>SemantiCache</h3>
           <p class="project-tagline">Semantic retrieval with a cache that understands meaning, not strings.</p>
@@ -395,7 +397,7 @@
             <span class="tag">FAISS</span><span class="tag">GMM clustering</span><span class="tag">Semantic caching</span><span class="tag">FastAPI</span><span class="tag">Docker</span>
           </div>
           <div class="project-links">
-            <a class="btn btn-small btn-primary" href="https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app" target="_blank" rel="noopener">Live demo</a>
+            <a class="btn btn-small btn-ghost" href="https://trademarkia-j8favfyrs6vqqm9nifpdsm.streamlit.app" target="_blank" rel="noopener">Demo link</a>
             <a class="btn btn-small btn-ghost" href="https://trademarkia-api-trh5.onrender.com/docs" target="_blank" rel="noopener">API docs</a>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/SemantiCache" target="_blank" rel="noopener">Code</a>
           </div>
@@ -482,7 +484,7 @@
           <div class="project-topline">
             <span class="mono project-index">P.04</span>
             <span class="badge badge-award">Insightify 6.0 National Finalist</span>
-            <span class="badge badge-live" data-health="craveconnect">Live</span>
+            <span class="badge badge-offline" data-health="craveconnect">Demo offline</span>
           </div>
           <h3>CraveConnect</h3>
           <p class="project-tagline">Explainable customer intelligence, built under national-competition pressure.</p>
@@ -501,7 +503,7 @@
             <span class="tag">Gradient boosting</span><span class="tag">SHAP</span><span class="tag">LIME</span><span class="tag">Power BI</span><span class="tag">Flask</span>
           </div>
           <div class="project-links">
-            <a class="btn btn-small btn-primary" href="https://craveconnect.onrender.com" target="_blank" rel="noopener">Live demo</a>
+            <a class="btn btn-small btn-ghost" href="https://craveconnect.onrender.com" target="_blank" rel="noopener">Demo link</a>
             <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/craveconnect" target="_blank" rel="noopener">Code</a>
           </div>
         </div>
@@ -677,6 +679,71 @@
       </div>
       <div class="grid-2">
         <article class="card mini reveal">
+          <div class="mini-top"><h3>IAMAI CMS</h3><span class="badge badge-live">Live</span></div>
+          <p>
+            A public handoff mirror for a full-stack IAMAI website and CMS: editable page blocks, structured
+            content collections, Supabase Auth/Postgres/Storage, form APIs, media workflows, Netlify deployment
+            and GitHub Actions smoke monitoring.
+          </p>
+          <div class="tag-row"><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Supabase</span><span class="tag">Netlify</span></div>
+          <p class="mini-proof mono">Signal: production CMS architecture + deployment operations.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-primary" href="https://iamai-cms-rk-700.netlify.app" target="_blank" rel="noopener">Live site</a>
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/IAMAI_CMS_Public" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <article class="card mini reveal">
+          <div class="mini-top"><h3>ForgeAI</h3><span class="badge badge-local">Running locally</span></div>
+          <p>
+            A local-first autonomous software-engineering control plane with repo indexing, approval-gated
+            LangGraph agents, FastAPI orchestration, SSE events, RAG search, visual review artifacts and a
+            Next.js dashboard.
+          </p>
+          <div class="tag-row"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">Next.js</span></div>
+          <p class="mini-proof mono">Signal: agent systems + approval-safe engineering workflows.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/forgeAI" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <article class="card mini reveal">
+          <div class="mini-top"><h3>RecallAI</h3><span class="badge badge-local">Running locally</span></div>
+          <p>
+            A local-first visual episodic memory app: teach objects from camera/upload frames, add room and
+            nearby-object context, then search remembered objects by text, image, or both.
+          </p>
+          <div class="tag-row"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">React</span><span class="tag">Visual search</span></div>
+          <p class="mini-proof mono">Signal: productized CV retrieval with local persistence.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/RecallAI" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <article class="card mini reveal">
+          <div class="mini-top"><h3>EstateOS AI</h3><span class="badge badge-local">Frontend MVP</span></div>
+          <p>
+            A real-estate command-center prototype with role-specific dashboards for customers, brokers,
+            builders and management. Static fixture data today, designed to show the operating-system layer
+            before backend/AI services are wired.
+          </p>
+          <div class="tag-row"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Recharts</span></div>
+          <p class="mini-proof mono">Signal: dense dashboard UX and stakeholder-specific product thinking.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/EstateAI" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <article class="card mini reveal">
+          <div class="mini-top"><h3>Basketeer</h3><span class="badge badge-local">Running locally</span></div>
+          <p>
+            A collaborative shopping app for students to create shared baskets, invite others, track order
+            thresholds in real time, and coordinate checkout across platforms like BigBasket, Blinkit and
+            Amazon.
+          </p>
+          <div class="tag-row"><span class="tag">React</span><span class="tag">Supabase</span><span class="tag">Realtime</span><span class="tag">Edge Functions</span></div>
+          <p class="mini-proof mono">Signal: realtime product workflows with auth and database-backed state.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/basketeer" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <article class="card mini reveal">
           <div class="mini-top"><h3>FieldOpsEnv</h3><span class="badge badge-award">OpenEnv Hackathon</span></div>
           <p>
             A deterministic benchmark environment for autonomous field-robotics agents: structured terrain
@@ -736,6 +803,9 @@
           </p>
           <div class="tag-row"><span class="tag">Flask</span><span class="tag">PostgreSQL</span><span class="tag">WebSockets</span></div>
           <p class="mini-proof mono">Signal: full-stack API, persistence and realtime events.</p>
+          <div class="project-links">
+            <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/smart-task-manager" target="_blank" rel="noopener">Code</a>
+          </div>
         </article>
       </div>
     </div>
@@ -971,6 +1041,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.min.js?v=18"></script>
+<script src="script.min.js?v=19"></script>
 </body>
 </html>
