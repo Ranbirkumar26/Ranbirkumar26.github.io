@@ -1,179 +1,664 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
+%âãÏÓ
 1 0 obj
 <<
-/F1 2 0 R /F2 3 0 R
+/Producer (ReportLab PDF Library \055 \050opensource\051)
+/Author (Ranbir Kumar)
+/Title (Ranbir Kumar \055 Resume \050AI\057ML\051)
+/Creator (\050unspecified\051)
 >>
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
 >>
 endobj
 3 0 obj
 <<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+/Type /Catalog
+/Pages 2 0 R
 >>
 endobj
 4 0 obj
 <<
-/A <<
-/S /URI /Type /Action /URI (mailto:rk26.ftw@gmail.com)
->> /Border [ 0 0 0 ] /Rect [ 240.4492 739.5 314.8396 749.34 ] /Subtype /Link /Type /Annot
+/Annots [ 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R ]
+/Contents 18 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font 19 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
 >>
 endobj
 5 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://ranbirkumar26.github.io)
->> /Border [ 0 0 0 ] /Rect [ 326.2376 739.5 447.0072 749.34 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (mailto\072rk26\056ftw\100gmail\056com)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 240.4492 739.5 314.8396 749.34 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 6 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://github.com/Ranbirkumar26)
->> /Border [ 0 0 0 ] /Rect [ 196.407 729.8 294.8398 739.64 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057ranbirkumar26\056github\056io)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 326.2376 739.5 447.0072 749.34 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 7 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.linkedin.com/in/ranbirkumar-ai/)
->> /Border [ 0 0 0 ] /Rect [ 306.2378 729.8 415.593 739.64 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057github\056com\057Ranbirkumar26)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 196.407 729.8 294.8398 739.64 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 8 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.credly.com/badges/b5906f0c-cf47-43d6-b7a2-404c2764666c)
->> /Border [ 0 0 0 ] /Rect [ 95.45815 624.26 307.8798 634.04 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056linkedin\056com\057in\057ranbirkumar\055ai\057)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 306.2378 729.8 415.593 739.64 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 9 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.credly.com/badges/99224504-b9c8-48ed-8c29-57252312a6da)
->> /Border [ 0 0 0 ] /Rect [ 314.6769 624.26 540.2444 634.04 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056credly\056com\057badges\057b5906f0c\055cf47\05543d6\055b7a2\055404c2764666c)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 95.45815 624.26 307.8798 634.04 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 10 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.linkedin.com/company/iorainnovations/posts/?feedView=all)
->> /Border [ 0 0 0 ] /Rect [ 151.6824 599.16 172.2204 609.24 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056credly\056com\057badges\05799224504\055b9c8\05548ed\0558c29\05557252312a6da)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 314.6769 624.26 540.2444 634.04 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 11 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.linkedin.com/company/internet-and-mobile-association-of-india/posts/?feedView=all)
->> /Border [ 0 0 0 ] /Rect [ 236.1528 541.81 259.026 551.89 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056linkedin\056com\057company\057iorainnovations\057posts\057\077feedView\075all)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 151.6824 599.16 172.2204 609.24 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 12 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.linkedin.com/company/proeffico/posts/?feedView=all)
->> /Border [ 0 0 0 ] /Rect [ 182.0064 493.61 285.192 503.69 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056linkedin\056com\057company\057internet\055and\055mobile\055association\055of\055india\057posts\057\077feedView\075all)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 236.1528 541.81 259.026 551.89 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 13 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://www.linkedin.com/company/technocrats-robotics-vit/posts/?feedView=all)
->> /Border [ 0 0 0 ] /Rect [ 117.612 454.86 198.84 464.94 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056linkedin\056com\057company\057proeffico\057posts\057\077feedView\075all)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 182.0064 493.61 285.192 503.69 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 14 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://github.com/Ranbirkumar26/SemantiCache)
->> /Border [ 0 0 0 ] /Rect [ 38.4 401.51 288.1572 411.59 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057www\056linkedin\056com\057company\057technocrats\055robotics\055vit\057posts\057\077feedView\075all)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 117.612 454.86 198.84 464.94 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 15 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://github.com/Ranbirkumar26/craveconnect)
->> /Border [ 0 0 0 ] /Rect [ 38.4 353.31 277.4052 363.39 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057github\056com\057Ranbirkumar26\057SemantiCache)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 38.4 401.51 288.1572 411.59 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 16 0 obj
 <<
 /A <<
-/S /URI /Type /Action /URI (https://github.com/Ranbirkumar26/agri-monitor)
->> /Border [ 0 0 0 ] /Rect [ 38.4 323.71 258.7152 333.79 ] /Subtype /Link /Type /Annot
+/S /URI
+/Type /Action
+/URI (https\072\057\057github\056com\057Ranbirkumar26\057craveconnect)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 38.4 353.31 277.4052 363.39 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 17 0 obj
 <<
-/Annots [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R 
-  14 0 R 15 0 R 16 0 R ] /Contents 21 0 R /MediaBox [ 0 0 612 792 ] /Parent 20 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 
-  /Trans <<
-
->> /Type /Page
+/A <<
+/S /URI
+/Type /Action
+/URI (https\072\057\057github\056com\057Ranbirkumar26\057agri\055monitor)
+>>
+/Border [ 0 0 0 ]
+/Rect [ 38.4 323.71 258.7152 333.79 ]
+/Subtype /Link
+/Type /Annot
 >>
 endobj
 18 0 obj
 <<
-/PageMode /UseNone /Pages 20 0 R /Type /Catalog
+/Length 14662
 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 38.4 749.34 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.5 Tm /F2 15 Tf 16.5 TL 208.4475 0 Td (RANBIR KUMAR) Tj T* -208.4475 0 Td ET
+Q
+Q
+q
+1 0 0 1 38.4 729.94 cm
+q
+.043137 .309804 .639216 RG
+n 202.0492 10.175 m 276.4396 10.175 l S
+n 287.8376 10.175 m 408.6072 10.175 l S
+n 158.007 .475 m 256.4398 .475 l S
+n 267.8378 .475 m 377.193 .475 l S
+BT 1 0 0 1 0 11.2 Tm 126.5928 0 Td 9.7 TL /F1 8.2 Tf 0 0 0 rg (+91 83760 86612  ) Tj (\267) Tj (  ) Tj .043137 .309804 .639216 rg (rk26.ftw@gmail.com) Tj 0 0 0 rg (  ) Tj (\267) Tj (  ) Tj .043137 .309804 .639216 rg (Portfolio: ranbirkumar26.github.io) Tj 0 0 0 rg  T* 31.4142 0 Td .043137 .309804 .639216 rg (github.com/Ranbirkumar26) Tj 0 0 0 rg (  ) Tj (\267) Tj (  ) Tj .043137 .309804 .639216 rg (linkedin.com/in/ranbirkumar-ai) Tj T* -158.007 0 Td ET
+Q
+Q
+q
+1 0 0 1 38.4 716.84 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (PROFESSIONAL SUMMARY) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 715.64 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 677.74 cm
+q
+BT 1 0 0 1 0 28.65 Tm 9.2 TL /F1 8.15 Tf 0 0 0 rg (AI & ML undergraduate \(CGPA 8.28\) building production deep learning and computer vision systems with PyTorch, TensorFlow, and YOLOv8 on) Tj T* (edge hardware \(Jetson Xavier NX, Raspberry Pi\), including <) Tj (40 ms real-time inference in industry deployments. Experienced in RAG/semantic) Tj T* (retrieval \(FastAPI, FAISS, pgvector, LangChain/LlamaIndex\) and explainable AI \(SHAP, LIME\). Filed patent, peer-reviewed research in vision-based) Tj T* (perception and few-shot medical AI, and rover autonomy team lead \(20th worldwide, IRC 2025\). Targeting AI Engineer / Deep Learning roles.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 664.64 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (EDUCATION) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 663.44 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 652.44 cm
+q
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (B.Tech, Computer Science \(AI & ML\)) Tj /F1 8.4 Tf ( \227 Vellore Institute of Technology, Chennai ) Tj /F2 8.4 Tf (| CGPA: 8.28/10 |) Tj /F1 8.4 Tf ( Aug 2023 \226 May 2027 \(expected\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 634.04 cm
+q
+BT 1 0 0 1 0 10.25 Tm 9.2 TL /F2 8.15 Tf 0 0 0 rg (Relevant Coursework:) Tj /F1 8.15 Tf ( Machine Learning, Deep Learning, Reinforcement Learning, Explainable AI, Speech & NLP, Computer Vision, Machine) Tj T* (Vision, Data Structures & Algorithms, Probability & Statistics, SQL) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 624.84 cm
+q
+.043137 .309804 .639216 RG
+n 57.05815 .03125 m 269.4798 .03125 l S
+n 276.2769 .03125 m 501.8444 .03125 l S
+BT 1 0 0 1 0 1.05 Tm 9.2 TL /F2 8.15 Tf 0 0 0 rg (Certifications:) Tj /F1 8.15 Tf ( ) Tj .043137 .309804 .639216 rg (Getting Started with Artificial Intelligence \227 IBM SkillsBuild) Tj 0 0 0 rg ( \267 ) Tj .043137 .309804 .639216 rg (Journey to Cloud: Envisioning Your Solution \227 IBM SkillsBuild) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 611.74 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (EXPERIENCE) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 610.54 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 599.54 cm
+q
+.043137 .309804 .639216 RG
+n 113.2824 .25 m 133.8204 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Technical Integration Lead) Tj /F1 8.4 Tf ( | ) Tj .043137 .309804 .639216 rg (IORA) Tj 0 0 0 rg (, Noida ) Tj .266667 .266667 .266667 rg (| May 2026 \226 Present) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 580.94 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Own technical integration for an nRF9151-based LTE-M/NB-IoT safety wearable; drive architecture reviews across PCB, firmware \(MQTT over) Tj T* -2.5 0 Td (TLS, GNSS, flash-buffered telemetry\), and power subsystems.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 553.19 cm
+q
+BT 1 0 0 1 2 19.3 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 19.3 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Architect and ship IORA AI, a RAG document-intelligence platform \(FastAPI + Next.js on Railway\): Supabase Postgres + pgvector retrieval with) Tj T* -2.5 0 Td (grounded-answer coverage gating, persistent per-user memory, a DuckDB text-to-SQL analytics path, and multi-provider LLM fallback \(Gemini,) Tj T* (Groq, OpenRouter\).) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 542.19 cm
+q
+.043137 .309804 .639216 RG
+n 197.7528 .25 m 220.626 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Software Testing & Product Development Intern) Tj /F1 8.4 Tf ( | ) Tj .043137 .309804 .639216 rg (IAMAI) Tj 0 0 0 rg ( \(Internet and Mobile Association of India\), Delhi ) Tj .266667 .266667 .266667 rg (| May 2026 \226 Jul 2026) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 523.59 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Executed k6 load, stress, and spike testing on staging web platforms; documented vulnerability findings and consolidated performance reports,) Tj T* -2.5 0 Td (improving pre-release reliability.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 504.99 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Contributed map feature development, level-of-detail \(LOD\) visualization, and feature validation to a GIS-based mapping platform for large-scale) Tj T* -2.5 0 Td (spatial data, strengthening spatial-data engineering skills.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 493.99 cm
+q
+.043137 .309804 .639216 RG
+n 143.6064 .25 m 246.792 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Computer Vision Engineer \(Intern\)) Tj /F1 8.4 Tf ( | ) Tj .043137 .309804 .639216 rg (Proeffico Solutions Pvt. Ltd.) Tj 0 0 0 rg (, Noida ) Tj .266667 .266667 .266667 rg (| May 2025 \226 Oct 2025 \(on-site May\226Jul; remote Aug\226Oct\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 466.24 cm
+q
+BT 1 0 0 1 2 19.3 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+BT 1 0 0 1 9 19.3 Tm 2.5 0 Td -0.077344 Tw 9.15 TL /F1 8.15 Tf 0 0 0 rg (Designed and deployed 4 production computer vision pipelines \(speed monitoring, pothole detection, fire detection, workplace safety analytics\) on) Tj T* 0 Tw -2.5 0 Td (NVIDIA Jetson Xavier NX, achieving <) Tj (40 ms real-time inference latency \227 reducing manual monitoring effort and enabling automated real-time) Tj T* (decisions in client workflows.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 455.24 cm
+q
+.043137 .309804 .639216 RG
+n 79.212 .25 m 160.44 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Team Lead, Rover) Tj /F1 8.4 Tf ( | ) Tj .043137 .309804 .639216 rg (Technocrats Robotics) Tj 0 0 0 rg (, VIT Chennai ) Tj .266667 .266667 .266667 rg (| Aug 2025 \226 Present \(member since Mar 2024\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 436.64 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td -0.075906 Tw (Lead the rover autonomy stack: CV-based soil classification and autonomous arrow-marker detection under rough terrain, deployed on Raspberry) Tj T* 0 Tw -2.5 0 Td (Pi and an i7 mini-PC; built an end-effector camera pipeline for tool identification and autonomous approach for manual-trigger pickup.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 427.19 cm
+q
+BT 1 0 0 1 2 1 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 1 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (All-India Rank 1, DD Robocon Round 1 \(100/100\); IRC 2025 \227 20th worldwide out of 100+ applicant teams; IRC 2026 Finalist.) Tj T* -2.5 0 Td ET
+Q
+Q
+q
+1 0 0 1 38.4 414.09 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (PROJECTS) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 412.89 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 401.89 cm
+q
+.043137 .309804 .639216 RG
+n 0 .25 m 249.7572 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf .043137 .309804 .639216 rg (SemantiSearch \227 Semantic Retrieval System & RAG Pipelines) Tj /F1 8.4 Tf 0 0 0 rg ( ) Tj .266667 .266667 .266667 rg (| MiniLM \267 GMM \267 FAISS \267 FastAPI \267 Docker) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 383.29 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Engineered and containerized a semantic retrieval backend as a FastAPI/Docker microservice; validated the end-to-end RAG pipeline with) Tj T* -2.5 0 Td (OpenAI at ~480 ms p95 latency with confirmed LangChain/LlamaIndex compatibility.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 364.69 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Implemented GMM-based cluster-partitioned semantic caching to group similar query embeddings, cutting redundant FAISS lookups by ~40%) Tj T* -2.5 0 Td (and accelerating average query response time.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 353.69 cm
+q
+.043137 .309804 .639216 RG
+n 0 .25 m 239.0052 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf .043137 .309804 .639216 rg (CraveConnect \227 Explainable Customer Intelligence System) Tj /F1 8.4 Tf 0 0 0 rg ( ) Tj .266667 .266667 .266667 rg (| Power BI \267 Gradient Boosting \267 SHAP \267 LIME \267 Flask) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 335.09 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Delivered an end-to-end customer-prediction system on 2,000 customers \(19 features, 4 engineered\), achieving 0.784 ROC-AUC with Gradient) Tj T* -2.5 0 Td (Boosting; served SHAP/LIME-explainable predictions via a Flask API on Render, integrated with Power BI dashboards.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 324.09 cm
+q
+.043137 .309804 .639216 RG
+n 0 .25 m 220.3152 .25 l S
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf .043137 .309804 .639216 rg (Annadata \227 Agricultural AI Platform \(SIH 2025 Finalist\)) Tj /F1 8.4 Tf 0 0 0 rg ( ) Tj .266667 .266667 .266667 rg (| PyTorch \267 YOLOv8 \267 ResNet-34 \267 Flask \267 Python) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 305.49 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Built an AI agritech platform with PyTorch-based YOLOv8 and ResNet-34 models, achieving 91% disease classification and 97% soil health) Tj T* -2.5 0 Td (prediction accuracy, with GPS-enabled asynchronous pipelines sustaining ~30 FPS video-stream inference.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 292.39 cm
+q
+BT 1 0 0 1 0 1.2 Tm 10.5 TL /F2 9.3 Tf 0 0 0 rg (RESEARCH & PATENTS) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 291.19 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 280.19 cm
+q
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Patrolling Bot \227 AI-Powered Autonomous Campus Surveillance Robot) Tj /F1 8.4 Tf ( ) Tj .266667 .266667 .266667 rg (| Patent filed; publication pending) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 252.44 cm
+q
+BT 1 0 0 1 2 19.3 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 19.3 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Invented an autonomous patrolling robot using YOLO-based detection \(missing ID cards, fire/smoke, overcrowding\) and action-recognition) Tj T* -2.5 0 Td (models for fight detection, with real-time alerts to security; embedded deployment on Jetson Xavier NX / Raspberry Pi with LiDAR/ultrasonic) Tj T* (navigation \(Python, OpenCV, PyTorch, ROS\).) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 241.44 cm
+q
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Vision-Based Terrain Analysis) Tj /F1 8.4 Tf ( ) Tj .266667 .266667 .266667 rg (| Accepted; publication forthcoming) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 222.84 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Developed a real-time multi-model perception system \(YOLOv8 + MiDaS, PyTorch\) for terrain classification in autonomous navigation; deployed) Tj T* -2.5 0 Td (to embedded edge hardware.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 211.84 cm
+q
+BT 1 0 0 1 0 1.3 Tm 9.7 TL /F2 8.4 Tf 0 0 0 rg (Few-Shot Learning with Explainable AI) Tj /F1 8.4 Tf ( ) Tj .266667 .266667 .266667 rg (| Peer-reviewed journal, under review) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 193.24 cm
+q
+BT 1 0 0 1 2 10.15 Tm /F1 10 Tf 12 TL 0 0 0 rg (\177) Tj ET
+0 0 0 rg
+BT 1 0 0 1 9 10.15 Tm /F1 8.15 Tf 9.15 TL 2.5 0 Td (Designed an N-way K-shot classifier for hospital-sourced low-data medical diagnosis; achieved 93% diagnostic accuracy with LIME + SHAP) Tj T* -2.5 0 Td (attribution for full prediction interpretability.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 180.14 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (SKILLS) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 178.94 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 168.69 cm
+q
+BT 1 0 0 1 0 1.05 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (Programming Languages:) Tj /F1 8.1 Tf ( Python, SQL) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 141.04 cm
+q
+BT 1 0 0 1 0 19.35 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (AI/ML Frameworks:) Tj /F1 8.1 Tf ( PyTorch, TensorFlow, Scikit-learn, XGBoost, HuggingFace Transformers; RAG Pipeline Design, Semantic Search, Vector) Tj T* (Embeddings, Few-Shot Learning, Reinforcement Learning, Explainable AI \(SHAP, LIME\), Prompt Engineering, LLM Integration \(LangChain,) Tj T* (LlamaIndex\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 122.54 cm
+q
+BT 1 0 0 1 0 10.2 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (Computer Vision:) Tj /F1 8.1 Tf ( YOLOv8, ResNet, MiDaS, OpenCV, Object Detection, Action Recognition, Depth Estimation, Real-Time Inference, Edge) Tj T* (Deployment \(NVIDIA Jetson Xavier NX, Raspberry Pi\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 113.19 cm
+q
+BT 1 0 0 1 0 1.05 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (Deployment & Backend:) Tj /F1 8.1 Tf ( FastAPI, Flask, Docker, REST APIs, Microservices, ROS, Railway, Render, Streamlit Cloud) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 103.84 cm
+q
+BT 1 0 0 1 0 1.05 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (Databases:) Tj /F1 8.1 Tf ( Supabase Postgres, pgvector, Qdrant, FAISS, DuckDB, SQL) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 94.49 cm
+q
+BT 1 0 0 1 0 1.05 Tm 9.15 TL /F2 8.1 Tf 0 0 0 rg (Tools:) Tj /F1 8.1 Tf ( Git, Linux, k6, Power BI \(Dashboarding, DAX, Data Modeling\), Pandas, NumPy) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 81.39 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 1.2 Tm /F2 9.3 Tf 10.5 TL (ADDITIONAL INFORMATION) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 80.19 cm
+q
+.7 w
+1 J
+0 0 0 RG
+n 0 0 m 535.2 0 l S
+Q
+Q
+q
+1 0 0 1 38.4 60.29 cm
+q
+BT 1 0 0 1 0 10.65 Tm 9.4 TL /F2 8.15 Tf 0 0 0 rg (ACHIEVEMENTS:) Tj /F1 8.15 Tf ( Patent Filed \(Patrolling Bot\) \267 All-India Rank 1, DD Robocon Round 1 \(100/100\) \267 IRC \227 Top 20 Worldwide \(2025\), Finalist/Top) Tj T* (30 \(2026\) \267 SIH 2025 Finalist \267 Team Lead, Rover \227 Technocrats Robotics, VIT Chennai) Tj T* ET
+Q
+Q
+q
+1 0 0 1 38.4 50.29 cm
+q
+BT 1 0 0 1 0 1.25 Tm 9.4 TL /F2 8.15 Tf 0 0 0 rg (SOFT SKILLS:) Tj /F1 8.15 Tf ( Team Leadership \267 Cross-Functional Collaboration \267 Problem Solving \267 Communication \267 Adaptability) Tj T* ET
+Q
+Q
+ 
+
+endstream
 endobj
 19 0 obj
 <<
-/Author (Ranbir Kumar) /CreationDate (D:20260725002909+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20260725002909+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (\(unspecified\)) /Title (Ranbir Kumar - Resume \(AI/ML\)) /Trapped /False
+/F1 20 0 R
+/F2 21 0 R
 >>
 endobj
 20 0 obj
 <<
-/Count 1 /Kids [ 17 0 R ] /Type /Pages
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 21 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 5781
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
 >>
-stream
-Gau`WgNM>kP'tYXoLlLN0`^1LX#1Ci;3\qNOr0AU3,:>]+OD;E!GDZRd5ifDI/DUI%=k5WM6`Wd-ZL\hNCK\SC=h=m-&\2df961.A&_:,m.f@FQHeR$b\A"I2BT9ar.dLdYf`)'%i;j[^>ZG<#JMnR([:JqghYHh=[nn*@n^JjX">^bd$6>l9h`q![P;A8YbS1EFZPts?U%l.ds#X-#Fk`0e+^o@n\=&?a%NZ67_`2[@C@0!kq^.2q`V:)N/lArXU^h,r/fif2SSWi*N!7RcC!;@NmVnDSa&hcAi-[B20r$,ZQ7Z71-0%!hB-C<H\Q7o@4a?>>>EaJT?F2pEiNG'`p%XUX7'k[m$l-QCpK=;_aJpbVr#"'FNIdp)a-Q+7qH@WoY-BE=K9JhSIY@N8]r.1i48-No#c#sTfLO_4RP,br6I.l_T;48/8s3*j@usU7%3"j-kmb*l6V?B]dmPF`KQTr^+'mf./'9"g[/*4bA,_q[9oB8S-)DIT'fAQG:Yi`P<0h=M4?_&Nd"O-HXZ<0e`OX-R.0b)J_73-fK^:qi%S/M*)3<^kJPthFFE82g$I`FU>kq4iQjZiD02d;kctZ3rM=nEFFX-1Ao4G_OG1gP)CF^a6+c5(HV:aY!A]c6[-#LO<CCaWmZ,pqluL=-,iIoBon('(3P.9i>YJDnhVQL=[OAuup0FtH.Y>O`6]nU'o/2H9QR;?YQNR`J?Pb^ufmT78M!Q;.H(;,K[[p27js'J")Op=D'Bscf2O_;EpZqABI?05\1=ZsIQCP(i1t[%%XlL:iB:/+nG9:;bX3V]RHJ*V\e+A2c_OG`f$PP`Sj9#?c3DBm)b?2p#8C,2@A&'ZlH/d:Kpb+&$*&e+M*JoQ=-[B=.iKlDt6Q-WbTW*9XSFP6)o$FRAQLZ"_m_&n,3qor8SW#CKmZ(m8NNJQAgs8EhZ*BWH#:g=F30(Z()o8ac?po<Drad,/$Z?Vs#/f=<c$jg`\79V@]Qn.oo.\&1f@YU!a,HOdHHPd/)dH*_#%RN\>+@@P^@3m!e;M68ID2"o6]\h?)a.D^SAbaC+%pcIb2B8/LDdcL(Q!qi=O+UIp+a?tC_Jn<&SVqq_LQE<1`[,1[qT]#04".=ClF&YP@^+hH0gohOWTN45=e5]1ZN&MmrVa@f7.q)%F73Jgc8j1cncYPTl5pl[Tu]"BRPnuWtOQ37`4u;lI;2BEq_j7'Jj)W(T^k2gs%qV$7[Oeh+-hO[_(l>O!4VN+!k&2k.$h9>=PqF+qi'(bdl_)ie=JH^OH%,?]:`QK+-LEb@H)cI=bZSBhKIm</4b*&+liZ<P^QO^H<p2ot4k,(9k<j.&LGA_i<IP2cCb@J<Cn,.FO0mg$V&jXATKl_SZ3c4KN]WD;WY>!?<g'7,\io44f77&Z2fNU'O'V'>#/YG';o0N$,6K:)uaQoeS8qfITf!Fp0'#pUegNUd24Fe(>o\$Z?VH@K(dqB"=7`fIA!#b^LKQ0V@1$1X(d,Vqj5SFq=:#9ZOFb>NtcG6AVbB.j\O'+i9lNG$Ne/n-D#AcF?C4CED?2!Di=V(<AdtOu;XS_7Y03EsW[;:^YNHM83-?L-VP3P/GhfV2>Y$rR'jUS)&cqPat^pGt\^('c_\h0CZ&r"5*er7%srN!3R#FdUI[G[qmCc66bNt:ORZo62A*17^(.%iH-oh)@R->"F#5DI'rkMm3F?qRUnJZ$l`9Es&b:koP@HSCiGtufI*prjrE)`E!g;o`+\WSO8_2QT;1_OqoBF-FsY#@/+9l-po"#MD]8CP"`YOdGS<]E8cH$ggHDm/-Tge"ZpZ@&TX.>&[5*ED/%`'tMR[-\-MQ`m:JsV[?iCLgAQ7[SHBTI1=,%--$jkQR,%o$i]Pk20`<+\:51D6HY>4bQR'Y#Kjaa3;:m$:tKEZ(7cPb,c&9AJ[0h!WKk4u!t1,^#?C@!iPj-"Lir\gB)@L?=J="eDS#2cu$,1^fSH.bes'Xu#a!\?;4+G3l1.jM@)()ro`<\-iuG^p^>gCD/&PND\amCp^34**N&GIK>j>^s0hf8L\Gd3kZB/.d7r=[s!HnI'%9l7%_%e<%@V=8Y^/r/lQdK!U3Z`e.\`YZ\7)B\1m)AGMD:bPR_lZ7X*B\88DK1)7aX"5QU*19OEbjFK'>]j.F"&A\eNM"2a=e;F`f@NLI"J_o=dnF+XtYu>"M4Vp-l(1,LK*[lLMoj"JUMi/toFn#?V0Ys!5a-Z/DMkYpghr,"tGT8'(<i=3#<;``#lSVJ8K(:Dtj+32-g%@hLN(n`!Rl5r-_C""qN=OtCXjAm<ONlkFF.UM/oFiNldPN'`pH0((aX7A'dc>7Yj^,Nn-]..[c,c/O>mcYun<5C:8;&as61H'36B;32N(9r<l`oiD,*JQ.=Pe4[G%6@,KA\Zc_Yo'7_-Mgb_@&1)6,p6)q-LK>ml3F/m1:_ggfr3f)nr92/3Bg5&bFco;1^2E3S>u0*l_ih/;<#@O=b,c!eP=`-t6,h(29@S%5AX<dds<pjj7D^7iC+oL#jNh\[U6IqVU&K"-ERU(=LL5[tZ+!,k;1E8(XF3n3Il"HGFSE'KgMcI0R(d_GkbWpb1m&>,`q#rP0bc-@%0kQH(UIZSDjG.;NY)$4A:_73ilG$sANJ=?6QF&/W9<T(7JDR7#lY2!&pBIE-R]3TV'?X<#rG<o9nNi+7^Y3C_'U<:n4KFc:4qIP\o)dMQ2j>_,/(n9Y>C!2oTDR'WaE/$eksDQn+%(uNPug'U3M!JKaeO\#*QM3%qg=$W)c6pN;B#pPNb@IPGJf]k_m1fC<V9'D7[]QPLT1sBjhJ`<)9l8WI[G+J.S>UFDiEbJJQ_2$TZ@I%nNCE9PipBe.t%D7siRmTai<NBX\ns,"ZW/*7N=94?6qb.nE&HTg!H!-\V&SKk0QV"78M2\K2UU-*+SlWTsZL[lo<P'G)-2A'Dk('*>52?G<6Yu5(#(pCd$<;q?['M=J'tK,HB\"ukq**`N1epNj-pJ%fB@:SP7UgEm0&,dI-!lPR0(c,S=/)L#;D%%uP/N9T!n#Z-B!ktbJZ8q7K8+$+AKb^pT*4#Kd<r\oo5aVkopGHE4FsD]YUtYkLU<&-?:oiR#G]Q.e<RH1Q$-[l[ejZlh"cb"c@G)=X,b9brnRf;pf(jc9Ha*)&//2PF-,6\hB30dnh_(#4nd;c9N6e6W`s!0@^uPO85h00aOQD)M0E)RIP/toTmB\T_Cd'>X%rpIZK=jnJUe#J`.qgb^))E6e<h?l>V6-^>(D$JIdLnN%,t<J=5g&%2_UM"qE"9;MY3[9Z+J<fUMo#>=%K&6dNpo-/X&8.JYA[W!:\+CUdd&]c&lS+a7s`Im\DHT/)])6.l/RVU:V9=SdZ:KAoN$q6YH(_*HiJ*,p?cWVki8h'3Qp)m(`Mck*P%75!,tVQ>Q9jhcQ1Y;0hRe]YplX$';:FrE;\]&sCMhai7#F.*,+40DTEf$db<km#Xc6H7)]2HjlQ-1?UN:"7ZOH.4]Z[QfSbK#c7I(eB[X&RIK[R'o;!8EI*XRIrD>mEP.H:+>,pV+\9J"d1o\&,jgD7'%3:8!oQngoW`^L?kCk!G^:J.r1p(A>i@*)&S*uZ9"Rt'd5/`CP2u%eGrbbGX!_Vu]&0Z)JLnlOYuLIk)H+JhQ)$d_Zrb?jLJE$,pKig<Fi6pU#S/F!N#rdRk#>]7Bc[mT;pqYR`L!J&99M)1?!/E>`Z]F3qm55F"/Ag883s40aB#94M+f2r!LIi`8-kl5`YK)h[/"4L<lgN`qp:M*/CZAWXP9\/+S2d&W1\K'Zjtd"mF6<.*J?D#__g+t-\Mn+X</'2Ti.:HOPQ[u!N[l7.ed`V$;eGG5UNe2GZl<07Ht&>I@^e>ap%>k*NQ34k\.@l(9i_/"*OigS);tMcOeIt-'[bN]3h"+?`/"?Rr=A?M<3BYBq"]3dOLmtV.,57[VGb7-[`NE_DJj;(7SV@FSFf\+[Tbi"t-RtI)6/]YXYqj0c=-O4kngG0nYGU#i`r%N0'Si""2NoeQ)#%CoH4F^roadiMF@61#^d>V#S"sYYE$?rmjVZ_=_Ar6:QO<9LHRN@!?nYc6h;Wn8.a'@RV$@H!1OLb#hJ7(!=;77LJt_P\4&[f:CKQl`2*T&(%B!!Mc*#U\2=<i3_M$PeLO(3XaUVQ?IUI8q\kTT3uj>qQU<NPjS<ohtiH=@3uA.%>(A4rDAE6'gutM9&0e<^cAjVJ'c?JRETb%T.+riLW!Pr&-/C'gCci-!(E!r6N6A>m!LQu<+$M'<PBSQC[$;`n*Ri+3)@#^k-u/2h;Ps"4dljn6[(TdR>TniI!Bdip=aq1>HE<)mBq:QPCe(FHCoG-.O&#\3#-#5EC[Tn$eX1h$E\jqYOU5G!'#[0,jW*@W]q6rYDFpcM8O51/a%ehMa^UU$>:.dJcg13mN;6P:U<O4]ja;6U`DV0hAS3sl`_RsBB'8k17GWQqrT::1\p_-$qptpX@ca<=Y0!N-4^F!=#XZNZH^LTGNpXO`A3QlX!*L&BM(^@)_P4f?HJ/CBj8sT^mXbPkZPn;E?Lu',q7lj:)=_CQH/)BG.cEYVIgm)BC>C/+J!fq][Pf(i3oI`^:&VcFf[IqUhs>gVUr/,#@)GqH?8P:.NIcPE[0_HVSQLe)J7qAq=Q4-G("*7HgJ[Mo36e'+*M2LY+&J+,;55#(/dtG>sk/]8mc$h*H3;Z\iD7H_KuR71N-<4+rjUKDG&qQ8d+*ZY\]liUb42UpbTRhp;su``^?>,=\ZnaQ)C/DNBX*a^UaGAqY,FPeD$X7YPIYuC8p_IXfAhOlS$#=eT[Uar;WNU;j[C7Q+lc0fWV;(ZJ'91%/I_3AEtq):M"cJl2Zg^7NFQjh31.g/JE^14"7]C#5+N/X6ZQ*.lL45$ji!hOrlW>_-A#*<W*oH725-nB$$!1I*Q)ChIoc,I;;d0m+9X0I"29#h;5SMs/d!NlL^Of"1o"V<dX/ueftfh$>>-\cq7=g$>AW$^,4s,'l4t.`NoQlc(0ftd,FZ-UZ9NP43*Lp(M!&7)Od71IWu[k\nmqgf]NVkWAO<iZ(s2DF#k\;Vd>Muc\7NDfrMhAjjDej>c2=])Z(cfe9*)WmaNeZTYtX#-Qb2obJqSIS_$B#nePsLg$SCB3NDC9gBNer:?VelJm?cRY.sVeVE?neD:fMe&@>=[BN8B;P5P"4%ka>;C+eMGLn&A)%!?6b$"aeCEHsf5V2R7/N&7O_4KOAr:n-BZb>W;M5MY"3D*MDXX0GmoQ1;5fStFZ7.RuDLCYS#I,#Tq,Z<6=02CCY[OU8Mib"U5.X_N(.C99^a!XDi)RPGDdRHZi#'4:?C!,c8N9d0>.pM.0Ys0huZQe*hfW`A=!8CDE6l/c!LFtQ24[*jjD.iF+6nO6r3*Gq_DKbl;`,H<QRrEM63?P3g21`XD!`'(ch<=r"J?=&*,WjUnh-P,t<Cc#5.nhRd;^RecGU,d]n$,4)3he]=h99cB(l)"'#F0dt'Gr5FU]Hln!eCn.75P=mj2imSY\>(UOI-n2+\r.'.Uk#"o27$$N^\,,SrVd!!Y(]p.LQ4*d`Xg*h,<F@K<)0G_b.?#pStp!M<k%J2@'J>Wq4&n.ct'?VGT@*K3[Wtb#1QbTT,3=e:iN?6D!3H=Pp^*&$M#tS;4i^/^96;o`8`&@aLJNui2nL^FJsFaT<>lD0nu=`;g7_N3ZSYnNnl.*#P6=j3;E")f.OZBb)L7O'A2a]\2h\kht`8,h&Y<%&?<qR2kfZ%Q&&i)&%+X38FNB`rMWh/:qHBF.ZfLl&7Qpbs2\%'L]7@2Jt$N~>endstream
 endobj
 xref
 0 22
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000493 00000 n 
-0000000671 00000 n 
-0000000849 00000 n 
-0000001038 00000 n 
-0000001252 00000 n 
-0000001466 00000 n 
-0000001683 00000 n 
-0000001924 00000 n 
-0000002134 00000 n 
-0000002357 00000 n 
-0000002547 00000 n 
-0000002737 00000 n 
-0000002927 00000 n 
-0000003223 00000 n 
-0000003293 00000 n 
-0000003591 00000 n 
-0000003652 00000 n 
+0000000015 00000 n 
+0000000199 00000 n 
+0000000258 00000 n 
+0000000307 00000 n 
+0000000596 00000 n 
+0000000780 00000 n 
+0000000973 00000 n 
+0000001166 00000 n 
+0000001382 00000 n 
+0000001629 00000 n 
+0000001877 00000 n 
+0000002127 00000 n 
+0000002416 00000 n 
+0000002659 00000 n 
+0000002921 00000 n 
+0000003129 00000 n 
+0000003337 00000 n 
+0000003548 00000 n 
+0000018264 00000 n 
+0000018308 00000 n 
+0000018416 00000 n 
 trailer
 <<
-/ID 
-[<157a3ce1022d89cd3401bb9f6ebda23c><157a3ce1022d89cd3401bb9f6ebda23c>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 19 0 R
-/Root 18 0 R
 /Size 22
+/Root 3 0 R
+/Info 1 0 R
 >>
 startxref
-9525
+18529
 %%EOF
