@@ -1,6 +1,6 @@
 {
-  "checked": "2026-08-05T12:08:25Z",
+  "checked": "2026-08-05T15:28:57Z",
   "docqa": { "up": false },
-  "semanticache": { "up": true },
-  "craveconnect": { "up": true }
+  "semanticache": { "up": false },
+  "craveconnect": { "up": false }
 }
