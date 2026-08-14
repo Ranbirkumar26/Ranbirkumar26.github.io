@@ -26,5 +26,5 @@ Open `http://localhost:8787`. The backend serves the site and exposes:
 - `GET /api/messages` with `ADMIN_TOKEN`
 - `GET /api/health`
 
-If the static site is served separately, set the `portfolio-api-base` meta tag
-in `index.html` to the deployed backend origin.
+GitHub Pages uses `https://ranbir-portfolio-backend.onrender.com` as the
+portfolio backend origin through the `portfolio-api-base` meta tag.
