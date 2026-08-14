@@ -1,0 +1,101 @@
+[
+  {
+    "id": "project.docqa",
+    "title": "iORA DocQA",
+    "tags": ["project", "rag", "documents", "gemini", "pgvector", "duckdb", "postgresql"],
+    "roleTags": ["ai_ml", "full_stack", "rag"],
+    "priority": 10,
+    "content": "iORA DocQA is a production RAG document-intelligence platform. It handles answers grounded in uploaded documents, including numeric questions language models can get wrong. Ranbir architected automatic routing between direct context, pgvector dense retrieval, and model-written SQL executed by DuckDB on CSV/XLSX tables. It has Supabase auth and storage, approval-based signup, admin access control, per-user corpora, cited source files, persistent multi-file memory, semantic answer caching, hard coverage gating that refuses unsupported answers, and multi-provider LLM failover across Gemini, Groq, and OpenRouter. The portfolio and resumes say Ranbir owned architecture, retrieval routing, SQL path, auth, provider fallback, and deployment.",
+    "evidence": ["Projects section", "iORA DocQA repository link", "Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.semanticache",
+    "title": "SemantiCache",
+    "tags": ["project", "semantic search", "faiss", "gmm", "fastapi", "docker", "rag"],
+    "roleTags": ["ai_ml", "rag", "backend"],
+    "priority": 10,
+    "content": "SemantiCache is a clustered semantic retrieval backend over the 20 Newsgroups corpus. It addresses repeated semantic queries paying full vector-search cost. Ranbir built a batch pipeline for loading, header stripping, text normalization, MiniLM embedding inference, FAISS index persistence, PCA dimensionality reduction, Gaussian Mixture Model clustering, and a cluster-partitioned semantic cache keyed by dominant cluster. It is packaged as a FastAPI and Docker service with LangChain and LlamaIndex compatibility. The portfolio and resumes report about 40 percent fewer redundant FAISS lookups and roughly 480 ms p95 on the demo corpus. Ranbir owned cache design, clustering, API, Docker packaging, and demo.",
+    "evidence": ["Projects section", "SemantiCache repository link", "API docs link", "Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.annadata",
+    "title": "Annadata",
+    "tags": ["project", "agriculture", "computer vision", "yolov8", "resnet", "gps", "sih"],
+    "roleTags": ["computer_vision", "robotics", "ai_ml", "full_stack"],
+    "priority": 10,
+    "content": "Annadata, also framed as AgriVision in resumes, is an agricultural AI platform built around an autonomous Agribot. It targets crop disease detection that reaches farmers in the field. The system uses a two-stage vision architecture: custom YOLO detection to localize infected leaf regions and ResNet-34 classification for disease labels, plus real-time YOLO weed detection, GPS-tagged asynchronous pipelines, and a rental platform with an Agribot live POV feed. The portfolio and resumes report 91 percent disease classification, 97 percent soil-health prediction, around 30 FPS video-stream inference, and Smart India Hackathon 2025 Grand Finale top 5 nationally in Robotics and Drones. Ranbir owned the vision stack and GPS-tagged async detection flow within the SIH team.",
+    "evidence": ["Projects section", "agri-monitor repository link", "Achievements section", "Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.craveconnect",
+    "title": "CraveConnect",
+    "tags": ["project", "machine learning", "explainability", "shap", "lime", "flask", "power bi"],
+    "roleTags": ["ai_ml", "data", "backend"],
+    "priority": 9,
+    "content": "CraveConnect, also framed as CraveIQ in resumes, is explainable customer intelligence for food-delivery membership upgrade prediction. Ranbir's team built it for Insightify 6.0 at IIM Lucknow. It uses about 2,000 customer records, 19 raw attributes, 4 engineered behavioral features, model benchmarking, and a selected Gradient Boosting classifier validated at 0.784 ROC-AUC, with XGBoost listed as part of the ML toolkit but not the shipped classifier. It includes SHAP global explanations, LIME local explanations, segmentation, Power BI dashboards, and a Flask scoring API. The portfolio reports 1st nationally in round one and 2nd in the ML case study at Insightify 6.0. Ranbir owned modeling, explainability, and serving within team DataQuants.",
+    "evidence": ["Projects section", "CraveConnect repository link", "Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.iamai_cms",
+    "title": "IAMAI Publishing Platform",
+    "tags": ["project", "cms", "next.js", "supabase", "postgres", "github actions", "netlify"],
+    "roleTags": ["full_stack", "backend", "software"],
+    "priority": 10,
+    "content": "IAMAI Publishing Platform is a full-stack CMS and content delivery system for the Internet and Mobile Association of India. Resume details say Ranbir engineered a CMS-managed public site with page blocks, eleven structured content collections, normalized Postgres schema, form APIs wired to Supabase Storage, Supabase authentication with password reset, user and permission management, role-based access control across CMS routes, modularized code, GitHub Actions production deployment to Netlify, and a scheduled smoke-test monitor for live deployment verification.",
+    "evidence": ["Supplied resumes", "GitHub public API", "IAMAI_CMS_Public repository"]
+  },
+  {
+    "id": "project.terraview",
+    "title": "TerraView indoor venue navigation",
+    "tags": ["project", "maps", "routing", "react", "vite", "graph algorithms", "navigation"],
+    "roleTags": ["full_stack", "software", "data"],
+    "priority": 9,
+    "content": "TerraView is an indoor venue navigation and multi-floor routing system described in supplied resumes. Ranbir modelled a convention centre as one routing graph over stall, amenity, gate, and lift-connector nodes so shortest-path search resolves routes across hall layouts and floors. Resume details say it was deployed for Global Fintech Fest at Jio World Centre, included exhibitor-name search over 393 mapped stalls and 225 companies, a pre-deploy validation script enforcing stall-to-company mapping, an admin authoring mode for routing metadata, and an offline-capable static bundle embeddable in Android and iOS WebViews.",
+    "evidence": ["Supplied resumes"]
+  },
+  {
+    "id": "project.reality360",
+    "title": "Reality360 real estate intelligence",
+    "tags": ["project", "real estate", "next.js", "supabase rls", "pgvector", "tool calling", "xai"],
+    "roleTags": ["full_stack", "ai_ml", "backend", "data"],
+    "priority": 8,
+    "content": "Reality360 is a multi-tenant real estate intelligence platform described in supplied resumes and represented by public GitHub repositories realty360-ai and EstateAI. Resume details say Ranbir built a Next.js and Supabase platform where tenant isolation is enforced by Postgres row-level security, listings are embedded for semantic search, and an assistant answers through tool calling against deterministic services for comparable-driven fair price scoring, ROI forecasting, and FOIR loan eligibility. The resumes frame it as explainable AI over valuation, where users can inspect comparables, adjustments, and market factors behind price and ROI estimates.",
+    "evidence": ["Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.ecoloop",
+    "title": "EcoLoop HVAC optimization agent",
+    "tags": ["project", "llm", "agents", "mcp", "energyplus", "hvac", "optimization"],
+    "roleTags": ["ai_ml", "data", "software"],
+    "priority": 8,
+    "content": "EcoLoop, represented publicly as energyplus-llm-hvac-agent and eco-loop-building-agents, is an LLM-driven autonomous HVAC optimization agent. Resume details say Ranbir engineered a closed-loop AI agent over a DOE reference building simulated in EnergyPlus. A local Qwen2.5-7B model reads zone temperature, humidity, Fanger PMV, occupancy, and power, then writes thermostat setpoints back into the running simulation. The resumes report electricity reduction from 158.9 kWh to 145.6 kWh, an 8.4 percent reduction over a matched 2-day window, while keeping about 88 percent of occupied-hour comfort readings inside the acceptable PMV band. The system exposes five control tools over Model Context Protocol.",
+    "evidence": ["Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.sentinelqa",
+    "title": "SentinelQA autonomous web testing agent",
+    "tags": ["project", "testing", "playwright", "chromium", "accessibility", "automation"],
+    "roleTags": ["software", "full_stack", "ai_ml"],
+    "priority": 8,
+    "content": "SentinelQA, represented publicly by the dogfood_tester repository, is an autonomous web testing and accessibility agent. Resume details say Ranbir built a browser agent that drives real Chromium through Playwright, explores sites, plans and executes safe UI actions from DOM and accessibility snapshots, watches console and network activity, captures screenshots, and emits human-readable and machine-readable QA and accessibility defect reports.",
+    "evidence": ["Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.appleq",
+    "title": "AppleQ produce quality classification",
+    "tags": ["project", "machine learning", "svc", "smote", "flask", "model evaluation"],
+    "roleTags": ["data", "ai_ml", "backend"],
+    "priority": 7,
+    "content": "AppleQ is a produce quality classification and model evaluation study represented publicly by apple_q_detection. Resume details say Ranbir ran null handling, identifier removal, scaler comparisons across RobustScaler, StandardScaler, and MinMaxScaler, SMOTE oversampling for class imbalance, RandomizedSearchCV tuning of an SVC, evaluation with precision, recall, F1, and confusion matrix, and a Flask scoring app returning per-prediction confidence.",
+    "evidence": ["Supplied resumes", "GitHub public API"]
+  },
+  {
+    "id": "project.other",
+    "title": "Other builds",
+    "tags": ["project", "full stack", "agents", "realtime", "dashboard"],
+    "roleTags": ["full_stack", "ai_ml", "data"],
+    "priority": 6,
+    "content": "Other portfolio and GitHub projects include ForgeAI, RecallAI, FieldOpsEnv, AEGIS, nlp-text-speech-pipeline, Basketeer, ShareKart, Smart Task Manager, Apple Quality Detection, Explainable Few-Shot, IAMAI CMS, EstateAI, and portfolio builds. These span agent workflows, visual retrieval, autonomous field-robotics benchmarking, auditable insurance decisioning, NLP lab tools, collaborative commerce, classical ML, research implementation, CMS architecture, dashboard UX, realtime shared carts, and full-stack task management.",
+    "evidence": ["Projects section", "GitHub public API"]
+  }
+]

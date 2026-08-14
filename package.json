@@ -1,0 +1,16 @@
+{
+  "name": "ranbir-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ranbir Kumar portfolio static site with a lightweight Node backend for contact and grounded portfolio chat.",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "PORT=8787 node server/index.js",
+    "test": "node --test server/backend.test.js",
+    "check": "node --check server/index.js && node --check script.js && node --check script.min.js",
+    "build:assets": "npx -y esbuild script.js --minify --outfile=script.min.js && npx -y esbuild styles.css --minify --outfile=styles.min.css"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

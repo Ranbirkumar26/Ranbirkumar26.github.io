@@ -1,0 +1,11 @@
+[
+  {
+    "id": "education.vit",
+    "title": "VIT Chennai",
+    "tags": ["education", "vit", "degree", "coursework"],
+    "roleTags": ["ai_ml", "computer_vision", "software", "data"],
+    "priority": 8,
+    "content": "Ranbir is pursuing B.Tech Computer Science with specialization in AI and ML at Vellore Institute of Technology, Chennai, from August 2023 to May 2027 expected. The portfolio and resumes list CGPA 8.28 out of 10. Relevant coursework across supplied resumes includes Data Structures and Algorithms, Machine Learning, Deep Learning, Reinforcement Learning, Explainable AI, Speech and NLP, Computer Vision, Machine Vision, Database Management and SQL, Probability and Statistics, Compiler Design, and Operating Systems concepts.",
+    "evidence": ["Education section", "Supplied resumes"]
+  }
+]

@@ -1,8 +1,17 @@
 # Working notes and dev harnesses, not for the public repo
 .claude/
+AGENTS.md
 CLAUDE.md
 PLACEHOLDERS.md
 _og-card.html
 _mobile-test.html
+brag-output-*/
 
 .DS_Store
+.env
+.env.local
+.env.*.local
+
+# Runtime backend state
+data/*
+!data/.gitkeep

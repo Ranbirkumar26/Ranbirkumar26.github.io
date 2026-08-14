@@ -17,6 +17,7 @@
   <meta name="twitter:description" content="Production RAG systems, real-time edge vision, autonomous rovers. SIH 2025 finalist, two papers under review.">
   <meta name="twitter:image" content="https://ranbirkumar26.github.io/assets/og.png">
   <meta name="theme-color" content="#0a0f1b">
+  <meta name="portfolio-api-base" content="">
   <link rel="canonical" href="https://ranbirkumar26.github.io/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202B41'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%238BA6F0' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +34,7 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="styles.min.css?v=21">
+  <link rel="stylesheet" href="styles.min.css?v=23">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1026,7 +1027,7 @@
         <span>Robotics Software</span>
         <span>RAG / Backend</span>
       </div>
-      <form class="contact-form" id="contactForm" data-contact-email="rk26.ftw@gmail.com" data-supabase-endpoint="https://qhnmoaqdvymgpfscqxcw.supabase.co/functions/v1/portfolio-contact" data-supabase-anon-key="sb_publishable_JeADQiZ89-YmHHCVND1sVg_PphilORB" novalidate>
+      <form class="contact-form" id="contactForm" data-contact-email="rk26.ftw@gmail.com" data-contact-endpoint="/api/contact" novalidate>
         <div class="contact-form-head">
           <h3>Message me</h3>
           <span class="mono">RK26 // inbox relay</span>
@@ -1075,6 +1076,60 @@
   </div>
 </footer>
 
+<section
+  class="chatbot"
+  id="chatbot"
+  data-chat-endpoint="/api/chat"
+  aria-label="Portfolio AI assistant"
+>
+  <div class="chat-nudge" id="chatNudge" hidden>
+    <button class="chat-nudge-close" id="chatNudgeClose" type="button" aria-label="Dismiss assistant prompt">X</button>
+    <p>Want to know more about Ranbir?</p>
+    <button class="btn btn-small btn-primary" id="chatNudgeTry" type="button">Try AI assistant</button>
+  </div>
+
+  <div class="chat-try-bubble mono" id="chatTryBubble" hidden>Try me. Ask anything about Ranbir.</div>
+
+  <button class="chat-launcher" id="chatLauncher" type="button" aria-label="Open portfolio AI assistant" aria-expanded="false" aria-controls="chatPanel">
+    <span class="chat-launcher-ring" aria-hidden="true"></span>
+    <span class="chat-launcher-core mono" aria-hidden="true">AI</span>
+    <span class="chat-launcher-text mono">Ask Ranbir</span>
+  </button>
+
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-labelledby="chatTitle" hidden>
+    <div class="chat-head">
+      <div>
+        <span class="chat-kicker mono">RK26 // portfolio assistant</span>
+        <h2 id="chatTitle">Ask about Ranbir</h2>
+      </div>
+      <div class="chat-head-actions">
+        <button class="chat-icon-btn" id="chatClear" type="button">Clear</button>
+        <button class="chat-icon-btn" id="chatClose" type="button" aria-label="Close portfolio AI assistant">X</button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+
+    <div class="chat-suggestions" id="chatSuggestions" aria-label="Suggested questions">
+      <button type="button">Why should I hire Ranbir?</button>
+      <button type="button">Why should I hire him for AI/ML?</button>
+      <button type="button">Why would he be good for Computer Vision?</button>
+      <button type="button">What are his strongest skills?</button>
+      <button type="button">Tell me about his internships.</button>
+      <button type="button">What projects has he worked on?</button>
+    </div>
+
+    <form class="chat-form" id="chatForm">
+      <label class="sr-only" for="chatInput">Ask a question about Ranbir</label>
+      <textarea id="chatInput" rows="2" maxlength="900" placeholder="Ask about Ranbir's projects, skills, experience, or role fit"></textarea>
+      <div class="chat-form-actions">
+        <p class="chat-status mono" id="chatStatus" role="status" aria-live="polite"></p>
+        <button class="btn btn-small btn-primary" type="submit">Send</button>
+      </div>
+    </form>
+  </div>
+</section>
+
 <div class="reticle" id="cursorRing" aria-hidden="true">
   <span class="ret-corner ret-tl"></span><span class="ret-corner ret-tr"></span>
   <span class="ret-corner ret-bl"></span><span class="ret-corner ret-br"></span>
@@ -1085,6 +1140,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.min.js?v=21"></script>
+<script src="script.min.js?v=23"></script>
 </body>
 </html>

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "achievement.sih",
+    "title": "Smart India Hackathon 2025 Grand Finalist",
+    "tags": ["achievement", "sih", "robotics", "competition"],
+    "roleTags": ["robotics", "computer_vision", "ai_ml"],
+    "priority": 10,
+    "content": "Ranbir was a Smart India Hackathon 2025 Grand Finalist. The portfolio states his team was top 5 nationally in the Robotics and Drones category out of 500 plus, after placing in the top 3 of nearly 800 teams at college level. Resume versions also list SIH 2025 Finalist as a selected achievement.",
+    "evidence": ["Achievements section", "Supplied resumes"]
+  },
+  {
+    "id": "achievement.robocon",
+    "title": "DD Robocon AIR 1 Round 1",
+    "tags": ["achievement", "robocon", "robotics"],
+    "roleTags": ["robotics"],
+    "priority": 10,
+    "content": "Ranbir's team achieved DD Robocon All-India Rank 1 in Round 1 with a perfect 100 out of 100 in stage one, as part of the team's basketball-playing robot campaign. Resume versions list this as All-India Rank 1, DD Robocon Round 1.",
+    "evidence": ["Achievements section", "Robotics section", "Supplied resumes"]
+  },
+  {
+    "id": "achievement.irc",
+    "title": "International Rover Challenge",
+    "tags": ["achievement", "irc", "rover", "robotics"],
+    "roleTags": ["robotics"],
+    "priority": 10,
+    "content": "Ranbir's team placed 20th worldwide at International Rover Challenge 2025 among more than 100 applicant teams, and is a finalist again for IRC 2026.",
+    "evidence": ["Achievements section", "Robotics section", "Supplied resumes"]
+  },
+  {
+    "id": "achievement.insightify",
+    "title": "Insightify 6.0 National Finalist",
+    "tags": ["achievement", "analytics", "machine learning", "iim lucknow"],
+    "roleTags": ["ai_ml", "data"],
+    "priority": 8,
+    "content": "At Insightify 6.0, IIM Lucknow's analytics competition, Ranbir's team DataQuants was a national finalist, ranked 1st nationally in the analysis round, and ranked 2nd in the ML case-study round.",
+    "evidence": ["Achievements section", "CraveConnect project", "Supplied resumes"]
+  },
+  {
+    "id": "achievement.certifications",
+    "title": "Certifications",
+    "tags": ["certification", "cisco", "ibm"],
+    "roleTags": ["software", "ai_ml"],
+    "priority": 5,
+    "content": "The portfolio and resumes list certifications including Cisco Networking Academy Network Support and Security, additional NetAcad certificate links, IBM SkillsBuild Getting Started with Artificial Intelligence, and IBM SkillsBuild Journey to Cloud: Envisioning Your Solution.",
+    "evidence": ["Achievements section", "Supplied resumes"]
+  }
+]

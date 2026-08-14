@@ -1,0 +1,38 @@
+[
+  {
+    "id": "experience.iamai",
+    "title": "IAMAI internship",
+    "tags": ["experience", "internship", "testing", "gis", "product"],
+    "roleTags": ["full_stack", "data", "software"],
+    "priority": 9,
+    "content": "Ranbir was a Software Testing and Product Development Intern at the Internet and Mobile Association of India (IAMAI), on-site in Delhi, May 2026 to July 2026. He worked on product development, software testing, and GIS mapping systems. Resume details include an autonomous browser-testing agent using Playwright and Chromium, safe UI action planning from DOM and accessibility snapshots, console and network monitoring, machine-readable defect reports, k6 load, stress, and spike testing, Burp Suite security testing, level-of-detail visualization, feature validation, and pre-release reliability reporting.",
+    "evidence": ["Experience section", "Supplied resumes"]
+  },
+  {
+    "id": "experience.iora",
+    "title": "iora founder office technology and AI",
+    "tags": ["experience", "embedded", "product", "founders office", "ai"],
+    "roleTags": ["embedded", "ai_ml", "product"],
+    "priority": 9,
+    "content": "Ranbir works at iora in Founder's Office, Technology and AI, remote, August 2025 to present. Resume versions also use Technical Integration Lead from May 2026 onward. The portfolio describes iora as a safety-tech wearable startup. He owns technical integration for an nRF9151 LTE-M/NB-IoT safety wearable, driving architecture reviews across PCB, firmware, MQTT over TLS, GNSS, flash-buffered telemetry, power subsystems, and coordination between hardware, firmware, app teams, and founders. He also architected and shipped iORA DocQA, the company's RAG document-intelligence platform.",
+    "evidence": ["Experience section", "Supplied resumes"]
+  },
+  {
+    "id": "experience.proeffico",
+    "title": "Proeffico computer vision internship",
+    "tags": ["experience", "computer vision", "edge ai", "jetson", "internship"],
+    "roleTags": ["computer_vision", "embedded", "ai_ml"],
+    "priority": 10,
+    "content": "Ranbir was a Computer Vision Engineer Intern at Proeffico Solutions in Noida from May to October 2025, on site from May to July and remote from August to October. He designed, optimized, profiled, benchmarked, and deployed four production computer vision pipelines: speed monitoring, pothole detection, fire detection, and workplace safety analytics. The pipelines ran on NVIDIA Jetson Xavier NX at under 40 ms real-time inference latency and replaced manual monitoring with automated real-time decisions in client workflows.",
+    "evidence": ["Experience section", "Hero proof rail", "Supplied resumes"]
+  },
+  {
+    "id": "experience.robotics",
+    "title": "Technocrats Robotics rover lead",
+    "tags": ["experience", "robotics", "rover", "autonomy", "leadership"],
+    "roleTags": ["robotics", "computer_vision", "embedded", "leadership"],
+    "priority": 10,
+    "content": "Ranbir is Team Lead, Rover at Technocrats Robotics, VIT Chennai, from August 2025 to present, after joining as a member in March 2024. Resume details say he leads the rover perception and autonomy stack across Raspberry Pi and an i7 mini-PC, including CV-based soil classification, autonomous arrow-marker detection under rough terrain, and an end-effector camera pipeline for tool identification and autonomous approach. The team achieved All-India Rank 1 in DD Robocon Round 1, 20th worldwide at IRC 2025 among 100 plus teams, and IRC 2026 finalist status.",
+    "evidence": ["Robotics section", "Achievements section", "Supplied resumes"]
+  }
+]

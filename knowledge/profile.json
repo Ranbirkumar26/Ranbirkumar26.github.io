@@ -1,0 +1,47 @@
+[
+  {
+    "id": "profile.summary",
+    "title": "Profile summary",
+    "tags": ["profile", "about", "ai", "robotics", "rag", "computer vision"],
+    "roleTags": ["ai_ml", "computer_vision", "robotics", "full_stack", "research"],
+    "priority": 10,
+    "content": "Ranbir Kumar is a B.Tech Computer Science student specializing in AI and ML at VIT Chennai, 2023 to 2027, with CGPA 8.28 out of 10. His portfolio and resumes position him around intelligent systems that leave the notebook: production RAG products, real-time edge vision, rover autonomy, full-stack systems, data products, and research-backed AI.",
+    "evidence": ["Portfolio hero", "About section", "Education section", "Supplied resumes"]
+  },
+  {
+    "id": "profile.focus",
+    "title": "Current focus",
+    "tags": ["profile", "focus", "current"],
+    "roleTags": ["ai_ml", "computer_vision", "robotics", "embedded"],
+    "priority": 9,
+    "content": "Ranbir's current focus areas are AI systems, LLM and RAG products, computer vision, machine learning, robotics, embedded product work, rover autonomy, backend systems, data engineering, and full-stack product delivery.",
+    "evidence": ["About facts panel", "Hero domain strip", "Supplied resumes"]
+  },
+  {
+    "id": "profile.offhours",
+    "title": "Off-hours",
+    "tags": ["profile", "personal"],
+    "roleTags": [],
+    "priority": 3,
+    "content": "Off the clock, Ranbir mentions gym, cricket, and cooking. The portfolio ties the food interest to CraveConnect and ShareKart, two food or commerce related projects. Do not expand this into private personal claims.",
+    "evidence": ["About section"]
+  },
+  {
+    "id": "profile.public_links",
+    "title": "Public profile links",
+    "tags": ["profile", "github", "linkedin", "public links"],
+    "roleTags": ["software", "ai_ml", "full_stack"],
+    "priority": 7,
+    "content": "Ranbir's public GitHub profile is github.com/Ranbirkumar26. The user also provided LinkedIn profile URL linkedin.com/in/ranbir-kumar-a705551b5. Treat these as public profile links only; do not infer private facts from them.",
+    "evidence": ["User-provided GitHub URL", "User-provided LinkedIn URL", "GitHub public API"]
+  },
+  {
+    "id": "profile.github_overview",
+    "title": "GitHub public profile overview",
+    "tags": ["github", "repositories", "public code", "portfolio"],
+    "roleTags": ["software", "ai_ml", "full_stack", "data", "robotics"],
+    "priority": 8,
+    "content": "Ranbir's GitHub public bio says he is an AI/ML plus Robotics Engineer building RAG systems, computer vision pipelines, and autonomous field robotics tools. The public profile currently shows 25 public repositories, including portfolio, iORA DocQA, SemantiCache, agri-monitor, craveconnect, IAMAI_CMS_Public, forgeAI, RecallAI, fieldopsenv-openenv, energyplus-llm-hvac-agent, smart-task-manager, apple_q_detection, sharekart, basketeer, and other builds.",
+    "evidence": ["GitHub public API", "User-provided GitHub URL"]
+  }
+]

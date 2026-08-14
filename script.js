@@ -618,8 +618,29 @@
     }
   }
 
-  /* ----- Contact relay: if a Supabase Edge Function URL is configured on
-     the form, post there; otherwise fall back to a prefilled email. ----- */
+  function portfolioApiBase() {
+    if (window.RK_API_BASE) return String(window.RK_API_BASE).replace(/\/$/, "");
+    var meta = document.querySelector('meta[name="portfolio-api-base"]');
+    return meta ? String(meta.getAttribute("content") || "").replace(/\/$/, "") : "";
+  }
+
+  function resolvePortfolioEndpoint(endpoint) {
+    var cleanEndpoint = String(endpoint || "").trim();
+    if (!cleanEndpoint) return "";
+    if (/^https?:\/\//i.test(cleanEndpoint)) return cleanEndpoint;
+    if (cleanEndpoint.charAt(0) === "/") return portfolioApiBase() + cleanEndpoint;
+    return cleanEndpoint;
+  }
+
+  function portfolioApiError(body, fallback) {
+    if (body && body.error && typeof body.error === "object" && body.error.message) return body.error.message;
+    if (body && typeof body.error === "string") return body.error;
+    if (body && body.message) return body.message;
+    return fallback;
+  }
+
+  /* ----- Contact relay: post to the portfolio backend if configured;
+     otherwise fall back to a prefilled email. ----- */
   var contactForm = document.getElementById("contactForm");
   if (contactForm) {
     var contactStatus = document.getElementById("contactStatus");
@@ -678,8 +699,7 @@
         return;
       }
 
-      var endpoint = cleanContactValue(contactForm.getAttribute("data-supabase-endpoint"));
-      var anonKey = cleanContactValue(contactForm.getAttribute("data-supabase-anon-key"));
+      var endpoint = resolvePortfolioEndpoint(contactForm.getAttribute("data-contact-endpoint"));
       if (!endpoint) {
         setContactStatus("Opening a prefilled email...");
         openEmailFallback(payload);
@@ -687,10 +707,6 @@
       }
 
       var headers = { "Content-Type": "application/json" };
-      if (anonKey) {
-        headers.apikey = anonKey;
-        headers.Authorization = "Bearer " + anonKey;
-      }
       if (contactButton) contactButton.disabled = true;
       setContactStatus("Sending...");
 
@@ -700,7 +716,14 @@
         body: JSON.stringify(payload)
       })
         .then(function (response) {
-          if (!response.ok) throw new Error("Contact endpoint returned " + response.status);
+          return response.json().catch(function () {
+            return { ok: response.ok };
+          }).then(function (body) {
+            if (!response.ok || body.ok === false) throw new Error(portfolioApiError(body, "Contact endpoint returned " + response.status));
+            return body;
+          });
+        })
+        .then(function () {
           contactForm.reset();
           setContactStatus("Message sent. I will reply soon.");
         })
@@ -712,6 +735,328 @@
           if (contactButton) contactButton.disabled = false;
         });
     });
+  }
+
+  /* ----- Portfolio AI assistant ----- */
+  var chatbot = document.getElementById("chatbot");
+  if (chatbot) {
+    var chatLauncher = document.getElementById("chatLauncher");
+    var chatPanel = document.getElementById("chatPanel");
+    var chatClose = document.getElementById("chatClose");
+    var chatClear = document.getElementById("chatClear");
+    var chatForm = document.getElementById("chatForm");
+    var chatInput = document.getElementById("chatInput");
+    var chatMessages = document.getElementById("chatMessages");
+    var chatSuggestions = document.getElementById("chatSuggestions");
+    var chatStatus = document.getElementById("chatStatus");
+    var chatNudge = document.getElementById("chatNudge");
+    var chatNudgeClose = document.getElementById("chatNudgeClose");
+    var chatNudgeTry = document.getElementById("chatNudgeTry");
+    var chatTryBubble = document.getElementById("chatTryBubble");
+    var chatMemory = {};
+    var chatSending = false;
+    var chatLastQuestion = "";
+    var chatTypingEl = null;
+    var chatKeys = {
+      messages: "rk_chat_conversation",
+      id: "rk_chat_conversation_id",
+      intro: "rk_chat_intro_shown",
+      prompt: "rk_chat_prompt_dismissed",
+      last: "rk_chat_last_active"
+    };
+    var chatIntro =
+      "Hey. I am Ranbir's portfolio assistant. Ask me about his skills, projects, experience, education, or which roles he could fit.";
+    var chatFallback = "I am having trouble connecting to my AI service right now. Please try again in a moment.";
+    var chatMaxMessages = 40;
+    var chatTtl = 14 * 24 * 60 * 60 * 1000;
+
+    function chatStoreGet(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch (e) {
+        return chatMemory[key] || null;
+      }
+    }
+
+    function chatStoreSet(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (e) {
+        chatMemory[key] = value;
+      }
+    }
+
+    function chatStoreRemove(key) {
+      try {
+        window.localStorage.removeItem(key);
+      } catch (e) {
+        delete chatMemory[key];
+      }
+    }
+
+    function chatId() {
+      var existing = chatStoreGet(chatKeys.id);
+      if (existing) return existing;
+      var next = "rk_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 12);
+      chatStoreSet(chatKeys.id, next);
+      return next;
+    }
+
+    function loadChatMessages() {
+      var last = Number(chatStoreGet(chatKeys.last) || 0);
+      if (last && Date.now() - last > chatTtl) {
+        chatStoreRemove(chatKeys.messages);
+        chatStoreRemove(chatKeys.id);
+        chatStoreRemove(chatKeys.intro);
+        chatStoreRemove(chatKeys.last);
+        return [];
+      }
+
+      try {
+        var parsed = JSON.parse(chatStoreGet(chatKeys.messages) || "[]");
+        if (!Array.isArray(parsed)) return [];
+        return parsed
+          .filter(function (item) {
+            return item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string";
+          })
+          .slice(-chatMaxMessages);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveChatMessages(messages) {
+      chatStoreSet(chatKeys.messages, JSON.stringify(messages.slice(-chatMaxMessages)));
+      chatStoreSet(chatKeys.last, String(Date.now()));
+    }
+
+    var chatState = {
+      messages: loadChatMessages()
+    };
+
+    function setChatStatus(message) {
+      if (chatStatus) chatStatus.textContent = message || "";
+    }
+
+    function addChatMessage(role, content, options) {
+      chatState.messages.push({
+        role: role,
+        content: String(content || "").slice(0, 3000),
+        error: Boolean(options && options.error),
+        retry: Boolean(options && options.retry)
+      });
+      chatState.messages = chatState.messages.slice(-chatMaxMessages);
+      saveChatMessages(chatState.messages);
+      renderChatMessages();
+    }
+
+    function showIntroOnce() {
+      if (chatStoreGet(chatKeys.intro) === "true") return;
+      if (chatState.messages.length) {
+        chatStoreSet(chatKeys.intro, "true");
+        return;
+      }
+      addChatMessage("assistant", chatIntro);
+      chatStoreSet(chatKeys.intro, "true");
+    }
+
+    function renderChatMessages() {
+      if (!chatMessages) return;
+      chatMessages.innerHTML = "";
+      chatState.messages.forEach(function (message) {
+        var row = document.createElement("div");
+        row.className = "chat-msg chat-msg-" + message.role + (message.error ? " chat-msg-error" : "");
+        row.textContent = message.content;
+        if (message.retry) {
+          var retry = document.createElement("button");
+          retry.type = "button";
+          retry.className = "chat-retry mono";
+          retry.textContent = "Retry";
+          retry.setAttribute("data-chat-retry", "true");
+          row.appendChild(document.createElement("br"));
+          row.appendChild(retry);
+        }
+        chatMessages.appendChild(row);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+      if (!chatMessages || chatTypingEl) return;
+      chatTypingEl = document.createElement("div");
+      chatTypingEl.className = "chat-msg chat-msg-assistant chat-typing";
+      chatTypingEl.innerHTML = "<span></span><span></span><span></span>";
+      chatMessages.appendChild(chatTypingEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideTyping() {
+      if (chatTypingEl && chatTypingEl.parentNode) chatTypingEl.parentNode.removeChild(chatTypingEl);
+      chatTypingEl = null;
+    }
+
+    function chatHistoryForApi() {
+      return chatState.messages
+        .filter(function (message) {
+          return !message.error && (message.role === "user" || message.role === "assistant");
+        })
+        .slice(-13, -1)
+        .map(function (message) {
+          return { role: message.role, content: message.content };
+        });
+    }
+
+    function openChat(showBubble) {
+      if (!chatPanel || !chatLauncher) return;
+      chatPanel.hidden = false;
+      chatLauncher.setAttribute("aria-expanded", "true");
+      if (chatNudge) chatNudge.hidden = true;
+      showIntroOnce();
+      renderChatMessages();
+      if (chatInput) setTimeout(function () { chatInput.focus(); }, 50);
+      if (showBubble && chatTryBubble) {
+        chatTryBubble.hidden = false;
+        setTimeout(function () { chatTryBubble.hidden = true; }, 4500);
+      }
+    }
+
+    function closeChat() {
+      if (!chatPanel || !chatLauncher) return;
+      chatPanel.hidden = true;
+      chatLauncher.setAttribute("aria-expanded", "false");
+      if (chatTryBubble) chatTryBubble.hidden = true;
+    }
+
+    function clearChat() {
+      chatState.messages = [];
+      chatStoreRemove(chatKeys.messages);
+      chatStoreRemove(chatKeys.id);
+      chatStoreRemove(chatKeys.intro);
+      chatStoreSet(chatKeys.last, String(Date.now()));
+      chatId();
+      showIntroOnce();
+      renderChatMessages();
+      setChatStatus("Conversation cleared.");
+    }
+
+    function sendChatQuestion(question, retrying) {
+      var text = String(question || "").trim();
+      if (!text || chatSending) return;
+      if (text.length > 900) {
+        setChatStatus("Keep questions under 900 characters.");
+        return;
+      }
+
+      chatSending = true;
+      chatLastQuestion = text;
+      setChatStatus("Thinking...");
+      if (!retrying) addChatMessage("user", text);
+      showTyping();
+
+      var endpoint = resolvePortfolioEndpoint(chatbot.getAttribute("data-chat-endpoint"));
+      var headers = { "Content-Type": "application/json" };
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          conversationId: chatId(),
+          message: text,
+          history: chatHistoryForApi()
+        })
+      })
+        .then(function (response) {
+          return response.json().catch(function () {
+            return { ok: false, error: chatFallback };
+          }).then(function (body) {
+            if (!response.ok || !body.ok) {
+              var safeError = new Error(portfolioApiError(body, chatFallback));
+              safeError.safeChatError = true;
+              throw safeError;
+            }
+            return body;
+          });
+        })
+        .then(function (body) {
+          hideTyping();
+          addChatMessage("assistant", body.answer || chatFallback);
+          setChatStatus("");
+        })
+        .catch(function (error) {
+          hideTyping();
+          addChatMessage("assistant", error && error.safeChatError ? error.message : chatFallback, { error: true, retry: true });
+          setChatStatus("Connection issue. Retry when ready.");
+        })
+        .finally(function () {
+          chatSending = false;
+          if (chatInput) chatInput.value = "";
+        });
+    }
+
+    renderChatMessages();
+    chatId();
+
+    if (chatLauncher) {
+      chatLauncher.addEventListener("click", function () {
+        if (chatPanel && !chatPanel.hidden) closeChat();
+        else openChat(false);
+      });
+    }
+    if (chatClose) chatClose.addEventListener("click", closeChat);
+    if (chatClear) chatClear.addEventListener("click", clearChat);
+    if (chatForm) {
+      chatForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        sendChatQuestion(chatInput ? chatInput.value : "", false);
+      });
+    }
+    if (chatInput) {
+      chatInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendChatQuestion(chatInput.value, false);
+        }
+      });
+    }
+    if (chatSuggestions) {
+      chatSuggestions.addEventListener("click", function (e) {
+        if (e.target && e.target.tagName === "BUTTON") {
+          openChat(false);
+          sendChatQuestion(e.target.textContent, false);
+        }
+      });
+    }
+    if (chatMessages) {
+      chatMessages.addEventListener("click", function (e) {
+        var target = e.target;
+        if (target && target.getAttribute && target.getAttribute("data-chat-retry") === "true") {
+          sendChatQuestion(chatLastQuestion, true);
+        }
+      });
+    }
+
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && chatPanel && !chatPanel.hidden) closeChat();
+    });
+
+    if (chatNudgeClose) {
+      chatNudgeClose.addEventListener("click", function () {
+        chatStoreSet(chatKeys.prompt, "true");
+        if (chatNudge) chatNudge.hidden = true;
+      });
+    }
+    if (chatNudgeTry) {
+      chatNudgeTry.addEventListener("click", function () {
+        chatStoreSet(chatKeys.prompt, "true");
+        openChat(true);
+      });
+    }
+    if (chatStoreGet(chatKeys.prompt) !== "true") {
+      setTimeout(function () {
+        if (document.hidden || (chatPanel && !chatPanel.hidden)) return;
+        if (chatNudge) chatNudge.hidden = false;
+      }, 15000);
+    }
   }
 
   /* ----- Mobile menu ----- */
