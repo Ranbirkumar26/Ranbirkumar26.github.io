@@ -130,16 +130,18 @@ test("portfolio backend APIs", async (t) => {
     assert.match(clarify.body.answer, /What role are you considering Ranbir for/);
   });
 
-  await t.test("chat returns graceful unavailable when no providers configured", async () => {
+  await t.test("chat returns grounded fallback when no providers configured", async () => {
     process.env.CHAT_PROVIDER_ORDER = "99";
-    const unavailable = await postJson(app.baseUrl, "/api/chat", {
+    const fallback = await postJson(app.baseUrl, "/api/chat", {
       conversationId: "provider_missing_test_123",
       message: "Why should I hire him for AI/ML?",
       history: [],
     });
-    assert.equal(unavailable.status, 503);
-    assert.equal(unavailable.body.error.code, "providers_unavailable");
-    assert.ok(!JSON.stringify(unavailable.body).includes("AI_API_KEY"));
+    assert.equal(fallback.status, 200);
+    assert.equal(fallback.body.ok, true);
+    assert.equal(fallback.body.fallback, true);
+    assert.match(fallback.body.answer, /Role-fit evidence/);
+    assert.ok(!JSON.stringify(fallback.body).includes("AI_API_KEY"));
   });
 
   await t.test("provider chain falls through failed provider to next provider", async (subtest) => {

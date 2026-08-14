@@ -454,6 +454,75 @@ function buildContext(items) {
   ].join("\n")).join("\n\n");
 }
 
+function knowledgeById(id) {
+  return knowledgeItems.find((item) => item.id === id);
+}
+
+function firstSentence(text) {
+  return clean(String(text || "").split(/(?<=[.!?])\s+/)[0], 420);
+}
+
+function projectFallback() {
+  const projects = knowledgeItems.filter((item) => String(item.id || "").startsWith("project.")).slice(0, 8);
+  if (!projects.length) return null;
+  return [
+    "Ranbir has worked on:",
+    ...projects.map((item) => `- ${item.title}: ${firstSentence(item.content)}`),
+  ].join("\n");
+}
+
+function experienceFallback() {
+  const experiences = knowledgeItems.filter((item) => String(item.id || "").startsWith("experience.")).slice(0, 5);
+  if (!experiences.length) return null;
+  return [
+    "Ranbir's portfolio context lists these experience areas:",
+    ...experiences.map((item) => `- ${item.title}: ${firstSentence(item.content)}`),
+  ].join("\n");
+}
+
+function skillsFallback() {
+  const skills = knowledgeItems.filter((item) => String(item.id || "").startsWith("skills.")).slice(0, 6);
+  if (!skills.length) return null;
+  return [
+    "Ranbir's strongest evidence-backed skill areas are:",
+    ...skills.map((item) => `- ${item.title}: ${firstSentence(item.content)}`),
+  ].join("\n");
+}
+
+function hireFallback(message, contextItems) {
+  const roleTags = roleTagsFor(message);
+  if (!roleTags.size) return "What role are you considering Ranbir for: AI/ML, Computer Vision, Software Development, Data Science, Robotics, Embedded AI, Research, or something else?";
+  const evidence = contextItems
+    .filter((item) => !String(item.id || "").startsWith("policy."))
+    .slice(0, 5)
+    .map((item) => `- ${item.title}: ${firstSentence(item.content)}`);
+  if (!evidence.length) return UNKNOWN_ANSWER;
+  return ["Role-fit evidence from Ranbir's portfolio context:", ...evidence].join("\n");
+}
+
+function deterministicFallbackAnswer(message, contextItems) {
+  const query = normalize(message);
+  if (isPromptInjectionAttempt(message)) return INJECTION_WARNING;
+  if (isPrivatePersonalQuestion(message)) return PRIVACY_WARNING;
+  if (isHiringQuestion(message)) return hireFallback(message, contextItems);
+  if (/video resume|video|watch.*resume/.test(query)) {
+    const item = knowledgeById("profile.video_resume");
+    return item ? `${firstSentence(item.content)} Open it at #video-resume on the portfolio.` : "Open the Video Resume section at #video-resume on the portfolio.";
+  }
+  if (/project|projects|worked on|built|builds|build/.test(query)) return projectFallback();
+  if (/internship|experience|work history|where.*worked|worked at/.test(query)) return experienceFallback();
+  if (/skill|skills|strongest|tech stack|technologies|tools/.test(query)) return skillsFallback();
+  if (/education|college|cgpa|degree|vit/.test(query)) {
+    const item = knowledgeById("education.vit");
+    return item ? firstSentence(item.content) : UNKNOWN_ANSWER;
+  }
+  if (/research|paper|publication|patent/.test(query)) {
+    const items = knowledgeItems.filter((item) => String(item.id || "").startsWith("research.")).slice(0, 4);
+    return items.length ? ["Ranbir's research and patent context:", ...items.map((item) => `- ${item.title}: ${firstSentence(item.content)}`)].join("\n") : UNKNOWN_ANSWER;
+  }
+  return UNKNOWN_ANSWER;
+}
+
 function systemPrompt(context) {
   return [
     "You are Ranbir Kumar's professional portfolio assistant.",
@@ -639,7 +708,7 @@ async function handleChat(req, res) {
     if (process.env.CHAT_DEBUG_CONTEXT === "true") body.usedContextIds = contextItems.map((item) => item.id);
     ok(res, body);
   } catch (_error) {
-    fail(res, 503, "providers_unavailable", FRIENDLY_ERROR);
+    ok(res, { answer: deterministicFallbackAnswer(message, contextItems), fallback: true });
   }
 }
 
