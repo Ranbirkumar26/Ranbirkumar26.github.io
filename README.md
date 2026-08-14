@@ -3,6 +3,8 @@
 Personal portfolio of Ranbir Kumar: AI systems, RAG pipelines, computer vision
 and robotics.
 
+[Watch Video Resume](https://ranbirkumar26.github.io/#video-resume)
+
 Plain HTML, CSS and JavaScript on the frontend. The contact form and portfolio
 RAG assistant use a small zero-dependency Node backend in `server/`.
 

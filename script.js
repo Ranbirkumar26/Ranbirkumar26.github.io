@@ -349,6 +349,73 @@
     onTimelineScroll();
   }
 
+  /* ----- Video resume: native controls, custom mute toggle, no background playback ----- */
+  var videoResume = document.getElementById("videoResume");
+  var videoMuteToggle = document.getElementById("videoMuteToggle");
+  if (videoResume) {
+    var shouldResumeVideo = false;
+    var videoVisible = false;
+    var pausingForVisibility = false;
+
+    function syncVideoMuteState() {
+      if (!videoMuteToggle) return;
+      videoMuteToggle.textContent = videoResume.muted ? "Muted" : "Sound on";
+      videoMuteToggle.setAttribute("aria-pressed", videoResume.muted ? "true" : "false");
+    }
+
+    function tryResumeVideo() {
+      if (!shouldResumeVideo || !videoVisible || document.hidden || !videoResume.muted || videoResume.ended) return;
+      videoResume.play().catch(function () {});
+    }
+
+    function pauseVideoForVisibility() {
+      if (videoResume.paused) return;
+      pausingForVisibility = true;
+      shouldResumeVideo = true;
+      videoResume.pause();
+      pausingForVisibility = false;
+    }
+
+    if (videoMuteToggle) {
+      videoMuteToggle.addEventListener("click", function () {
+        videoResume.muted = !videoResume.muted;
+        syncVideoMuteState();
+      });
+    }
+
+    videoResume.addEventListener("volumechange", syncVideoMuteState);
+    videoResume.addEventListener("play", function () {
+      shouldResumeVideo = true;
+    });
+    videoResume.addEventListener("pause", function () {
+      if (!pausingForVisibility) shouldResumeVideo = false;
+    });
+    videoResume.addEventListener("ended", function () {
+      shouldResumeVideo = false;
+    });
+
+    if ("IntersectionObserver" in window) {
+      var videoIO = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            videoVisible = entry.isIntersecting;
+            if (videoVisible) tryResumeVideo();
+            else pauseVideoForVisibility();
+          });
+        },
+        { threshold: 0.45 }
+      );
+      videoIO.observe(videoResume);
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) pauseVideoForVisibility();
+      else tryResumeVideo();
+    });
+
+    syncVideoMuteState();
+  }
+
   /* ----- Demo pre-warm: SemantiCache (Streamlit + Render API) and
      CraveConnect (Render) all sleep on free tiers. Pinging a project's
      stack when its card scrolls into view (and again on hover/click) means

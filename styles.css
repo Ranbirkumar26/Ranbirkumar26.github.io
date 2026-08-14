@@ -483,6 +483,117 @@ ul { list-style: none; }
 .fact-row span:last-child { color: var(--text-muted); }
 .fact-strong { background: color-mix(in srgb, var(--surface-2) 80%, var(--amber) 4%); }
 
+/* ---------- Video resume ---------- */
+
+.video-resume-section {
+  position: relative;
+}
+
+.video-resume-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.video-resume-player {
+  padding: 14px;
+  overflow: hidden;
+}
+
+.video-frame {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px 4px 12px 4px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(217, 160, 63, 0.08), transparent 44%),
+    var(--brand-navy);
+}
+
+.video-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.video-frame::after {
+  content: "VIDEO RESUME";
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  color: var(--amber);
+  border: 1px solid rgba(217, 160, 63, 0.36);
+  background: rgba(7, 11, 19, 0.68);
+  border-radius: 999px;
+  padding: 5px 9px;
+  pointer-events: none;
+}
+
+.portfolio-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 480 / 438;
+  max-height: min(70vh, 620px);
+  object-fit: contain;
+  background: #050812;
+  position: relative;
+  z-index: 0;
+}
+
+.video-mute-toggle {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  z-index: 3;
+  border: 1px solid rgba(217, 160, 63, 0.45);
+  background: rgba(7, 11, 19, 0.74);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.video-mute-toggle:hover,
+.video-mute-toggle:focus-visible {
+  color: var(--amber);
+  border-color: var(--amber);
+  background: rgba(7, 11, 19, 0.88);
+}
+
+.video-resume-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.video-note-kicker {
+  color: var(--amber);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.video-resume-notes h3 {
+  font-size: clamp(1.28rem, 2.6vw, 1.72rem);
+}
+
 /* ---------- Experience timeline ---------- */
 
 .timeline {
@@ -1751,6 +1862,7 @@ html.scene-paused .project-scene::after {
   .hero { padding-top: 130px; }
   .hero-sub { min-height: 5.4em; }
   .about-grid { grid-template-columns: 1fr; }
+  .video-resume-grid { grid-template-columns: 1fr; align-items: stretch; }
   .project, .project-flip { grid-template-columns: 1fr; gap: 24px; }
   .project-flip .project-media { order: 0; }
   .robotics-grid { grid-template-columns: 1fr; }
@@ -1781,6 +1893,10 @@ html.scene-paused .project-scene::after {
 
 @media (max-width: 760px) {
   .section { padding: 72px 0; }
+  .video-resume-player { padding: 10px; }
+  .video-frame::after { top: 10px; left: 10px; font-size: 0.58rem; }
+  .video-mute-toggle { top: 10px; right: 10px; padding: 6px 9px; }
+  .portfolio-video { max-height: 72vh; }
   .ach { grid-template-columns: 64px 1fr; gap: 12px; }
   .contact-form { padding: 20px; }
   .contact-form-head { align-items: start; flex-direction: column; gap: 6px; }
