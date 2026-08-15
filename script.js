@@ -688,7 +688,10 @@
   function portfolioApiBase() {
     if (window.RK_API_BASE) return String(window.RK_API_BASE).replace(/\/$/, "");
     var meta = document.querySelector('meta[name="portfolio-api-base"]');
-    return meta ? String(meta.getAttribute("content") || "").replace(/\/$/, "") : "";
+    var configured = meta ? String(meta.getAttribute("content") || "").replace(/\/$/, "") : "";
+    if (configured) return configured;
+    if (location.hostname === "ranbirkumar26.github.io") return "https://ranbir-portfolio-backend.onrender.com";
+    return "";
   }
 
   function resolvePortfolioEndpoint(endpoint) {
@@ -886,6 +889,9 @@
           .filter(function (item) {
             return item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string";
           })
+          .filter(function (item) {
+            return !item.error && item.content !== chatFallback && item.content !== "Failed to fetch";
+          })
           .slice(-chatMaxMessages);
       } catch (e) {
         return [];
@@ -900,6 +906,7 @@
     var chatState = {
       messages: loadChatMessages()
     };
+    saveChatMessages(chatState.messages);
 
     function setChatStatus(message) {
       if (chatStatus) chatStatus.textContent = message || "";
