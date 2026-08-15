@@ -95,7 +95,16 @@ function fail(res, status, code, message, extraHeaders = {}) {
 function applyCors(req, res) {
   const allowed = (process.env.ALLOWED_ORIGINS || "*").split(",").map((item) => item.trim()).filter(Boolean);
   const origin = req.headers.origin;
-  const allowOrigin = allowed.includes("*") ? "*" : allowed.includes(origin) ? origin : "";
+  const allowLocalOrigin = (() => {
+    if (origin === "null") return true;
+    try {
+      const parsed = new URL(origin || "");
+      return ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
+    } catch (_error) {
+      return false;
+    }
+  })();
+  const allowOrigin = allowed.includes("*") ? "*" : allowed.includes(origin) || allowLocalOrigin ? origin : "";
   if (allowOrigin) res.setHeader("Access-Control-Allow-Origin", allowOrigin);
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "content-type, authorization, x-admin-token");

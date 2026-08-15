@@ -53,6 +53,21 @@ async function getJson(baseUrl, route, headers = {}) {
   };
 }
 
+async function corsPreflight(baseUrl, origin) {
+  const response = await fetch(`${baseUrl}/api/chat`, {
+    method: "OPTIONS",
+    headers: {
+      Origin: origin,
+      "Access-Control-Request-Method": "POST",
+      "Access-Control-Request-Headers": "content-type",
+    },
+  });
+  return {
+    status: response.status,
+    allowOrigin: response.headers.get("access-control-allow-origin"),
+  };
+}
+
 test("portfolio backend APIs", async (t) => {
   const app = await listen(requestHandler);
   t.after(() => app.server.close());
@@ -65,6 +80,30 @@ test("portfolio backend APIs", async (t) => {
     assert.equal(result.body.status, "ok");
     assert.equal(typeof result.body.knowledgeItems, "number");
     assert.ok(!JSON.stringify(result.body).includes("AI_API_KEY"));
+  });
+
+  await t.test("CORS allows production and local portfolio origins", async () => {
+    const previous = process.env.ALLOWED_ORIGINS;
+    process.env.ALLOWED_ORIGINS = "https://ranbirkumar26.github.io";
+    t.after(() => {
+      process.env.ALLOWED_ORIGINS = previous;
+    });
+
+    const github = await corsPreflight(app.baseUrl, "https://ranbirkumar26.github.io");
+    assert.equal(github.status, 204);
+    assert.equal(github.allowOrigin, "https://ranbirkumar26.github.io");
+
+    const fileOrigin = await corsPreflight(app.baseUrl, "null");
+    assert.equal(fileOrigin.status, 204);
+    assert.equal(fileOrigin.allowOrigin, "null");
+
+    const local = await corsPreflight(app.baseUrl, "http://127.0.0.1:8787");
+    assert.equal(local.status, 204);
+    assert.equal(local.allowOrigin, "http://127.0.0.1:8787");
+
+    const blocked = await corsPreflight(app.baseUrl, "https://example.com");
+    assert.equal(blocked.status, 204);
+    assert.equal(blocked.allowOrigin, null);
   });
 
   await t.test("contact stores valid message and rejects invalid email", async () => {
