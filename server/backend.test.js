@@ -68,6 +68,12 @@ async function corsPreflight(baseUrl, origin) {
   };
 }
 
+function assertPlainTextAnswer(answer) {
+  assert.doesNotMatch(answer, /(^|\n)\s*[*+-]\s+/);
+  assert.doesNotMatch(answer, /\*\*|__|`/);
+  assert.doesNotMatch(answer, /\[[^\]]+\]\([^)]+\)/);
+}
+
 test("portfolio backend APIs", async (t) => {
   const app = await listen(requestHandler);
   t.after(() => app.server.close());
@@ -180,6 +186,7 @@ test("portfolio backend APIs", async (t) => {
     assert.equal(fallback.body.ok, true);
     assert.equal(fallback.body.fallback, true);
     assert.match(fallback.body.answer, /Role-fit evidence/);
+    assertPlainTextAnswer(fallback.body.answer);
     assert.ok(!JSON.stringify(fallback.body).includes("AI_API_KEY"));
   });
 
@@ -193,7 +200,7 @@ test("portfolio backend APIs", async (t) => {
       if (req.url.includes("/good/chat/completions")) {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({
-          choices: [{ message: { content: "Mock provider answer from fallback slot." } }],
+          choices: [{ message: { content: "* **Mock provider answer** from [fallback](https://example.com) slot." } }],
         }));
         return;
       }
@@ -218,7 +225,8 @@ test("portfolio backend APIs", async (t) => {
       history: [],
     });
     assert.equal(result.status, 200);
-    assert.equal(result.body.answer, "Mock provider answer from fallback slot.");
+    assert.equal(result.body.answer, "Mock provider answer from fallback (https://example.com) slot.");
+    assertPlainTextAnswer(result.body.answer);
     assert.equal(result.body.usedContextIds, undefined);
   });
 });
