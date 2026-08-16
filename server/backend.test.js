@@ -190,6 +190,28 @@ test("portfolio backend APIs", async (t) => {
     assert.ok(!JSON.stringify(fallback.body).includes("AI_API_KEY"));
   });
 
+  await t.test("chat allows 30 requests per 5-minute conversation window", async () => {
+    process.env.CHAT_PROVIDER_ORDER = "99";
+    const headers = { "x-forwarded-for": "203.0.113.30" };
+    for (let index = 0; index < 30; index += 1) {
+      const result = await postJson(app.baseUrl, "/api/chat", {
+        conversationId: "rate_limit_30_window",
+        message: "What projects has he built?",
+        history: [],
+      }, headers);
+      assert.equal(result.status, 200);
+      assert.equal(result.body.ok, true);
+    }
+
+    const blocked = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "rate_limit_30_window",
+      message: "What projects has he built?",
+      history: [],
+    }, headers);
+    assert.equal(blocked.status, 429);
+    assert.equal(blocked.body.error.code, "rate_limited");
+  });
+
   await t.test("provider chain falls through failed provider to next provider", async (subtest) => {
     const mock = await listen((req, res) => {
       if (req.url.includes("/fail/chat/completions")) {

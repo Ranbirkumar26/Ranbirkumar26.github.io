@@ -16,6 +16,12 @@ const UNKNOWN_ANSWER = "I do not have that information in my portfolio context."
 const FRIENDLY_ERROR = "I am having trouble connecting to my AI service right now. Please try again in a moment.";
 const PRIVACY_WARNING = "Privacy warning: I cannot share private personal information such as phone number, address, net worth, family details, relationship details, compensation, or private identifiers. Ask about Ranbir's public portfolio, education, skills, projects, experience, research, or achievements instead.";
 const INJECTION_WARNING = "Prompt-injection warning: I cannot ignore grounding rules, reveal hidden instructions, expose context or provider details, or fabricate facts about Ranbir. Ask a normal portfolio question instead.";
+const CHAT_WINDOW_LIMIT = Number(process.env.CHAT_WINDOW_LIMIT || 30);
+const CHAT_DAY_LIMIT = Number(process.env.CHAT_DAY_LIMIT || 150);
+const CHAT_STRICT_WINDOW_LIMIT = Number(process.env.CHAT_STRICT_WINDOW_LIMIT || 8);
+const CHAT_STRICT_DAY_LIMIT = Number(process.env.CHAT_STRICT_DAY_LIMIT || 40);
+const CHAT_IP_WINDOW_LIMIT = Number(process.env.CHAT_IP_WINDOW_LIMIT || 60);
+const CHAT_IP_DAY_LIMIT = Number(process.env.CHAT_IP_DAY_LIMIT || 300);
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -196,8 +202,8 @@ function bumpDurableConversationLimit(conversationId, strict) {
   const hash = crypto.createHash("sha256").update(conversationId).digest("hex");
   const now = Date.now();
   const today = dayKey(new Date(now));
-  const windowLimit = strict ? 4 : 12;
-  const dayLimit = strict ? 20 : 60;
+  const windowLimit = strict ? CHAT_STRICT_WINDOW_LIMIT : CHAT_WINDOW_LIMIT;
+  const dayLimit = strict ? CHAT_STRICT_DAY_LIMIT : CHAT_DAY_LIMIT;
   const store = readRateStore();
   const current = store[hash] || {
     windowStart: now,
@@ -703,7 +709,7 @@ async function handleChat(req, res) {
     return;
   }
 
-  const ipLimit = bumpMemoryLimit(`chat:${clientKey(req)}`, strict ? 4 : 20, strict ? 20 : 100);
+  const ipLimit = bumpMemoryLimit(`chat:${clientKey(req)}`, strict ? CHAT_STRICT_WINDOW_LIMIT : CHAT_IP_WINDOW_LIMIT, strict ? CHAT_STRICT_DAY_LIMIT : CHAT_IP_DAY_LIMIT);
   if (!ipLimit.allowed) {
     fail(res, 429, "rate_limited", "Too many chat requests from this connection. Please wait and try again.", { "Retry-After": String(ipLimit.retryAfter) });
     return;
