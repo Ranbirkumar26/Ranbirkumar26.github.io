@@ -1,0 +1,104 @@
+{
+  "checked": "2026-08-16T20:35:22.894Z",
+  "source": "github_public_api_snapshot",
+  "repos": {
+    "Ranbirkumar26/iora-docqa": {
+      "full_name": "Ranbirkumar26/iora-docqa",
+      "archived": false,
+      "pushed_at": "2026-07-22T18:06:11Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/SemantiCache": {
+      "full_name": "Ranbirkumar26/SemantiCache",
+      "archived": false,
+      "pushed_at": "2026-03-13T18:01:35Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/forgeAI": {
+      "full_name": "Ranbirkumar26/forgeAI",
+      "archived": false,
+      "pushed_at": "2026-08-14T21:48:06Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/RecallAI": {
+      "full_name": "Ranbirkumar26/RecallAI",
+      "archived": false,
+      "pushed_at": "2026-07-29T19:34:47Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/fieldopsenv-openenv": {
+      "full_name": "Ranbirkumar26/fieldopsenv-openenv",
+      "archived": false,
+      "pushed_at": "2026-04-12T19:25:39Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/agri-monitor": {
+      "full_name": "Ranbirkumar26/agri-monitor",
+      "archived": false,
+      "pushed_at": "2026-07-14T00:09:58Z",
+      "language": "HTML",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/craveconnect": {
+      "full_name": "Ranbirkumar26/craveconnect",
+      "archived": false,
+      "pushed_at": "2026-03-07T18:19:40Z",
+      "language": "HTML",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/apple_q_detection": {
+      "full_name": "Ranbirkumar26/apple_q_detection",
+      "archived": false,
+      "pushed_at": "2025-10-31T04:36:05Z",
+      "language": "HTML",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/Explainable-Fewshot": {
+      "full_name": "Ranbirkumar26/Explainable-Fewshot",
+      "archived": false,
+      "pushed_at": "2026-07-14T00:10:01Z",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/IAMAI_CMS_Public": {
+      "full_name": "Ranbirkumar26/IAMAI_CMS_Public",
+      "archived": false,
+      "pushed_at": "2026-07-22T18:14:47Z",
+      "language": "TypeScript",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/EstateAI": {
+      "full_name": "Ranbirkumar26/EstateAI",
+      "archived": false,
+      "pushed_at": "2026-07-22T18:05:31Z",
+      "language": "TypeScript",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/basketeer": {
+      "full_name": "Ranbirkumar26/basketeer",
+      "archived": false,
+      "pushed_at": "2026-07-14T00:09:58Z",
+      "language": "TypeScript",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/sharekart": {
+      "full_name": "Ranbirkumar26/sharekart",
+      "archived": false,
+      "pushed_at": "2025-11-12T22:50:51Z",
+      "language": "TypeScript",
+      "stargazers_count": 0
+    },
+    "Ranbirkumar26/smart-task-manager": {
+      "full_name": "Ranbirkumar26/smart-task-manager",
+      "archived": false,
+      "pushed_at": "2026-05-12T08:55:45Z",
+      "language": "Python",
+      "stargazers_count": 0
+    }
+  }
+}

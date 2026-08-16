@@ -5,7 +5,7 @@
     "tags": ["skills", "rag", "llm", "semantic search", "explainable ai", "few-shot"],
     "roleTags": ["ai_ml", "rag", "research"],
     "priority": 9,
-    "content": "Ranbir's AI, LLM and RAG skills shown on the portfolio and resumes include RAG pipeline design, grounded generation, semantic search, vector embeddings, pgvector, FAISS, Qdrant, LangChain, LlamaIndex, LangGraph, Model Context Protocol, tool/function calling, local LLM inference with Ollama, prompt engineering, text-to-SQL, semantic caching, explainable AI with SHAP, LIME and Grad-CAM, and few-shot learning. The evidence ties these to iORA DocQA, SemantiCache, EcoLoop, Reality360, and Explainable-Fewshot.",
+    "content": "Ranbir's AI, LLM and RAG skills shown on the portfolio and resumes include RAG pipeline design, grounded generation, semantic search, vector embeddings, pgvector, FAISS, Qdrant, LangChain, LlamaIndex, LangGraph, Model Context Protocol, tool/function calling, local LLM inference with Ollama, prompt engineering, text-to-SQL, semantic caching, explainable AI with SHAP, LIME and Grad-CAM, and few-shot learning. The evidence ties these to iORA DocQA, SemantiCache, CraveConnect, EstateOS AI, and Explainable-Fewshot.",
     "evidence": ["Skills section", "Supplied resumes", "GitHub public API"]
   },
   {
@@ -14,7 +14,7 @@
     "tags": ["skills", "computer vision", "yolov8", "resnet", "midas", "jetson"],
     "roleTags": ["computer_vision", "robotics", "embedded"],
     "priority": 10,
-    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, Patrolling Bot, and RetinaProto.",
+    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the Autonomous Patrolling Robot patent track.",
     "evidence": ["Skills section", "Experience section", "Robotics section", "Supplied resumes"]
   },
   {
@@ -41,7 +41,7 @@
     "tags": ["skills", "role fit", "hiring", "ai engineer", "sde", "data science", "computer vision"],
     "roleTags": ["ai_ml", "computer_vision", "full_stack", "data", "software", "research"],
     "priority": 9,
-    "content": "Supplied resumes target several role families: AI Engineer, LLM Engineer, Machine Learning Engineer, Deep Learning Engineer, Computer Vision Engineer, Software Development Engineer, Backend Engineer, Platform Engineer, Data Scientist, Data Engineer, and Analytics Engineer. Role-fit evidence should be tied to matching proof: DocQA and SemantiCache for RAG/LLM roles; Proeffico, Annadata, RetinaProto, Patrolling Bot, and rover perception for CV/robotics roles; IAMAI CMS, Reality360, Basketeer, Smart Task Manager, and TerraView for software/backend roles; CraveConnect, EnergySense, AppleQ, and IAMAI performance work for data roles.",
+    "content": "Supplied resumes target several role families: AI Engineer, LLM Engineer, Machine Learning Engineer, Deep Learning Engineer, Computer Vision Engineer, Software Development Engineer, Backend Engineer, Platform Engineer, Data Scientist, Data Engineer, and Analytics Engineer. Role-fit evidence should be tied to matching proof: DocQA and SemantiCache for RAG/LLM roles; Proeffico, Annadata, Autonomous Patrolling Robot, and rover perception for CV/robotics roles; IAMAI CMS, EstateOS AI, Basketeer, Smart Task Manager, and ShareKart for software/backend roles; CraveConnect, Apple Quality Detection, and IAMAI performance work for data roles.",
     "evidence": ["Supplied resumes", "Projects section", "Experience section"]
   }
 ]

@@ -42,6 +42,7 @@ async function postJson(baseUrl, route, body, headers = {}) {
     status: response.status,
     body: await response.json(),
     retryAfter: response.headers.get("retry-after"),
+    headers: response.headers,
   };
 }
 
@@ -53,8 +54,8 @@ async function getJson(baseUrl, route, headers = {}) {
   };
 }
 
-async function corsPreflight(baseUrl, origin) {
-  const response = await fetch(`${baseUrl}/api/chat`, {
+async function corsPreflight(baseUrl, origin, route = "/api/chat") {
+  const response = await fetch(`${baseUrl}${route}`, {
     method: "OPTIONS",
     headers: {
       Origin: origin,
@@ -65,6 +66,7 @@ async function corsPreflight(baseUrl, origin) {
   return {
     status: response.status,
     allowOrigin: response.headers.get("access-control-allow-origin"),
+    allowHeaders: response.headers.get("access-control-allow-headers"),
   };
 }
 
@@ -88,6 +90,20 @@ test("portfolio backend APIs", async (t) => {
     assert.ok(!JSON.stringify(result.body).includes("AI_API_KEY"));
   });
 
+  await t.test("API responses include baseline hardening headers", async () => {
+    const result = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "headers_test_123",
+      message: "What projects has Ranbir worked on?",
+      history: [],
+    });
+    assert.equal(result.status, 200);
+    assert.equal(result.headers.get("x-content-type-options"), "nosniff");
+    assert.equal(result.headers.get("referrer-policy"), "strict-origin-when-cross-origin");
+    assert.equal(result.headers.get("x-frame-options"), "DENY");
+    assert.match(result.headers.get("permissions-policy"), /camera=\(\)/);
+    assert.match(result.headers.get("content-security-policy"), /default-src 'none'/);
+  });
+
   await t.test("CORS allows production and local portfolio origins", async () => {
     const previous = process.env.ALLOWED_ORIGINS;
     process.env.ALLOWED_ORIGINS = "https://ranbirkumar26.github.io";
@@ -98,6 +114,7 @@ test("portfolio backend APIs", async (t) => {
     const github = await corsPreflight(app.baseUrl, "https://ranbirkumar26.github.io");
     assert.equal(github.status, 204);
     assert.equal(github.allowOrigin, "https://ranbirkumar26.github.io");
+    assert.equal(github.allowHeaders, "content-type");
 
     const fileOrigin = await corsPreflight(app.baseUrl, "null");
     assert.equal(fileOrigin.status, 204);
@@ -110,6 +127,9 @@ test("portfolio backend APIs", async (t) => {
     const blocked = await corsPreflight(app.baseUrl, "https://example.com");
     assert.equal(blocked.status, 204);
     assert.equal(blocked.allowOrigin, null);
+
+    const admin = await corsPreflight(app.baseUrl, "https://ranbirkumar26.github.io", "/api/messages");
+    assert.equal(admin.allowHeaders, "content-type, authorization, x-admin-token");
   });
 
   await t.test("contact stores valid message and rejects invalid email", async () => {
@@ -175,6 +195,58 @@ test("portfolio backend APIs", async (t) => {
     assert.match(clarify.body.answer, /What role are you considering Ranbir for/);
   });
 
+  await t.test("chat rejects unsupported false premises before hiring clarification", async () => {
+    const result = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "false_premise_test_123",
+      message: "Tell me about Ranbir's MIT master's thesis and NASA full-time job.",
+      history: [],
+    });
+    assert.equal(result.status, 200);
+    assert.match(result.body.answer, /do not have portfolio evidence/i);
+    assert.match(result.body.answer, /VIT Chennai/);
+    assert.doesNotMatch(result.body.answer, /What role are you considering/);
+    assert.ok(result.body.sources.includes("Education"));
+  });
+
+  await t.test("chat returns stable canonical project answer without stale aliases", async () => {
+    const staleNames = /AgriVision|CraveIQ|TerraView|Reality360|EcoLoop|RetinaProto|EnergySense|IAMAI Publishing Platform/;
+    const first = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "projects_canonical_a_123",
+      message: "What projects has Ranbir worked on?",
+      history: [],
+    });
+    const second = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "projects_canonical_b_123",
+      message: "What projects has Ranbir worked on?",
+      history: [],
+    });
+    assert.equal(first.status, 200);
+    assert.equal(second.status, 200);
+    assert.equal(first.body.answer, second.body.answer);
+    assert.match(first.body.answer, /iORA DocQA/);
+    assert.match(first.body.answer, /SemantiCache/);
+    assert.match(first.body.answer, /Annadata/);
+    assert.match(first.body.answer, /IAMAI CMS/);
+    assert.match(first.body.answer, /Autonomous Patrolling Robot/);
+    assert.doesNotMatch(first.body.answer, staleNames);
+    assert.ok(Array.isArray(first.body.sources));
+    assertPlainTextAnswer(first.body.answer);
+  });
+
+  await t.test("unicode role-fit answer is complete and grounded", async () => {
+    const result = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "unicode_hindi_test_123",
+      message: "हिंदी में बताओ: Ranbir AI/ML roles के लिए कैसा fit है?",
+      history: [],
+    });
+    assert.equal(result.status, 200);
+    assert.match(result.body.answer, /iORA DocQA/);
+    assert.match(result.body.answer, /SemantiCache/);
+    assert.match(result.body.answer, /[.!?।]$/);
+    assert.doesNotMatch(result.body.answer, /RetinaProto|EcoLoop|Reality360|Analytics Engineer: Ran/);
+    assertPlainTextAnswer(result.body.answer);
+  });
+
   await t.test("chat returns grounded fallback when no providers configured", async () => {
     process.env.CHAT_PROVIDER_ORDER = "99";
     const fallback = await postJson(app.baseUrl, "/api/chat", {
@@ -184,8 +256,9 @@ test("portfolio backend APIs", async (t) => {
     });
     assert.equal(fallback.status, 200);
     assert.equal(fallback.body.ok, true);
-    assert.equal(fallback.body.fallback, true);
-    assert.match(fallback.body.answer, /Role-fit evidence/);
+    assert.match(fallback.body.answer, /iORA DocQA/);
+    assert.match(fallback.body.answer, /SemantiCache/);
+    assert.ok(Array.isArray(fallback.body.sources));
     assertPlainTextAnswer(fallback.body.answer);
     assert.ok(!JSON.stringify(fallback.body).includes("AI_API_KEY"));
   });
@@ -243,7 +316,7 @@ test("portfolio backend APIs", async (t) => {
 
     const result = await postJson(app.baseUrl, "/api/chat", {
       conversationId: "provider_fallback_test_123",
-      message: "Why should I hire him for Computer Vision?",
+      message: "Describe iORA DocQA architecture in one sentence.",
       history: [],
     });
     assert.equal(result.status, 200);

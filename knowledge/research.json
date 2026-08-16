@@ -23,7 +23,7 @@
     "tags": ["patent", "robotics", "autonomous navigation"],
     "roleTags": ["robotics", "research"],
     "priority": 7,
-    "content": "The portfolio and resumes list a filed patent for an AI-powered Autonomous Campus Surveillance Robot, also described as Patrolling Bot. Public shareable details say it combines YOLO detection for missing ID cards, fire or smoke, and overcrowding, action-recognition models for fight detection, real-time security alerts, and embedded deployment on Jetson Xavier NX and Raspberry Pi with LiDAR and ultrasonic navigation using Python, OpenCV, PyTorch, and ROS. Filing specifics remain confidential until public.",
+    "content": "The portfolio and resumes list a filed patent for an AI-powered Autonomous Campus Surveillance Robot, shown on the portfolio as Autonomous Patrolling Robot. Public shareable details say it combines YOLO detection for missing ID cards, fire or smoke, and overcrowding, action-recognition models for fight detection, real-time security alerts, and embedded deployment on Jetson Xavier NX and Raspberry Pi with LiDAR and ultrasonic navigation using Python, OpenCV, PyTorch, and ROS. Filing specifics remain confidential until public.",
     "evidence": ["Research section", "Supplied resumes"]
   }
 ]

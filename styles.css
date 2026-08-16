@@ -2714,6 +2714,28 @@ html.scene-paused .project-scene::after {
   background: color-mix(in srgb, var(--surface-2) 88%, transparent);
 }
 
+.chat-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  white-space: normal;
+}
+
+.chat-source {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 3px 7px;
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+  border-radius: 999px;
+  color: var(--amber);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+}
+
 .chat-msg-error {
   border-color: color-mix(in srgb, var(--amber) 60%, transparent);
   color: var(--text);
@@ -2811,6 +2833,12 @@ html.scene-paused .project-scene::after {
   margin-top: 10px;
 }
 
+.chat-form-actions .btn:disabled {
+  cursor: progress;
+  opacity: 0.68;
+  filter: saturate(0.72);
+}
+
 .chat-status {
   min-height: 1.2em;
   color: var(--text-muted);
@@ -2882,9 +2910,20 @@ html.scene-paused .project-scene::after {
     width: auto;
     max-height: calc(100vh - 20px);
     border-radius: 18px 18px 8px 8px;
+    background:
+      linear-gradient(135deg, rgba(217, 160, 63, 0.1), transparent 38%),
+      color-mix(in srgb, var(--surface) 99%, var(--bg) 1%);
+    box-shadow: 0 24px 88px rgba(0, 0, 0, 0.62);
   }
 
-  .chat-msg { max-width: 94%; }
+  .chat-msg {
+    max-width: 94%;
+    background: color-mix(in srgb, var(--surface-2) 96%, var(--bg) 4%);
+  }
+
+  .chat-msg-user {
+    background: color-mix(in srgb, var(--accent-dim) 88%, var(--surface) 12%);
+  }
   .chat-form-actions { align-items: stretch; flex-direction: column; }
   .chat-form-actions .btn { width: 100%; justify-content: center; }
   .chat-nudge { right: 0; bottom: 66px; }

@@ -23,7 +23,7 @@
     "tags": ["project", "agriculture", "computer vision", "yolov8", "resnet", "gps", "sih"],
     "roleTags": ["computer_vision", "robotics", "ai_ml", "full_stack"],
     "priority": 10,
-    "content": "Annadata, also framed as AgriVision in resumes, is an agricultural AI platform built around an autonomous Agribot. It targets crop disease detection that reaches farmers in the field. The system uses a two-stage vision architecture: custom YOLO detection to localize infected leaf regions and ResNet-34 classification for disease labels, plus real-time YOLO weed detection, GPS-tagged asynchronous pipelines, and a rental platform with an Agribot live POV feed. The portfolio and resumes report 91 percent disease classification, 97 percent soil-health prediction, around 30 FPS video-stream inference, and Smart India Hackathon 2025 Grand Finale top 5 nationally in Robotics and Drones. Ranbir owned the vision stack and GPS-tagged async detection flow within the SIH team.",
+    "content": "Annadata is an agricultural AI platform built around an autonomous Agribot. It targets crop disease detection that reaches farmers in the field. The system uses a two-stage vision architecture: custom YOLO detection to localize infected leaf regions and ResNet-34 classification for disease labels, plus real-time YOLO weed detection, GPS-tagged asynchronous pipelines, and a rental platform with an Agribot live POV feed. The portfolio and resumes report 91 percent disease classification, 97 percent soil-health prediction, around 30 FPS video-stream inference, and Smart India Hackathon 2025 Grand Finale top 5 nationally in Robotics and Drones. Ranbir owned the vision stack and GPS-tagged async detection flow within the SIH team.",
     "evidence": ["Projects section", "agri-monitor repository link", "Achievements section", "Supplied resumes", "GitHub public API"]
   },
   {
@@ -32,16 +32,16 @@
     "tags": ["project", "machine learning", "explainability", "shap", "lime", "flask", "power bi"],
     "roleTags": ["ai_ml", "data", "backend"],
     "priority": 9,
-    "content": "CraveConnect, also framed as CraveIQ in resumes, is explainable customer intelligence for food-delivery membership upgrade prediction. Ranbir's team built it for Insightify 6.0 at IIM Lucknow. It uses about 2,000 customer records, 19 raw attributes, 4 engineered behavioral features, model benchmarking, and a selected Gradient Boosting classifier validated at 0.784 ROC-AUC, with XGBoost listed as part of the ML toolkit but not the shipped classifier. It includes SHAP global explanations, LIME local explanations, segmentation, Power BI dashboards, and a Flask scoring API. The portfolio reports 1st nationally in round one and 2nd in the ML case study at Insightify 6.0. Ranbir owned modeling, explainability, and serving within team DataQuants.",
+    "content": "CraveConnect is explainable customer intelligence for food-delivery membership upgrade prediction. Ranbir's team built it for Insightify 6.0 at IIM Lucknow. It uses about 2,000 customer records, 19 raw attributes, 4 engineered behavioral features, model benchmarking, and a selected Gradient Boosting classifier validated at 0.784 ROC-AUC, with XGBoost listed as part of the ML toolkit but not the shipped classifier. It includes SHAP global explanations, LIME local explanations, segmentation, Power BI dashboards, and a Flask scoring API. The portfolio reports 1st nationally in round one and 2nd in the ML case study at Insightify 6.0. Ranbir owned modeling, explainability, and serving within team DataQuants.",
     "evidence": ["Projects section", "CraveConnect repository link", "Supplied resumes", "GitHub public API"]
   },
   {
     "id": "project.iamai_cms",
-    "title": "IAMAI Publishing Platform",
+    "title": "IAMAI CMS",
     "tags": ["project", "cms", "next.js", "supabase", "postgres", "github actions", "netlify"],
     "roleTags": ["full_stack", "backend", "software"],
     "priority": 10,
-    "content": "IAMAI Publishing Platform is a full-stack CMS and content delivery system for the Internet and Mobile Association of India. Resume details say Ranbir engineered a CMS-managed public site with page blocks, eleven structured content collections, normalized Postgres schema, form APIs wired to Supabase Storage, Supabase authentication with password reset, user and permission management, role-based access control across CMS routes, modularized code, GitHub Actions production deployment to Netlify, and a scheduled smoke-test monitor for live deployment verification.",
+    "content": "IAMAI CMS is a full-stack CMS and content delivery system for the Internet and Mobile Association of India. Resume details say Ranbir engineered a CMS-managed public site with page blocks, eleven structured content collections, normalized Postgres schema, form APIs wired to Supabase Storage, Supabase authentication with password reset, user and permission management, role-based access control across CMS routes, modularized code, GitHub Actions production deployment to Netlify, and a scheduled smoke-test monitor for live deployment verification.",
     "evidence": ["Supplied resumes", "GitHub public API", "IAMAI_CMS_Public repository"]
   },
   {

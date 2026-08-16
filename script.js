@@ -467,29 +467,35 @@
     });
   });
 
-  /* ----- Demo health badges: status.json is refreshed by a scheduled
-     GitHub Action that curls each demo. Badges only downgrade (Live ->
-     Demo offline); they never upgrade a hand-set offline badge, so a
-     stale JSON can't oversell anything. ----- */
+  /* ----- Demo health badges: status.json uses precise user-facing states
+     instead of collapsing access-gated, sleeping and offline services. ----- */
   fetch("status.json", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (status) {
       if (!status) return;
       var checkedAt = status.checked ? Date.parse(status.checked) : 0;
       var healthStale = !checkedAt || Date.now() - checkedAt > 2 * 60 * 60 * 1000;
+      function healthState(raw) {
+        if (!raw) return { state: "unknown", label: "status unknown", tone: "stale" };
+        var state = raw.state || (raw.up === true ? "public" : raw.up === false ? "offline" : "unknown");
+        var label = raw.label || ({
+          public: "public demo",
+          access_gated: "access gated",
+          sleeping: "sleeping demo",
+          offline: "demo offline",
+          unknown: "status unknown"
+        }[state] || "status unknown");
+        var tone = state === "public" ? "up" : state === "offline" ? "down" : "stale";
+        return { state: state, label: label, tone: tone };
+      }
       document.querySelectorAll("[data-health]").forEach(function (badge) {
-        var state = status[badge.getAttribute("data-health")];
-        if (!state) return;
-        if (state.up === false && badge.classList.contains("badge-live")) {
-          badge.classList.add("health-down");
-          badge.textContent = "Demo offline";
-        }
-        if (healthStale && state.up !== false && badge.classList.contains("badge-live")) {
-          badge.classList.add("health-stale");
-          badge.textContent = "Status stale";
-        }
+        var health = healthState(status[badge.getAttribute("data-health")]);
+        badge.classList.remove("health-down", "health-stale");
+        if (health.tone === "down") badge.classList.add("health-down");
+        if (health.tone === "stale" || (healthStale && health.tone === "up")) badge.classList.add("health-stale");
+        badge.textContent = healthStale && health.tone === "up" ? "status stale" : health.label;
         if (status.checked) {
-          badge.title = "Demo health last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC" + (healthStale ? " (stale)" : "");
+          badge.title = "Demo status last checked " + status.checked.slice(0, 16).replace("T", " ") + " UTC" + (healthStale ? " (stale)" : "");
         }
       });
 
@@ -502,12 +508,11 @@
           ["CraveConnect", "craveconnect"]
         ];
         systems.forEach(function (sys) {
-          var state = status[sys[1]];
-          if (!state) return;
+          var health = healthState(status[sys[1]]);
           var el = document.createElement("span");
-          var staleOnline = healthStale && state.up !== false;
-          el.className = "sys " + (staleOnline ? "sys-stale" : (state.up ? "sys-up" : "sys-down"));
-          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (staleOnline ? "status stale" : (state.label || (state.up ? "online" : "offline")));
+          var staleOnline = healthStale && health.tone === "up";
+          el.className = "sys sys-" + (staleOnline ? "stale" : health.tone);
+          el.innerHTML = '<span class="sys-dot"></span>' + sys[0] + ": " + (staleOnline ? "status stale" : health.label);
           board.appendChild(el);
         });
         if (status.checked) {
@@ -541,7 +546,7 @@
   }).filter(Boolean);
 
   if (githubCards.length) {
-    var GITHUB_CACHE_KEY = "rk-github-status-v1";
+    var GITHUB_CACHE_KEY = "rk-github-status-v2";
     var GITHUB_CACHE_TTL = 30 * 60 * 1000;
 
     function uniqueRepos(cards) {
@@ -628,7 +633,7 @@
       var unavailable = repoNames.length - publicRepos.length;
       var main = document.createElement("span");
       main.className = "gh";
-      main.innerHTML = '<span class="gh-dot"></span>GitHub: ' + activeRepos.length + "/" + publicRepos.length + " active public repos";
+      main.innerHTML = '<span class="gh-dot"></span>GitHub: ' + activeRepos.length + "/" + repoNames.length + " active public repos";
       board.appendChild(main);
       if (unavailable) {
         var miss = document.createElement("span");
@@ -641,6 +646,25 @@
       checked.textContent = "refreshed " + new Date(fetchedAt || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       board.appendChild(checked);
       board.hidden = false;
+    }
+
+    function normalizeRepoSnapshot(raw) {
+      if (!raw || !raw.repos || typeof raw.repos !== "object") return null;
+      if (!repoMapHasData(raw.repos)) return null;
+      return {
+        repos: raw.repos,
+        fetchedAt: Date.parse(raw.checked || "") || Date.now()
+      };
+    }
+
+    function fetchStaticGitHubStatus() {
+      return fetch("assets/github-repos.json", { cache: "no-store" })
+        .then(function (response) {
+          if (!response.ok) return null;
+          return response.json();
+        })
+        .then(normalizeRepoSnapshot)
+        .catch(function () { return null; });
     }
 
     function fetchGitHubRepo(repoName) {
@@ -674,18 +698,26 @@
       renderGitHubStatus(cachedGitHub.repos, cachedGitHub.fetchedAt);
     } else {
       var reposToLoad = uniqueRepos(githubCards);
-      Promise.all(reposToLoad.map(fetchGitHubRepo)).then(function (results) {
-        var repoMap = {};
-        reposToLoad.forEach(function (name, index) {
-          repoMap[name] = results[index];
+      fetchStaticGitHubStatus().then(function (snapshot) {
+        if (snapshot) {
+          writeGitHubCache(snapshot.repos);
+          renderGitHubStatus(snapshot.repos, snapshot.fetchedAt);
+          return;
+        }
+        Promise.all(reposToLoad.map(fetchGitHubRepo)).then(function (results) {
+          var repoMap = {};
+          reposToLoad.forEach(function (name, index) {
+            repoMap[name] = results[index];
+          });
+          writeGitHubCache(repoMap);
+          renderGitHubStatus(repoMap, Date.now());
         });
-        writeGitHubCache(repoMap);
-        renderGitHubStatus(repoMap, Date.now());
       });
     }
   }
 
   function portfolioApiBase() {
+    if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return "";
     if (window.RK_API_BASE) return String(window.RK_API_BASE).replace(/\/$/, "");
     var meta = document.querySelector('meta[name="portfolio-api-base"]');
     var configured = meta ? String(meta.getAttribute("content") || "").replace(/\/$/, "") : "";
@@ -819,6 +851,7 @@
     var chatMessages = document.getElementById("chatMessages");
     var chatSuggestions = document.getElementById("chatSuggestions");
     var chatStatus = document.getElementById("chatStatus");
+    var chatSubmit = chatForm ? chatForm.querySelector('button[type="submit"]') : null;
     var chatNudge = document.getElementById("chatNudge");
     var chatNudgeClose = document.getElementById("chatNudgeClose");
     var chatNudgeTry = document.getElementById("chatNudgeTry");
@@ -889,6 +922,15 @@
           .filter(function (item) {
             return item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string";
           })
+          .map(function (item) {
+            return {
+              role: item.role,
+              content: item.content,
+              sources: sanitizeChatSources(item.sources),
+              error: Boolean(item.error),
+              retry: Boolean(item.retry)
+            };
+          })
           .filter(function (item) {
             return !item.error && item.content !== chatFallback && item.content !== "Failed to fetch";
           })
@@ -912,10 +954,33 @@
       if (chatStatus) chatStatus.textContent = message || "";
     }
 
+    function sanitizeChatSources(sources) {
+      if (!Array.isArray(sources)) return [];
+      return sources
+        .map(function (source) {
+          return String(source || "").replace(/\s+/g, " ").trim().slice(0, 80);
+        })
+        .filter(Boolean)
+        .filter(function (source, index, list) {
+          return list.indexOf(source) === index;
+        })
+        .slice(0, 4);
+    }
+
+    function setChatSending(sending) {
+      chatSending = sending;
+      if (chatSubmit) {
+        chatSubmit.disabled = sending;
+        chatSubmit.setAttribute("aria-disabled", String(sending));
+      }
+      if (chatForm) chatForm.setAttribute("aria-busy", String(sending));
+    }
+
     function addChatMessage(role, content, options) {
       chatState.messages.push({
         role: role,
         content: String(content || "").slice(0, 3000),
+        sources: sanitizeChatSources(options && options.sources),
         error: Boolean(options && options.error),
         retry: Boolean(options && options.retry)
       });
@@ -941,6 +1006,19 @@
         var row = document.createElement("div");
         row.className = "chat-msg chat-msg-" + message.role + (message.error ? " chat-msg-error" : "");
         row.textContent = message.content;
+        var sources = sanitizeChatSources(message.sources);
+        if (message.role === "assistant" && sources.length) {
+          var sourceWrap = document.createElement("div");
+          sourceWrap.className = "chat-sources mono";
+          sourceWrap.setAttribute("aria-label", "Answer sources");
+          sources.forEach(function (source) {
+            var chip = document.createElement("span");
+            chip.className = "chat-source";
+            chip.textContent = source;
+            sourceWrap.appendChild(chip);
+          });
+          row.appendChild(sourceWrap);
+        }
         if (message.retry) {
           var retry = document.createElement("button");
           retry.type = "button";
@@ -1015,13 +1093,18 @@
 
     function sendChatQuestion(question, retrying) {
       var text = String(question || "").trim();
-      if (!text || chatSending) return;
+      if (!text) {
+        setChatStatus("Ask a question about Ranbir first.");
+        if (chatInput) chatInput.focus();
+        return;
+      }
+      if (chatSending) return;
       if (text.length > 900) {
         setChatStatus("Keep questions under 900 characters.");
         return;
       }
 
-      chatSending = true;
+      setChatSending(true);
       chatLastQuestion = text;
       setChatStatus("Thinking...");
       if (!retrying) addChatMessage("user", text);
@@ -1053,7 +1136,7 @@
         })
         .then(function (body) {
           hideTyping();
-          addChatMessage("assistant", body.answer || chatFallback);
+          addChatMessage("assistant", body.answer || chatFallback, { sources: body.sources });
           setChatStatus("");
         })
         .catch(function (error) {
@@ -1062,7 +1145,7 @@
           setChatStatus("Connection issue. Retry when ready.");
         })
         .finally(function () {
-          chatSending = false;
+          setChatSending(false);
           if (chatInput) chatInput.value = "";
         });
     }

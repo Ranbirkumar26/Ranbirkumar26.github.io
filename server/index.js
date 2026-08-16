@@ -23,6 +23,72 @@ const CHAT_STRICT_DAY_LIMIT = Number(process.env.CHAT_STRICT_DAY_LIMIT || 40);
 const CHAT_IP_WINDOW_LIMIT = Number(process.env.CHAT_IP_WINDOW_LIMIT || 60);
 const CHAT_IP_DAY_LIMIT = Number(process.env.CHAT_IP_DAY_LIMIT || 300);
 
+const API_SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "X-Frame-Options": "DENY",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+  "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+};
+
+const STATIC_SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+};
+
+const FEATURED_PROJECTS = [
+  {
+    name: "iORA DocQA",
+    source: "Projects > iORA DocQA",
+    summary: "production RAG document intelligence with direct-context, pgvector, and DuckDB SQL routing.",
+  },
+  {
+    name: "SemantiCache",
+    source: "Projects > SemantiCache",
+    summary: "clustered semantic caching in front of FAISS, packaged behind a FastAPI and Docker demo.",
+  },
+  {
+    name: "Annadata",
+    source: "Projects > Annadata",
+    summary: "agriculture vision stack with YOLO and ResNet pipelines for SIH robotics work.",
+  },
+  {
+    name: "CraveConnect",
+    source: "Projects > CraveConnect",
+    summary: "explainable customer upgrade prediction with gradient boosting, SHAP, LIME, Flask, and Power BI.",
+  },
+  {
+    name: "IAMAI CMS",
+    source: "More Builds > IAMAI CMS",
+    summary: "CMS, auth, content collections, deployment workflow, and reliability checks for IAMAI.",
+  },
+  {
+    name: "EstateOS AI",
+    source: "More Builds > EstateOS AI",
+    summary: "real-estate intelligence frontend MVP with AI-guided valuation and explainability flows.",
+  },
+  {
+    name: "Apple Quality Detection",
+    source: "More Builds > Apple Quality Detection",
+    summary: "classical ML produce-quality classifier with preprocessing, balancing, tuning, and a Flask scoring app.",
+  },
+  {
+    name: "Smart Task Manager",
+    source: "More Builds > Smart Task Manager",
+    summary: "Flask and PostgreSQL task platform with auth, REST APIs, WebSockets, and analytics.",
+  },
+];
+
+const ADDITIONAL_VISIBLE_BUILDS = [
+  "ForgeAI",
+  "RecallAI",
+  "FieldOpsEnv",
+  "Explainable Few-Shot",
+  "Basketeer",
+  "ShareKart",
+];
+
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -85,6 +151,7 @@ function json(res, status, body, extraHeaders = {}) {
   res.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store",
+    ...API_SECURITY_HEADERS,
     ...extraHeaders,
   });
   res.end(payload);
@@ -98,7 +165,7 @@ function fail(res, status, code, message, extraHeaders = {}) {
   json(res, status, { ok: false, error: { code, message } }, extraHeaders);
 }
 
-function applyCors(req, res) {
+function applyCors(req, res, pathname = "") {
   const allowed = (process.env.ALLOWED_ORIGINS || "*").split(",").map((item) => item.trim()).filter(Boolean);
   const origin = req.headers.origin;
   const allowLocalOrigin = (() => {
@@ -113,7 +180,7 @@ function applyCors(req, res) {
   const allowOrigin = allowed.includes("*") ? "*" : allowed.includes(origin) || allowLocalOrigin ? origin : "";
   if (allowOrigin) res.setHeader("Access-Control-Allow-Origin", allowOrigin);
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "content-type, authorization, x-admin-token");
+  res.setHeader("Access-Control-Allow-Headers", pathname === "/api/messages" ? "content-type, authorization, x-admin-token" : "content-type");
   res.setHeader("Vary", "Origin");
 }
 
@@ -495,13 +562,129 @@ function plainTextAnswer(value) {
     .trim() || UNKNOWN_ANSWER;
 }
 
+function completePlainTextAnswer(value) {
+  const answer = plainTextAnswer(value);
+  if (!answer || answer === UNKNOWN_ANSWER || /[.!?।)]$/.test(answer)) return answer;
+  return `${answer}.`;
+}
+
+function safeSourceLabel(value) {
+  return clean(value, 80).replace(/[<]/g, "");
+}
+
+function sourceLabels(items, fallback = []) {
+  const labels = [];
+  for (const label of fallback) {
+    const safe = safeSourceLabel(label);
+    if (safe && !labels.includes(safe)) labels.push(safe);
+  }
+  for (const item of items || []) {
+    if (String(item.id || "").startsWith("policy.")) continue;
+    const safe = safeSourceLabel(item.title);
+    if (safe && !labels.includes(safe)) labels.push(safe);
+    if (labels.length >= 4) break;
+  }
+  return labels.slice(0, 4);
+}
+
+function chatOk(res, answer, options = {}) {
+  const body = { answer: completePlainTextAnswer(answer) };
+  const sources = sourceLabels(options.contextItems, options.sources);
+  if (sources.length) body.sources = sources;
+  if (options.fallback) body.fallback = true;
+  if (process.env.CHAT_DEBUG_CONTEXT === "true" && options.contextItems) {
+    body.usedContextIds = options.contextItems.map((item) => item.id);
+  }
+  ok(res, body);
+}
+
+function unsupportedPortfolioClaims(message) {
+  const query = normalize(message);
+  const claims = [];
+  if (/\bmit\b/.test(query) || /massachusetts institute/.test(query)) claims.push("MIT");
+  if (/master'?s|masters|m\.s\.|ms thesis|thesis/.test(query)) claims.push("master's thesis");
+  if (/\bnasa\b/.test(query)) claims.push("NASA");
+  if (/full[-\s]?time job|full[-\s]?time role|full[-\s]?time employee/.test(query) && claims.length) claims.push("full-time job");
+  if (/\bphd\b|doctorate|stanford|harvard|google full[-\s]?time|openai full[-\s]?time|meta full[-\s]?time/.test(query)) claims.push("unsupported education or employment claim");
+  return Array.from(new Set(claims));
+}
+
+function falsePremiseAnswer(claims) {
+  const claimText = claims.length ? claims.join(", ") : "that claim";
+  return `I do not have portfolio evidence for ${claimText}. Portfolio context says Ranbir is pursuing B.Tech Computer Science with AI/ML specialization at VIT Chennai from 2023 to 2027, has CGPA 8.28 out of 10, and has evidence across iORA, IAMAI, Proeffico, Technocrats Robotics, projects, research, and achievements.`;
+}
+
+function canonicalProjectAnswer() {
+  const featured = FEATURED_PROJECTS.map((project) => `${project.name}: ${project.summary}`).join(" ");
+  return `Ranbir's featured portfolio projects are ${featured} Robotics and research proof includes Rover Abhimanyu and the Autonomous Patrolling Robot patent. Additional visible builds on the portfolio include ${ADDITIONAL_VISIBLE_BUILDS.join(", ")}.`;
+}
+
+function roleFitAnswer(message, contextItems) {
+  const roles = roleTagsFor(message);
+  if (!roles.size) return null;
+  if (roles.has("computer_vision")) {
+    return "For Computer Vision roles, Ranbir's strongest evidence is Proeffico production CV work on NVIDIA Jetson Xavier NX under 40 ms inference, Annadata's YOLO and ResNet agriculture vision pipeline, rover perception work for terrain and arrow-marker detection, and the Vision-Based Terrain Analysis research track.";
+  }
+  if (roles.has("robotics") || roles.has("embedded")) {
+    return "For Robotics or Embedded AI roles, Ranbir brings rover leadership at Technocrats Robotics, autonomy and perception work across Raspberry Pi and i7 mini-PC systems, iORA wearable integration across firmware, MQTT over TLS, GNSS and telemetry, and competition proof from Robocon and IRC.";
+  }
+  if (roles.has("ai_ml") || roles.has("rag")) {
+    return "For AI/ML roles, Ranbir's strongest evidence is iORA DocQA for grounded RAG and SQL routing, SemantiCache for semantic retrieval optimization, CraveConnect for explainable ML, and research work in few-shot explainable AI and terrain perception.";
+  }
+  if (roles.has("full_stack") || roles.has("backend")) {
+    return "For Software or Backend roles, Ranbir has shipped iORA DocQA, IAMAI CMS, SemantiCache APIs, CraveConnect's Flask scoring service, Smart Task Manager, and Supabase-backed applications with auth, storage, RBAC, deployment workflows, and reliability checks.";
+  }
+  if (roles.has("data")) {
+    return "For Data Science or Analytics roles, Ranbir's evidence includes CraveConnect's feature engineering and explainability pipeline, SemantiCache benchmarking, Apple Quality Detection's model evaluation flow, IAMAI testing metrics, and Power BI work.";
+  }
+  if (roles.has("research")) {
+    return "For Research roles, Ranbir's evidence includes Few-Shot Learning with Explainable AI, Vision-Based Terrain Analysis, the Autonomous Patrolling Robot patent track, and implementation work linking models to deployed or hardware-facing systems.";
+  }
+  return hireFallback(message, contextItems);
+}
+
+function hindiRoleFitAnswer(message) {
+  if (!/[\u0900-\u097F]/.test(message)) return null;
+  if (!isHiringQuestion(message) && !/(ai|ml|computer vision|robotics|rag|role|fit)/i.test(message)) return null;
+  return "Ranbir AI/ML roles ke liye strong fit hai because uske portfolio mein shipped RAG systems, semantic retrieval, explainable ML, computer vision, and robotics deployment ka evidence hai. Best proof iORA DocQA, SemantiCache, CraveConnect, Proeffico CV pipelines, Annadata, and rover autonomy work se aata hai.";
+}
+
+function deterministicPortfolioAnswer(message, contextItems) {
+  const query = normalize(message);
+  const hindiAnswer = hindiRoleFitAnswer(message);
+  if (hindiAnswer) return { answer: hindiAnswer, sources: ["Projects", "Experience", "Research"] };
+  if (isHiringQuestion(message) && roleTagsFor(message).size > 0) {
+    return { answer: roleFitAnswer(message, contextItems), sources: sourceLabels(contextItems, ["Experience", "Projects"]) };
+  }
+  if (/project|projects|worked on|built|builds|build|what all|what has .*done|what .*done|portfolio work/.test(query)) {
+    return { answer: canonicalProjectAnswer(), sources: FEATURED_PROJECTS.slice(0, 4).map((project) => project.source) };
+  }
+  if (/internship|experience|work history|where.*worked|worked at/.test(query)) {
+    return { answer: experienceFallback(), sources: ["Experience"] };
+  }
+  if (/skill|skills|strongest|tech stack|technologies|tools/.test(query)) {
+    return { answer: skillsFallback(), sources: ["Skills"] };
+  }
+  if (/education|college|cgpa|degree|vit/.test(query)) {
+    const item = knowledgeById("education.vit");
+    return { answer: item ? firstSentence(item.content) : UNKNOWN_ANSWER, sources: ["Education"] };
+  }
+  if (/research|paper|publication|patent/.test(query)) {
+    const items = knowledgeItems.filter((item) => String(item.id || "").startsWith("research.")).slice(0, 4);
+    return {
+      answer: items.length ? ["Ranbir's research and patent context:", ...items.map((item) => `${item.title}: ${firstSentence(item.content)}`)].join("\n") : UNKNOWN_ANSWER,
+      sources: ["Research"],
+    };
+  }
+  if (/video resume|video|watch.*resume/.test(query)) {
+    const item = knowledgeById("profile.video_resume");
+    return { answer: item ? `${firstSentence(item.content)} Open it at #video-resume on the portfolio.` : "Open the Video Resume section at #video-resume on the portfolio.", sources: ["Video Resume"] };
+  }
+  return null;
+}
+
 function projectFallback() {
-  const projects = knowledgeItems.filter((item) => String(item.id || "").startsWith("project.")).slice(0, 8);
-  if (!projects.length) return null;
-  return [
-    "Ranbir has worked on:",
-    ...projects.map((item) => `- ${item.title}: ${firstSentence(item.content)}`),
-  ].join("\n");
+  return canonicalProjectAnswer();
 }
 
 function experienceFallback() {
@@ -716,20 +899,32 @@ async function handleChat(req, res) {
   }
 
   if (isPromptInjectionAttempt(message)) {
-    ok(res, { answer: plainTextAnswer(INJECTION_WARNING) });
+    chatOk(res, INJECTION_WARNING, { sources: ["Safety policy"] });
     return;
   }
   if (isPrivatePersonalQuestion(message)) {
-    ok(res, { answer: plainTextAnswer(PRIVACY_WARNING) });
+    chatOk(res, PRIVACY_WARNING, { sources: ["Privacy policy"] });
     return;
   }
-  if (needsRoleClarification(message)) {
-    ok(res, { answer: plainTextAnswer("What role are you considering Ranbir for: AI/ML, Computer Vision, Software Development, Data Science, Robotics, Embedded AI, Research, or something else?") });
+  const unsupportedClaims = unsupportedPortfolioClaims(message);
+  if (unsupportedClaims.length) {
+    chatOk(res, falsePremiseAnswer(unsupportedClaims), { sources: ["Education", "Experience"] });
     return;
   }
 
   const history = sanitizeHistory(payload.history);
   const contextItems = retrieveContext(message, history);
+  const deterministic = deterministicPortfolioAnswer(message, contextItems);
+  if (deterministic && deterministic.answer) {
+    chatOk(res, deterministic.answer, { sources: deterministic.sources, contextItems });
+    return;
+  }
+
+  if (needsRoleClarification(message)) {
+    chatOk(res, "What role are you considering Ranbir for: AI/ML, Computer Vision, Software Development, Data Science, Robotics, Embedded AI, Research, or something else?", { sources: ["Hiring guide"] });
+    return;
+  }
+
   const messages = [
     { role: "system", content: systemPrompt(buildContext(contextItems)) },
     ...history,
@@ -738,11 +933,9 @@ async function handleChat(req, res) {
 
   try {
     const answer = await runProviders(messages);
-    const body = { answer: plainTextAnswer(answer) };
-    if (process.env.CHAT_DEBUG_CONTEXT === "true") body.usedContextIds = contextItems.map((item) => item.id);
-    ok(res, body);
+    chatOk(res, answer, { contextItems });
   } catch (_error) {
-    ok(res, { answer: plainTextAnswer(deterministicFallbackAnswer(message, contextItems)), fallback: true });
+    chatOk(res, deterministicFallbackAnswer(message, contextItems), { contextItems, fallback: true });
   }
 }
 
@@ -782,8 +975,9 @@ function serveStatic(req, res, url) {
   }
   const ext = path.extname(filePath).toLowerCase();
   res.setHeader("Content-Type", MIME_TYPES[ext] || "application/octet-stream");
+  Object.entries(STATIC_SECURITY_HEADERS).forEach(([key, value]) => res.setHeader(key, value));
   if ([".webp", ".png", ".jpg", ".jpeg", ".pdf", ".css", ".js"].includes(ext)) {
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   } else {
     res.setHeader("Cache-Control", "no-cache");
   }
@@ -793,7 +987,7 @@ function serveStatic(req, res, url) {
 async function requestHandler(req, res) {
   const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
   if (url.pathname.startsWith("/api/")) {
-    applyCors(req, res);
+    applyCors(req, res, url.pathname);
     if (req.method === "OPTIONS") {
       res.writeHead(204);
       res.end();
