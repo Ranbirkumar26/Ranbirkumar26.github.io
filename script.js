@@ -54,6 +54,8 @@
     if (!target) return;
     e.preventDefault();
     animateScrollTo(target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET);
+    revealSectionNow(target);
+    scheduleRevealCheck();
     if (history.pushState) history.pushState(null, "", "#" + id);
   });
 
@@ -90,6 +92,22 @@
       }
     });
   }
+  function revealSectionNow(section) {
+    if (!section || !revealEls.length) return;
+    var batch = 0;
+    if (section.classList && section.classList.contains("reveal") && !section.classList.contains("in")) {
+      revealElement(section, batch++);
+    }
+    section.querySelectorAll(".reveal").forEach(function (el) {
+      if (!el.classList.contains("in")) revealElement(el, batch++);
+    });
+  }
+  function scheduleRevealCheck() {
+    requestAnimationFrame(revealVisibleNow);
+    setTimeout(revealVisibleNow, 120);
+    setTimeout(revealVisibleNow, 420);
+    setTimeout(revealVisibleNow, 760);
+  }
   if ("IntersectionObserver" in window && !reducedMotion) {
     io = new IntersectionObserver(
       function (entries) {
@@ -105,11 +123,14 @@
     );
     revealEls.forEach(function (el) { io.observe(el); });
     revealVisibleNow();
-    requestAnimationFrame(revealVisibleNow);
-    setTimeout(revealVisibleNow, 360);
+    scheduleRevealCheck();
+    if (location.hash) revealSectionNow(document.getElementById(location.hash.slice(1)));
     window.addEventListener("pageshow", revealVisibleNow);
-    window.addEventListener("hashchange", function () { setTimeout(revealVisibleNow, 160); });
-    window.addEventListener("popstate", function () { setTimeout(revealVisibleNow, 160); });
+    window.addEventListener("hashchange", function () {
+      revealSectionNow(document.getElementById(location.hash.slice(1)));
+      scheduleRevealCheck();
+    });
+    window.addEventListener("popstate", scheduleRevealCheck);
   } else {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
@@ -490,7 +511,8 @@
       }
       document.querySelectorAll("[data-health]").forEach(function (badge) {
         var health = healthState(status[badge.getAttribute("data-health")]);
-        badge.classList.remove("health-down", "health-stale");
+        badge.classList.remove("health-up", "health-down", "health-stale");
+        if (health.tone === "up" && !healthStale) badge.classList.add("health-up");
         if (health.tone === "down") badge.classList.add("health-down");
         if (health.tone === "stale" || (healthStale && health.tone === "up")) badge.classList.add("health-stale");
         badge.textContent = healthStale && health.tone === "up" ? "status stale" : health.label;

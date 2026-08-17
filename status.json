@@ -1,6 +1,15 @@
 {
-  "checked": "2026-08-17T17:42:19Z",
-  "docqa": { "up": false },
-  "semanticache": { "up": false },
-  "craveconnect": { "up": false }
+  "checked": "2026-08-16T20:36:00Z",
+  "docqa": {
+    "state": "access_gated",
+    "label": "access gated"
+  },
+  "semanticache": {
+    "state": "sleeping",
+    "label": "sleeping demo"
+  },
+  "craveconnect": {
+    "state": "sleeping",
+    "label": "sleeping demo"
+  }
 }

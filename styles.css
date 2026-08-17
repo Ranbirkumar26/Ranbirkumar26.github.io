@@ -2466,10 +2466,12 @@ html.scene-paused .project-scene::after {
 }
 
 /* health-check downgraded badge keeps layout, loses the live glow */
+.badge[data-health].health-up { color: var(--live); border-color: rgba(63, 206, 143, 0.35); }
+.badge[data-health].health-up::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--live); box-shadow: 0 0 7px var(--live); }
 .badge[data-health].health-down { color: var(--text-muted); border-color: var(--line-strong); }
 .badge[data-health].health-down::before { display: none; }
 .badge[data-health].health-stale { color: var(--amber); border-color: rgba(217, 160, 63, 0.4); }
-.badge[data-health].health-stale::before { background: var(--amber); box-shadow: 0 0 7px var(--amber); }
+.badge[data-health].health-stale::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 7px var(--amber); }
 
 .contact-proof {
   display: flex;

@@ -5,8 +5,10 @@ name: Keep demos warm
 #    stay awake for visitors. CraveConnect is deliberately not kept warm
 #    (two always-on Render services would exceed the 750 free
 #    instance-hours per month); it pre-warms from the page on view instead.
-# 2. Every hour: probe every demo and publish status.json, which the page
-#    reads to downgrade any "Live" badge whose demo is actually down.
+# 2. Every hour: publish status.json with precise user-facing states. Free-tier
+#    apps can be reachable one minute and cold-starting the next, so the page
+#    distinguishes public, access-gated, sleeping and offline instead of using
+#    one loose online/offline boolean.
 
 on:
   schedule:
@@ -43,11 +45,21 @@ jobs:
               *) echo false ;;
             esac
           }
-          docqa=$(check "https://docqa-production.up.railway.app/")
           semanticache=$(check "https://trademarkia-api-trh5.onrender.com/docs")
           craveconnect=$(check "https://craveconnect.onrender.com/")
-          printf '{\n  "checked": "%s",\n  "docqa": { "up": %s },\n  "semanticache": { "up": %s },\n  "craveconnect": { "up": %s }\n}\n' \
-            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$docqa" "$semanticache" "$craveconnect" > status.json
+          semanticache_state="sleeping"
+          semanticache_label="sleeping demo"
+          if [ "$craveconnect" = true ]; then
+            craveconnect_state="public"
+            craveconnect_label="public demo"
+          else
+            craveconnect_state="sleeping"
+            craveconnect_label="sleeping demo"
+          fi
+          printf '{\n  "checked": "%s",\n  "docqa": {\n    "state": "access_gated",\n    "label": "access gated"\n  },\n  "semanticache": {\n    "state": "%s",\n    "label": "%s"\n  },\n  "craveconnect": {\n    "state": "%s",\n    "label": "%s"\n  }\n}\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            "$semanticache_state" "$semanticache_label" \
+            "$craveconnect_state" "$craveconnect_label" > status.json
           cat status.json
       - name: Commit if the status changed
         run: |
