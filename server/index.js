@@ -99,6 +99,8 @@ const MIME_TYPES = {
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
+  ".mp4": "video/mp4",
+  ".mov": "video/quicktime",
   ".pdf": "application/pdf",
   ".txt": "text/plain; charset=utf-8",
   ".xml": "application/xml; charset=utf-8",
@@ -976,7 +978,7 @@ function serveStatic(req, res, url) {
   const ext = path.extname(filePath).toLowerCase();
   res.setHeader("Content-Type", MIME_TYPES[ext] || "application/octet-stream");
   Object.entries(STATIC_SECURITY_HEADERS).forEach(([key, value]) => res.setHeader(key, value));
-  if ([".webp", ".png", ".jpg", ".jpeg", ".pdf", ".css", ".js"].includes(ext)) {
+  if ([".webp", ".png", ".jpg", ".jpeg", ".mp4", ".mov", ".pdf", ".css", ".js"].includes(ext)) {
     res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   } else {
     res.setHeader("Cache-Control", "no-cache");

@@ -23,8 +23,8 @@
     "tags": ["video resume", "portfolio", "resume"],
     "roleTags": [],
     "priority": 7,
-    "content": "Ranbir's portfolio includes an embedded Video Resume section at #video-resume. It is a 2 minute 36 second MP4 that gives spoken context beyond the PDF resume. It is part of the personal portfolio, not a role-specific page.",
-    "evidence": ["User-provided HitWicket_resume_vid.mp4", "Portfolio Video Resume section"]
+    "content": "Ranbir's portfolio includes an embedded Video Resume section at #video-resume. It is an about 2 minute MP4 that gives spoken context beyond the PDF resume. It is part of the personal portfolio, not a role-specific page.",
+    "evidence": ["User-provided video resume file", "Portfolio Video Resume section"]
   },
   {
     "id": "profile.offhours",
