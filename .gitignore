@@ -15,3 +15,7 @@ brag-output-*/
 # Runtime backend state
 data/*
 !data/.gitkeep
+
+# Tooling scratch output
+.playwright-mcp/
+supabase/.temp*/

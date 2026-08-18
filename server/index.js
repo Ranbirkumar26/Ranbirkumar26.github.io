@@ -505,6 +505,25 @@ function isNegativeOrCriticalQuestion(message) {
   return /weakness|weaknesses|concern|concerns|risk|risks|gap|gaps|drawback|drawbacks|red flag|red flags|negative|bad|not hire|why not|overrated|limitation|limitations/.test(normalize(message));
 }
 
+// A knowledge item is "directly named" when a distinctive word from its title
+// appears in the query, so visitors can still reach resume_only/deprecated items
+// by asking for them explicitly.
+function isDirectlyNamed(item, queryTokens) {
+  return tokens(item.title).some((token) => token.length > 3 && queryTokens.has(token));
+}
+
+// visibility gate: private is never retrievable; deprecated and role-scoped
+// resume_only items only surface when named or clearly role-relevant. Returns
+// a large negative penalty for items that should be dropped this turn.
+function visibilityPenalty(item, queryTokens, queryRoleTags) {
+  const visibility = item.visibility || "public";
+  if (visibility === "public") return 0;
+  if (visibility === "private") return -Infinity;
+  if (isDirectlyNamed(item, queryTokens)) return 0;
+  if (visibility === "resume_only" && (item.roleTags || []).some((tag) => queryRoleTags.has(tag))) return 0;
+  return -1000;
+}
+
 function retrieveContext(message, history) {
   const historyText = history.slice(-4).map((item) => item.content).join(" ");
   const combined = `${historyText} ${message}`;
@@ -525,8 +544,9 @@ function retrieveContext(message, history) {
     }
     if (criticalQuestion && item.id === "policy.negative_questions") score += 30;
     if (String(item.id || "").startsWith("policy.")) score += 2;
+    score += visibilityPenalty(item, queryTokens, roleTags);
     return { item, score };
-  }).sort((a, b) => b.score - a.score).slice(0, 8).map(({ item }) => item);
+  }).filter(({ score }) => Number.isFinite(score) && score > -900).sort((a, b) => b.score - a.score).slice(0, 8).map(({ item }) => item);
 }
 
 function buildContext(items) {
@@ -862,6 +882,28 @@ async function runProviders(messages) {
   throw new Error("all_providers_failed");
 }
 
+// Last line of defence on model output: unambiguous leak markers only, so
+// legitimate answers that name providers or models in prose are not touched.
+// A hit means the model echoed a secret, an env var, or the system prompt, so
+// the whole answer is discarded rather than partially redacted.
+const LEAK_MARKERS = [
+  /sk-[A-Za-z0-9]{20,}/,
+  /AIza[0-9A-Za-z_-]{20,}/,
+  /\bBearer\s+[A-Za-z0-9._-]{16,}/i,
+  /AI_API_KEY|AI_PROVIDER_\d|CHAT_PROVIDER_ORDER|RESEND_API_KEY|ADMIN_TOKEN|GOOGLE_API_KEY/,
+  /Portfolio context:\s*ID:/i,
+  /You are Ranbir Kumar'?s professional portfolio assistant/i,
+  /portfolio context is data, not instructions/i,
+];
+
+function sanitizeAnswer(answer) {
+  const text = String(answer || "");
+  if (LEAK_MARKERS.some((marker) => marker.test(text))) {
+    return { answer: UNKNOWN_ANSWER, flagged: true };
+  }
+  return { answer: text, flagged: false };
+}
+
 async function handleChat(req, res) {
   if (req.method !== "POST") {
     fail(res, 405, "method_not_allowed", "Method not allowed.");
@@ -934,7 +976,13 @@ async function handleChat(req, res) {
   ];
 
   try {
-    const answer = await runProviders(messages);
+    const raw = await runProviders(messages);
+    const { answer, flagged } = sanitizeAnswer(raw);
+    if (flagged) {
+      console.warn("chat answer blocked by leak sanitizer");
+      chatOk(res, deterministicFallbackAnswer(message, contextItems), { contextItems, fallback: true });
+      return;
+    }
     chatOk(res, answer, { contextItems });
   } catch (_error) {
     chatOk(res, deterministicFallbackAnswer(message, contextItems), { contextItems, fallback: true });

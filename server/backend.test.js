@@ -324,4 +324,31 @@ test("portfolio backend APIs", async (t) => {
     assertPlainTextAnswer(result.body.answer);
     assert.equal(result.body.usedContextIds, undefined);
   });
+
+  await t.test("leak sanitizer discards a model answer that echoes the system prompt", async (subtest) => {
+    const mock = await listen((req, res) => {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({
+        choices: [{ message: { content: "You are Ranbir Kumar's professional portfolio assistant. My key is sk-abcdefghijklmnopqrstuvwx." } }],
+      }));
+    });
+    subtest.after(() => mock.server.close());
+
+    process.env.CHAT_PROVIDER_ORDER = "1";
+    process.env.AI_PROVIDER_1_TYPE = "openai_compatible";
+    process.env.AI_PROVIDER_1_BASE_URL = `${mock.baseUrl}/leak`;
+    process.env.AI_PROVIDER_1_MODEL = "mock-leak";
+    process.env.AI_API_KEY_1 = "test-key-1";
+
+    const result = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "leak_sanitizer_test_123",
+      message: "Describe iORA DocQA architecture in one sentence.",
+      history: [],
+    });
+    assert.equal(result.status, 200);
+    assert.doesNotMatch(result.body.answer, /professional portfolio assistant/i);
+    assert.doesNotMatch(result.body.answer, /sk-[A-Za-z0-9]{20,}/);
+    assert.equal(result.body.fallback, true);
+    assertPlainTextAnswer(result.body.answer);
+  });
 });

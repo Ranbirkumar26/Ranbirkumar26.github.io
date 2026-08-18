@@ -2,46 +2,130 @@
   {
     "id": "skills.ai_rag",
     "title": "AI, LLMs and RAG",
-    "tags": ["skills", "rag", "llm", "semantic search", "explainable ai", "few-shot"],
-    "roleTags": ["ai_ml", "rag", "research"],
+    "tags": [
+      "skills",
+      "rag",
+      "llm",
+      "semantic search",
+      "explainable ai",
+      "few-shot"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "rag",
+      "research"
+    ],
     "priority": 9,
     "content": "Ranbir's AI, LLM and RAG skills shown on the portfolio and resumes include RAG pipeline design, grounded generation, semantic search, vector embeddings, pgvector, FAISS, Qdrant, LangChain, LlamaIndex, LangGraph, Model Context Protocol, tool/function calling, local LLM inference with Ollama, prompt engineering, text-to-SQL, semantic caching, explainable AI with SHAP, LIME and Grad-CAM, and few-shot learning. The evidence ties these to iORA DocQA, SemantiCache, CraveConnect, EstateOS AI, and Explainable-Fewshot.",
-    "evidence": ["Skills section", "Supplied resumes", "GitHub public API"]
+    "evidence": [
+      "Skills section",
+      "Supplied resumes",
+      "GitHub public API"
+    ],
+    "visibility": "public"
   },
   {
     "id": "skills.cv",
     "title": "Computer vision",
-    "tags": ["skills", "computer vision", "yolov8", "resnet", "midas", "jetson"],
-    "roleTags": ["computer_vision", "robotics", "embedded"],
+    "tags": [
+      "skills",
+      "computer vision",
+      "yolov8",
+      "resnet",
+      "midas",
+      "jetson"
+    ],
+    "roleTags": [
+      "computer_vision",
+      "robotics",
+      "embedded"
+    ],
     "priority": 10,
     "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the Autonomous Patrolling Robot patent track.",
-    "evidence": ["Skills section", "Experience section", "Robotics section", "Supplied resumes"]
+    "evidence": [
+      "Skills section",
+      "Experience section",
+      "Robotics section",
+      "Supplied resumes"
+    ],
+    "visibility": "public"
   },
   {
     "id": "skills.backend",
     "title": "Backend and deployment",
-    "tags": ["skills", "backend", "fastapi", "flask", "docker", "postgresql"],
-    "roleTags": ["full_stack", "backend", "rag"],
+    "tags": [
+      "skills",
+      "backend",
+      "fastapi",
+      "flask",
+      "docker",
+      "postgresql"
+    ],
+    "roleTags": [
+      "full_stack",
+      "backend",
+      "rag"
+    ],
     "priority": 8,
     "content": "Backend, software engineering, and deployment skills shown on the portfolio and resumes include Python, TypeScript, JavaScript, Java, SQL, FastAPI, Flask, Node.js, Next.js, REST API design, WebSockets, Server-Sent Events, microservices, background workers with Celery and Redis, PostgreSQL, Supabase Auth/RLS/Storage/Realtime/Edge Functions, DuckDB, SQLite, Docker, GitHub Actions CI/CD, Linux, Vercel, Netlify, Railway, Render, authentication and authorization with RBAC and RLS, caching, system design, modular architecture, and code review.",
-    "evidence": ["Skills section", "Supplied resumes", "GitHub public API"]
+    "evidence": [
+      "Skills section",
+      "Supplied resumes",
+      "GitHub public API"
+    ],
+    "visibility": "public"
   },
   {
     "id": "skills.data",
     "title": "Data and tooling",
-    "tags": ["skills", "data", "power bi", "pandas", "numpy", "sql", "selenium"],
-    "roleTags": ["data", "software"],
+    "tags": [
+      "skills",
+      "data",
+      "power bi",
+      "pandas",
+      "numpy",
+      "sql",
+      "selenium"
+    ],
+    "roleTags": [
+      "data",
+      "software"
+    ],
     "priority": 7,
     "content": "Data, testing, and analytics skills shown on the portfolio and resumes include Power BI with DAX and data modeling, Pandas, NumPy, SQL, exploratory data analysis, data cleaning, feature engineering, SMOTE, scaling, model evaluation with ROC-AUC, precision, recall, F1 and confusion matrix, Gaussian Mixture Models, PCA, clustering, ETL and batch pipelines, data validation, time-series sensor analysis, baseline-versus-treatment experimentation, Playwright, Selenium, pytest, Jasmine, k6 load/stress/spike testing, and Burp Suite security testing.",
-    "evidence": ["Skills section", "Supplied resumes"]
+    "evidence": [
+      "Skills section",
+      "Supplied resumes"
+    ],
+    "visibility": "public"
   },
   {
     "id": "skills.role_fit",
     "title": "Role fit areas",
-    "tags": ["skills", "role fit", "hiring", "ai engineer", "sde", "data science", "computer vision"],
-    "roleTags": ["ai_ml", "computer_vision", "full_stack", "data", "software", "research"],
+    "tags": [
+      "skills",
+      "role fit",
+      "hiring",
+      "ai engineer",
+      "sde",
+      "data science",
+      "computer vision"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "computer_vision",
+      "full_stack",
+      "data",
+      "software",
+      "research"
+    ],
     "priority": 9,
     "content": "Supplied resumes target several role families: AI Engineer, LLM Engineer, Machine Learning Engineer, Deep Learning Engineer, Computer Vision Engineer, Software Development Engineer, Backend Engineer, Platform Engineer, Data Scientist, Data Engineer, and Analytics Engineer. Role-fit evidence should be tied to matching proof: DocQA and SemantiCache for RAG/LLM roles; Proeffico, Annadata, Autonomous Patrolling Robot, and rover perception for CV/robotics roles; IAMAI CMS, EstateOS AI, Basketeer, Smart Task Manager, and ShareKart for software/backend roles; CraveConnect, Apple Quality Detection, and IAMAI performance work for data roles.",
-    "evidence": ["Supplied resumes", "Projects section", "Experience section"]
+    "evidence": [
+      "Supplied resumes",
+      "Projects section",
+      "Experience section"
+    ],
+    "visibility": "public"
   }
 ]

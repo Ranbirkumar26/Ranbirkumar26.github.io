@@ -8,6 +8,7 @@
     "dev": "PORT=8787 node server/index.js",
     "test": "node --test server/backend.test.js",
     "check": "node --check server/index.js && node --check script.js && node --check script.min.js",
+    "build:knowledge": "node scripts/build-knowledge.mjs",
     "build:assets": "npx -y esbuild script.js --minify --outfile=script.min.js && npx -y esbuild styles.css --minify --outfile=styles.min.css"
   },
   "engines": {

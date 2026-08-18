@@ -2,28 +2,71 @@
   {
     "id": "research.fewshot",
     "title": "Few-Shot Learning with Explainable AI",
-    "tags": ["research", "few-shot", "medical imaging", "explainable ai", "grad-cam"],
-    "roleTags": ["research", "ai_ml"],
+    "tags": [
+      "research",
+      "few-shot",
+      "medical imaging",
+      "explainable ai",
+      "grad-cam"
+    ],
+    "roleTags": [
+      "research",
+      "ai_ml"
+    ],
     "priority": 9,
     "content": "Ranbir has a peer-reviewed journal manuscript under review titled Few-Shot Learning with Explainable AI. The portfolio and resumes describe it as an N-way K-shot classifier for low-data hospital-sourced medical diagnosis, reaching 93 percent accuracy. It uses Prototypical Networks over a ResNet-18 encoder trained end to end, episodic N-way K-shot sampling, Euclidean-distance inference in learned embedding space, seeded episodic evaluation, and interpretability with LIME, SHAP, and Grad-CAM attribution. Companion code is shareable through the Explainable-Fewshot repository.",
-    "evidence": ["Research section", "Explainable-Fewshot repository link", "Supplied resumes", "GitHub public API"]
+    "evidence": [
+      "Research section",
+      "Explainable-Fewshot repository link",
+      "Supplied resumes",
+      "GitHub public API"
+    ],
+    "visibility": "public"
   },
   {
     "id": "research.terrain",
     "title": "Vision-Based Terrain Analysis",
-    "tags": ["research", "terrain", "robotics", "yolov8", "midas", "edge"],
-    "roleTags": ["research", "robotics", "computer_vision", "embedded"],
+    "tags": [
+      "research",
+      "terrain",
+      "robotics",
+      "yolov8",
+      "midas",
+      "edge"
+    ],
+    "roleTags": [
+      "research",
+      "robotics",
+      "computer_vision",
+      "embedded"
+    ],
     "priority": 9,
     "content": "Ranbir has an accepted publication forthcoming titled Vision-Based Terrain Analysis. The portfolio and resumes describe it as a real-time multi-model perception system for terrain classification in autonomous navigation, combining YOLOv8 detection with MiDaS monocular depth estimation and deployment on embedded edge hardware. It grew from rover work.",
-    "evidence": ["Research section", "Robotics section", "Supplied resumes"]
+    "evidence": [
+      "Research section",
+      "Robotics section",
+      "Supplied resumes"
+    ],
+    "visibility": "public"
   },
   {
     "id": "research.patent",
     "title": "Autonomous Patrolling Robot patent",
-    "tags": ["patent", "robotics", "autonomous navigation"],
-    "roleTags": ["robotics", "research"],
+    "tags": [
+      "patent",
+      "robotics",
+      "autonomous navigation"
+    ],
+    "roleTags": [
+      "robotics",
+      "research"
+    ],
     "priority": 7,
     "content": "The portfolio and resumes list a filed patent for an AI-powered Autonomous Campus Surveillance Robot, shown on the portfolio as Autonomous Patrolling Robot. Public shareable details say it combines YOLO detection for missing ID cards, fire or smoke, and overcrowding, action-recognition models for fight detection, real-time security alerts, and embedded deployment on Jetson Xavier NX and Raspberry Pi with LiDAR and ultrasonic navigation using Python, OpenCV, PyTorch, and ROS. Filing specifics remain confidential until public.",
-    "evidence": ["Research section", "Supplied resumes"]
+    "evidence": [
+      "Research section",
+      "Supplied resumes"
+    ],
+    "visibility": "public"
   }
 ]
