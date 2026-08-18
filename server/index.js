@@ -993,6 +993,11 @@ function handleHealth(_req, res) {
   ok(res, {
     status: "ok",
     checkedAt: new Date().toISOString(),
+    // Render injects RENDER_GIT_COMMIT; lets a black-box health check confirm
+    // exactly which commit is deployed, since visibility/sanitizer changes are
+    // not otherwise observable from outside.
+    commit: clean(process.env.RENDER_GIT_COMMIT || process.env.GIT_COMMIT, 40) || null,
+    features: ["visibility-gate", "leak-sanitizer"],
     knowledgeItems: knowledgeItems.length,
     providersConfigured: configuredProviders().length,
     contactEmailConfigured: Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL),
