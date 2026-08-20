@@ -4,7 +4,9 @@ const http = require("node:http");
 const path = require("node:path");
 
 const ROOT = path.resolve(__dirname, "..");
-loadDotEnv(path.join(ROOT, ".env"));
+if (process.env.SKIP_DOTENV !== "true") {
+  loadDotEnv(path.join(ROOT, ".env"));
+}
 
 const PORT = Number(process.env.PORT || 8787);
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT, "data"));

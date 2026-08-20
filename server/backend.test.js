@@ -7,6 +7,7 @@ const test = require("node:test");
 
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "rk-portfolio-backend-"));
 process.env.DATA_DIR = tmpDir;
+process.env.SKIP_DOTENV = "true";
 process.env.CHAT_PROVIDER_ORDER = "99";
 process.env.ADMIN_TOKEN = "test-admin-token";
 process.env.ALLOWED_ORIGINS = "*";

@@ -1082,6 +1082,7 @@
 
     function openChat(showBubble) {
       if (!chatPanel || !chatLauncher) return;
+      chatbot.classList.add("chatbot-open");
       chatPanel.hidden = false;
       chatLauncher.setAttribute("aria-expanded", "true");
       if (chatNudge) chatNudge.hidden = true;
@@ -1096,6 +1097,7 @@
 
     function closeChat() {
       if (!chatPanel || !chatLauncher) return;
+      chatbot.classList.remove("chatbot-open");
       chatPanel.hidden = true;
       chatLauncher.setAttribute("aria-expanded", "false");
       if (chatTryBubble) chatTryBubble.hidden = true;
@@ -1134,42 +1136,94 @@
 
       var endpoint = resolvePortfolioEndpoint(chatbot.getAttribute("data-chat-endpoint"));
       var headers = { "Content-Type": "application/json" };
+      var payload = JSON.stringify({
+        conversationId: chatId(),
+        message: text,
+        history: chatHistoryForApi()
+      });
 
-      fetch(endpoint, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify({
-          conversationId: chatId(),
-          message: text,
-          history: chatHistoryForApi()
-        })
-      })
-        .then(function (response) {
-          return response.json().catch(function () {
-            return { ok: false, error: chatFallback };
-          }).then(function (body) {
-            if (!response.ok || !body.ok) {
-              var safeError = new Error(portfolioApiError(body, chatFallback));
-              safeError.safeChatError = true;
-              throw safeError;
+      // The chat backend runs on a free tier that sleeps when idle. The first
+      // request after a nap can 502 while the instance boots, then succeed a few
+      // seconds later. So transient gateway errors are retried a couple of times
+      // and the status line explains the wait rather than reading as a failure.
+      var MAX_ATTEMPTS = 3;
+      var RETRY_DELAYS = [3000, 5000];
+      var WAKING_MESSAGE = "Waking the assistant. First reply can take up to 20 seconds.";
+      var wakingTimer = null;
+
+      function isWakingStatus(status) {
+        return status === 502 || status === 503 || status === 504 || status === 0;
+      }
+
+      function armWakingNotice() {
+        if (wakingTimer) return;
+        wakingTimer = window.setTimeout(function () {
+          if (chatSending) setChatStatus(WAKING_MESSAGE);
+        }, 4000);
+      }
+
+      function clearWakingNotice() {
+        if (wakingTimer) {
+          window.clearTimeout(wakingTimer);
+          wakingTimer = null;
+        }
+      }
+
+      function finish() {
+        clearWakingNotice();
+        setChatSending(false);
+        if (chatInput) chatInput.value = "";
+      }
+
+      function onSuccess(body) {
+        clearWakingNotice();
+        hideTyping();
+        addChatMessage("assistant", body.answer || chatFallback, { sources: body.sources });
+        setChatStatus("");
+        finish();
+      }
+
+      function onError(error) {
+        clearWakingNotice();
+        hideTyping();
+        addChatMessage("assistant", error && error.safeChatError ? error.message : chatFallback, { error: true, retry: true });
+        setChatStatus("Connection issue. Retry when ready.");
+        finish();
+      }
+
+      function attempt(attemptNo) {
+        armWakingNotice();
+        fetch(endpoint, { method: "POST", headers: headers, body: payload })
+          .then(function (response) {
+            // Retry only on gateway/wake statuses; real errors (400, 429) fall through.
+            if (isWakingStatus(response.status) && attemptNo < MAX_ATTEMPTS) {
+              setChatStatus(WAKING_MESSAGE);
+              window.setTimeout(function () { attempt(attemptNo + 1); }, RETRY_DELAYS[attemptNo - 1] || 5000);
+              return null;
             }
-            return body;
+            return response.json().catch(function () {
+              return { ok: false, error: chatFallback };
+            }).then(function (body) {
+              if (!response.ok || !body.ok) {
+                var safeError = new Error(portfolioApiError(body, chatFallback));
+                safeError.safeChatError = true;
+                throw safeError;
+              }
+              onSuccess(body);
+            });
+          })
+          .catch(function (error) {
+            // Network-level failure (no response). Treat like a wake status and retry.
+            if (!(error && error.safeChatError) && attemptNo < MAX_ATTEMPTS) {
+              setChatStatus(WAKING_MESSAGE);
+              window.setTimeout(function () { attempt(attemptNo + 1); }, RETRY_DELAYS[attemptNo - 1] || 5000);
+              return;
+            }
+            onError(error);
           });
-        })
-        .then(function (body) {
-          hideTyping();
-          addChatMessage("assistant", body.answer || chatFallback, { sources: body.sources });
-          setChatStatus("");
-        })
-        .catch(function (error) {
-          hideTyping();
-          addChatMessage("assistant", error && error.safeChatError ? error.message : chatFallback, { error: true, retry: true });
-          setChatStatus("Connection issue. Retry when ready.");
-        })
-        .finally(function () {
-          setChatSending(false);
-          if (chatInput) chatInput.value = "";
-        });
+      }
+
+      attempt(1);
     }
 
     renderChatMessages();
