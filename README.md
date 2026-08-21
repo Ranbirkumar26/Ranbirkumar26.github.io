@@ -5,10 +5,10 @@ and robotics.
 
 [Watch Video Resume](https://ranbirkumar26.github.io/#video-resume)
 
-Plain HTML, CSS and JavaScript on the frontend. The contact form and portfolio
-RAG assistant currently use the zero-dependency Node backend in `server/`.
-Supabase Edge Functions live in `supabase/functions/` and are ready to become
-production once the `bir_portfolio` Supabase project is unpaused.
+Plain HTML, CSS and JavaScript on the frontend. The portfolio RAG assistant
+uses the `portfolio-chat` Supabase Edge Function as its primary backend, with
+the zero-dependency Node backend in `server/` as fallback. The contact form uses
+the configured portfolio backend endpoint.
 
 Local preview:
 
@@ -30,11 +30,11 @@ Open `http://localhost:8787`. The backend serves the site and exposes:
 - `GET /api/messages` with `ADMIN_TOKEN`
 - `GET /api/health`
 
-GitHub Pages uses `https://ranbir-portfolio-backend.onrender.com` as the
-portfolio backend origin through the `portfolio-api-base` meta tag until
-Supabase deployment succeeds.
+GitHub Pages keeps `https://ranbir-portfolio-backend.onrender.com` as the
+fallback portfolio backend origin through the `portfolio-api-base` meta tag.
+The chat widget first tries the deployed `bir_portfolio` Supabase Edge Function.
 
-Supabase target after unpause:
+Supabase target:
 
 ```
 supabase secrets set --project-ref qhnmoaqdvymgpfscqxcw --env-file .env

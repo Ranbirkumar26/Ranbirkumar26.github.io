@@ -1232,8 +1232,23 @@
       if (!retrying) addChatMessage("user", text);
       showTyping();
 
-      var endpoint = resolvePortfolioEndpoint(chatbot.getAttribute("data-chat-endpoint"));
-      var headers = { "Content-Type": "application/json" };
+      // Primary target is the Supabase edge function (no cold start); the Render
+      // Node backend stays as an automatic fallback if the edge function is
+      // unreachable. Each target carries its own headers.
+      var chatTargets = [];
+      var primaryUrl = chatbot.getAttribute("data-chat-primary");
+      var primaryKey = chatbot.getAttribute("data-chat-primary-key");
+      if (primaryUrl) {
+        var primaryHeaders = { "Content-Type": "application/json" };
+        if (primaryKey) {
+          primaryHeaders["apikey"] = primaryKey;
+          primaryHeaders["Authorization"] = "Bearer " + primaryKey;
+        }
+        chatTargets.push({ url: primaryUrl, headers: primaryHeaders });
+      }
+      var fallbackUrl = resolvePortfolioEndpoint(chatbot.getAttribute("data-chat-endpoint"));
+      if (fallbackUrl) chatTargets.push({ url: fallbackUrl, headers: { "Content-Type": "application/json" } });
+      if (!chatTargets.length) chatTargets.push({ url: resolvePortfolioEndpoint("/api/chat"), headers: { "Content-Type": "application/json" } });
       var payload = JSON.stringify({
         conversationId: chatId(),
         message: text,
@@ -1299,19 +1314,34 @@
         finish();
       }
 
-      function attempt(attemptNo) {
+      // On a transient (wake/network) failure, retry the same target with backoff;
+      // once its attempts are spent, advance to the next target before giving up.
+      function transientRetry(targetIndex, attemptNo, error) {
+        if (attemptNo < MAX_ATTEMPTS) {
+          setChatStatus(WAKING_MESSAGE);
+          window.setTimeout(function () { attempt(targetIndex, attemptNo + 1); }, RETRY_DELAYS[attemptNo - 1] || 5000);
+          return;
+        }
+        if (targetIndex + 1 < chatTargets.length) {
+          attempt(targetIndex + 1, 1);
+          return;
+        }
+        onError(error);
+      }
+
+      function attempt(targetIndex, attemptNo) {
         armWakingNotice();
+        var target = chatTargets[targetIndex];
         var controller = window.AbortController ? new AbortController() : null;
         var timeout = controller ? window.setTimeout(function () {
           controller.abort();
         }, FETCH_TIMEOUT) : null;
-        fetch(endpoint, { method: "POST", headers: headers, body: payload, signal: controller ? controller.signal : undefined })
+        fetch(target.url, { method: "POST", headers: target.headers, body: payload, signal: controller ? controller.signal : undefined })
           .then(function (response) {
             if (timeout) window.clearTimeout(timeout);
-            // Retry only on gateway/wake statuses; real errors (400, 429) fall through.
-            if (isWakingStatus(response.status) && attemptNo < MAX_ATTEMPTS) {
-              setChatStatus(WAKING_MESSAGE);
-              window.setTimeout(function () { attempt(attemptNo + 1); }, RETRY_DELAYS[attemptNo - 1] || 5000);
+            // Retry/fallback only on gateway/wake statuses; real errors (400, 429) surface.
+            if (isWakingStatus(response.status)) {
+              transientRetry(targetIndex, attemptNo, null);
               return null;
             }
             return response.json().catch(function () {
@@ -1327,17 +1357,16 @@
           })
           .catch(function (error) {
             if (timeout) window.clearTimeout(timeout);
-            // Network-level failure (no response). Treat like a wake status and retry.
-            if (!(error && error.safeChatError) && attemptNo < MAX_ATTEMPTS) {
-              setChatStatus(WAKING_MESSAGE);
-              window.setTimeout(function () { attempt(attemptNo + 1); }, RETRY_DELAYS[attemptNo - 1] || 5000);
+            // Network-level failure (no response): retry this target, then fall back.
+            if (!(error && error.safeChatError)) {
+              transientRetry(targetIndex, attemptNo, error);
               return;
             }
             onError(error);
           });
       }
 
-      attempt(1);
+      attempt(0, 1);
     }
 
     renderChatMessages();
