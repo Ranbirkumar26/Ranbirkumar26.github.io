@@ -19,8 +19,8 @@ grant select, insert, update on private.portfolio_chat_rate_limits to service_ro
 create or replace function public.portfolio_chat_bump_rate_limit(
   p_conversation_hash text,
   p_now timestamptz default now(),
-  p_window_limit integer default 12,
-  p_day_limit integer default 60,
+  p_window_limit integer default 30,
+  p_day_limit integer default 150,
   p_strict boolean default false
 )
 returns jsonb
@@ -30,8 +30,8 @@ set search_path = private, public
 as $$
 declare
   rec private.portfolio_chat_rate_limits%rowtype;
-  effective_window integer := case when p_strict then least(p_window_limit, 4) else p_window_limit end;
-  effective_day integer := case when p_strict then least(p_day_limit, 20) else p_day_limit end;
+  effective_window integer := case when p_strict then least(p_window_limit, 8) else p_window_limit end;
+  effective_day integer := case when p_strict then least(p_day_limit, 40) else p_day_limit end;
   current_day date := (p_now at time zone 'utc')::date;
   retry_after integer := 0;
 begin

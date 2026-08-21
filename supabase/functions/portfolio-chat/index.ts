@@ -78,8 +78,8 @@ function dayKey(now = new Date()) {
 function memoryBump(hash: string, strict: boolean) {
   const now = Date.now();
   const today = dayKey(new Date(now));
-  const windowLimit = strict ? 4 : 12;
-  const dayLimit = strict ? 20 : 60;
+  const windowLimit = strict ? 8 : 30;
+  const dayLimit = strict ? 40 : 150;
   const current = memoryRate.get(hash) ?? {
     windowStart: now,
     windowCount: 0,
@@ -116,8 +116,8 @@ async function rateLimit(admin: any, conversationId: string, strict: boolean) {
   const { data, error } = await admin.rpc("portfolio_chat_bump_rate_limit", {
     p_conversation_hash: hash,
     p_now: new Date().toISOString(),
-    p_window_limit: 12,
-    p_day_limit: 60,
+    p_window_limit: 30,
+    p_day_limit: 150,
     p_strict: strict,
   });
 
