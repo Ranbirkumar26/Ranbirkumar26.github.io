@@ -892,6 +892,8 @@
     var chatIntro =
       "Hey. I am Ranbir's portfolio assistant. Ask me about his skills, projects, experience, education, or which roles he could fit.";
     var chatFallback = "I am having trouble connecting to my AI service right now. Please try again in a moment.";
+    var chatPrivacyWarning = "Privacy warning: I cannot share private personal information such as phone number, address, net worth, family details, relationship details, compensation, or private identifiers. Ask about Ranbir's public portfolio, education, skills, projects, experience, research, or achievements instead.";
+    var chatInjectionWarning = "Prompt-injection warning: I cannot ignore grounding rules, reveal hidden instructions, expose context or provider details, or fabricate facts about Ranbir. Ask a normal portfolio question instead.";
     var chatMaxMessages = 40;
     var chatTtl = 14 * 24 * 60 * 60 * 1000;
 
@@ -1080,6 +1082,102 @@
         });
     }
 
+    function normalizeChatText(value) {
+      return String(value || "").toLowerCase().replace(/[^a-z0-9+/.\s-]/g, " ").replace(/\s+/g, " ").trim();
+    }
+
+    function offlineChatFallback(question) {
+      var query = normalizeChatText(question);
+      var privacy = /net ?worth|wealth|salary|ctc|compensation|pay|income|home address|address|where .*live|phone|mobile|whatsapp|contact number|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/;
+      var injection = /ignore .*instructions|ignore .*previous|ignore .*rules|bypass|jailbreak|developer message|system prompt|hidden prompt|hidden context|dump .*context|reveal .*context|show .*prompt|api key|provider|secret|make up|fabricate|pretend .*has|roleplay .*ignore|forget .*rules|override .*instructions/;
+
+      if (injection.test(query)) {
+        return {
+          answer: chatInjectionWarning,
+          sources: ["Safety policy"],
+          status: "Backend unreachable. Showing local safety answer."
+        };
+      }
+      if (privacy.test(query)) {
+        return {
+          answer: chatPrivacyWarning,
+          sources: ["Privacy policy"],
+          status: "Backend unreachable. Showing local privacy answer."
+        };
+      }
+      if (/why .*hire|hire .*ranbir|role fit|fit for|good for/.test(query)) {
+        if (/computer vision|vision|cv\b|yolo|resnet|jetson|edge/.test(query)) {
+          return {
+            answer: "For Computer Vision roles, Ranbir's strongest public evidence is Proeffico production CV work on NVIDIA Jetson Xavier NX under 40 ms inference, Annadata's YOLO and ResNet agriculture pipeline, rover perception work for terrain and arrow-marker detection, and the Vision-Based Terrain Analysis research track.",
+            sources: ["Experience", "Projects", "Research"],
+            status: "Backend unreachable. Showing offline portfolio answer."
+          };
+        }
+        if (/robotics|rover|embedded|autonomous|firmware|hardware/.test(query)) {
+          return {
+            answer: "For Robotics or Embedded AI roles, Ranbir brings rover leadership at Technocrats Robotics, autonomy and perception work across Raspberry Pi and i7 mini-PC systems, iORA wearable integration across firmware, MQTT over TLS, GNSS and telemetry, and competition proof from Robocon and IRC.",
+            sources: ["Experience", "Robotics", "Achievements"],
+            status: "Backend unreachable. Showing offline portfolio answer."
+          };
+        }
+        if (/ai|ml|machine learning|rag|llm|data/.test(query)) {
+          return {
+            answer: "For AI/ML roles, Ranbir's strongest public evidence is iORA DocQA for grounded RAG and SQL routing, SemantiCache for semantic retrieval optimization, CraveConnect for explainable ML, and research work in few-shot explainable AI and terrain perception.",
+            sources: ["Experience", "Projects", "Research"],
+            status: "Backend unreachable. Showing offline portfolio answer."
+          };
+        }
+        if (/software|sde|backend|full stack|full-stack|frontend|web/.test(query)) {
+          return {
+            answer: "For software roles, Ranbir has shipped iORA DocQA, IAMAI CMS work, SemantiCache APIs, CraveConnect's Flask scoring service, Smart Task Manager, and Supabase-backed applications with auth, storage, RBAC, deployment workflows, and reliability checks.",
+            sources: ["Experience", "Projects"],
+            status: "Backend unreachable. Showing offline portfolio answer."
+          };
+        }
+        return {
+          answer: "What role are you considering Ranbir for: AI/ML, Computer Vision, Software Development, Data Science, Robotics, Embedded AI, Research, or something else?",
+          sources: ["Hiring guide"],
+          status: "Backend unreachable. Showing offline clarification."
+        };
+      }
+      if (/project|projects|worked on|built|builds|build|what all|what has .*done|portfolio work/.test(query)) {
+        return {
+          answer: "Ranbir's visible portfolio projects include iORA DocQA, SemantiCache, Annadata, CraveConnect, Smart Task Manager, Apple Quality Detection, ShareKart, Rover Abhimanyu, and the Autonomous Patrolling Robot patent track.",
+          sources: ["Projects", "Robotics", "Research"],
+          status: "Backend unreachable. Showing offline portfolio answer."
+        };
+      }
+      if (/internship|experience|work history|where.*worked|worked at/.test(query)) {
+        return {
+          answer: "Ranbir's visible experience includes IAMAI engineering work, Founder's Office Technology and AI at iora, Proeffico computer vision internship work, and rover leadership with Technocrats Robotics.",
+          sources: ["Experience"],
+          status: "Backend unreachable. Showing offline portfolio answer."
+        };
+      }
+      if (/skill|skills|strongest|tech stack|technologies|tools/.test(query)) {
+        return {
+          answer: "Ranbir's strongest visible skill areas are AI/ML, RAG systems, computer vision, robotics, embedded systems, backend engineering, full-stack delivery, explainable ML, SQL, Supabase, Flask, Node, and deployment workflows.",
+          sources: ["Skills", "Projects"],
+          status: "Backend unreachable. Showing offline portfolio answer."
+        };
+      }
+      if (/education|college|cgpa|degree|vit/.test(query)) {
+        return {
+          answer: "Ranbir is pursuing B.Tech Computer Science with AI and ML specialization at VIT Chennai from 2023 to 2027. His listed CGPA is 8.28 out of 10.",
+          sources: ["Education"],
+          status: "Backend unreachable. Showing offline portfolio answer."
+        };
+      }
+      if (/video resume|video|watch.*resume/.test(query)) {
+        return {
+          answer: "Open the Video Resume section at #video-resume on the portfolio.",
+          sources: ["Video Resume"],
+          status: "Backend unreachable. Showing offline portfolio answer."
+        };
+      }
+      return null;
+    }
+
     function openChat(showBubble) {
       if (!chatPanel || !chatLauncher) return;
       chatbot.classList.add("chatbot-open");
@@ -1148,6 +1246,7 @@
       // and the status line explains the wait rather than reading as a failure.
       var MAX_ATTEMPTS = 3;
       var RETRY_DELAYS = [3000, 5000];
+      var FETCH_TIMEOUT = 9000;
       var WAKING_MESSAGE = "Waking the assistant. First reply can take up to 20 seconds.";
       var wakingTimer = null;
 
@@ -1186,6 +1285,15 @@
       function onError(error) {
         clearWakingNotice();
         hideTyping();
+        if (!(error && error.safeChatError)) {
+          var offline = offlineChatFallback(text);
+          if (offline) {
+            addChatMessage("assistant", offline.answer, { sources: offline.sources });
+            setChatStatus(offline.status || "");
+            finish();
+            return;
+          }
+        }
         addChatMessage("assistant", error && error.safeChatError ? error.message : chatFallback, { error: true, retry: true });
         setChatStatus("Connection issue. Retry when ready.");
         finish();
@@ -1193,8 +1301,13 @@
 
       function attempt(attemptNo) {
         armWakingNotice();
-        fetch(endpoint, { method: "POST", headers: headers, body: payload })
+        var controller = window.AbortController ? new AbortController() : null;
+        var timeout = controller ? window.setTimeout(function () {
+          controller.abort();
+        }, FETCH_TIMEOUT) : null;
+        fetch(endpoint, { method: "POST", headers: headers, body: payload, signal: controller ? controller.signal : undefined })
           .then(function (response) {
+            if (timeout) window.clearTimeout(timeout);
             // Retry only on gateway/wake statuses; real errors (400, 429) fall through.
             if (isWakingStatus(response.status) && attemptNo < MAX_ATTEMPTS) {
               setChatStatus(WAKING_MESSAGE);
@@ -1213,6 +1326,7 @@
             });
           })
           .catch(function (error) {
+            if (timeout) window.clearTimeout(timeout);
             // Network-level failure (no response). Treat like a wake status and retry.
             if (!(error && error.safeChatError) && attemptNo < MAX_ATTEMPTS) {
               setChatStatus(WAKING_MESSAGE);
