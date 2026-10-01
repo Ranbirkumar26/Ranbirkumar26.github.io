@@ -262,7 +262,7 @@ export const knowledgeItems: KnowledgeItem[] = [
     ],
     "roleTags": [],
     "priority": 10,
-    "content": "Never answer private personal questions. Do not share phone number, address, net worth, wealth, family details, relationship details, date of birth, government identifiers, private location, compensation, future employer, or any unsupported personal information. If asked for these, give a strict privacy warning and redirect to public professional topics. Public professional basics allowed by the user include name, college, CGPA, education, public portfolio work, projects, experience, skills, research, achievements, and public profile links.",
+    "content": "Answer resume-public facts only when they are present in the portfolio knowledge base or hosted resume. Resume-public contact facts allowed by the user include phone number, email, portfolio URL, GitHub URL, and LinkedIn URL. Never answer private personal questions about address, net worth, wealth, family details, relationship details, date of birth, age, government identifiers, private location, compensation, future employer, religion, caste, medical details, or any unsupported personal information. For mixed questions, answer allowed resume-public contact facts and refuse the private part with a strict privacy warning.",
     "evidence": [
       "User chatbot specification",
       "User privacy instruction"
@@ -352,6 +352,33 @@ export const knowledgeItems: KnowledgeItem[] = [
       "About facts panel",
       "Hero domain strip",
       "Supplied resumes"
+    ],
+    "visibility": "public"
+  },
+  {
+    "id": "profile.resume_public_contact",
+    "title": "Resume-public contact details",
+    "tags": [
+      "profile",
+      "contact",
+      "phone",
+      "mobile",
+      "email",
+      "portfolio",
+      "github",
+      "linkedin",
+      "resume"
+    ],
+    "roleTags": [
+      "software",
+      "ai_ml",
+      "full_stack"
+    ],
+    "priority": 10,
+    "content": "Ranbir's public resume lists phone +91 83760 86612, email rk26.ftw@gmail.com, portfolio ranbirkumar26.github.io, GitHub github.com/Ranbirkumar26, and LinkedIn linkedin.com/in/ranbir-kumar-a705551b5. These are resume-public contact details and may be shared when directly asked. Do not infer or share any private address, date of birth, family, relationship, compensation, government identifier, religion, caste, medical detail, future employer, private location, or net worth.",
+    "evidence": [
+      "Hosted resume PDF",
+      "Portfolio contact links"
     ],
     "visibility": "public"
   },

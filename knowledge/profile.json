@@ -51,6 +51,33 @@
     "visibility": "public"
   },
   {
+    "id": "profile.resume_public_contact",
+    "title": "Resume-public contact details",
+    "tags": [
+      "profile",
+      "contact",
+      "phone",
+      "mobile",
+      "email",
+      "portfolio",
+      "github",
+      "linkedin",
+      "resume"
+    ],
+    "roleTags": [
+      "software",
+      "ai_ml",
+      "full_stack"
+    ],
+    "priority": 10,
+    "content": "Ranbir's public resume lists phone +91 83760 86612, email rk26.ftw@gmail.com, portfolio ranbirkumar26.github.io, GitHub github.com/Ranbirkumar26, and LinkedIn linkedin.com/in/ranbir-kumar-a705551b5. These are resume-public contact details and may be shared when directly asked. Do not infer or share any private address, date of birth, family, relationship, compensation, government identifier, religion, caste, medical detail, future employer, private location, or net worth.",
+    "evidence": [
+      "Hosted resume PDF",
+      "Portfolio contact links"
+    ],
+    "visibility": "public"
+  },
+  {
     "id": "profile.video_resume",
     "title": "Video resume",
     "tags": [

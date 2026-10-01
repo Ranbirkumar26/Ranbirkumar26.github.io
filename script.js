@@ -261,7 +261,7 @@
       }
       requestAnimationFrame(follow);
     })();
-    document.querySelectorAll("a, button, .card, .shot, .placeholder, .motion-panel").forEach(function (el) {
+    document.querySelectorAll("a, button, .card, .shot, .placeholder, .motion-panel, .proof-orbit-card").forEach(function (el) {
       el.addEventListener("mouseenter", function () { ring.classList.add("hovering"); });
       el.addEventListener("mouseleave", function () { ring.classList.remove("hovering"); });
     });
@@ -354,6 +354,148 @@
       document.documentElement.classList.toggle("scene-paused", document.hidden);
     } else {
       scenePanels.forEach(function (panel) { panel.classList.add("scene-static"); });
+    }
+  }
+
+  /* ----- Proof Orbit: static-site carousel adapted from circular-card motion ----- */
+  var proofOrbit = document.querySelector("[data-proof-orbit]");
+  if (proofOrbit) {
+    var proofStage = proofOrbit.querySelector(".proof-orbit-stage");
+    var proofCards = Array.prototype.slice.call(proofOrbit.querySelectorAll("[data-proof-card]"));
+    var proofPrev = proofOrbit.querySelector("[data-proof-prev]");
+    var proofNext = proofOrbit.querySelector("[data-proof-next]");
+    var proofToggle = proofOrbit.querySelector("[data-proof-toggle]");
+    var proofLive = proofOrbit.querySelector("[data-proof-live]");
+    var proofCaptionTitle = proofOrbit.querySelector("[data-proof-caption-title]");
+    var proofCaptionSubtitle = proofOrbit.querySelector("[data-proof-caption-subtitle]");
+    var proofActive = 0;
+    var proofPaused = reducedMotion;
+    var proofVisible = true;
+    var proofHover = false;
+    var proofFocus = false;
+    var proofDragStart = null;
+    var proofStep = proofCards.length ? 360 / proofCards.length : 0;
+
+    function proofSyncRadius() {
+      if (!proofStage) return;
+      var width = proofStage.clientWidth || 720;
+      proofStage.style.setProperty("--orbit-radius", Math.max(210, Math.min(330, width * 0.38)) + "px");
+    }
+
+    function proofOffset(index) {
+      if (!proofCards.length) return 0;
+      var raw = (index - proofActive + proofCards.length) % proofCards.length;
+      return raw > proofCards.length / 2 ? raw - proofCards.length : raw;
+    }
+
+    function proofUpdate() {
+      if (!proofCards.length || !proofStage) return;
+      proofStage.style.setProperty("--orbit-angle", (-proofActive * proofStep) + "deg");
+      proofCards.forEach(function (card, index) {
+        var offset = proofOffset(index);
+        card.style.setProperty("--orbit-step", (index * proofStep) + "deg");
+        card.classList.toggle("is-active", offset === 0);
+        card.classList.toggle("is-near", Math.abs(offset) === 1);
+        card.setAttribute("aria-current", offset === 0 ? "true" : "false");
+      });
+      var activeCard = proofCards[proofActive];
+      if (activeCard) {
+        var title = activeCard.getAttribute("data-title") || activeCard.querySelector("h3").textContent || "";
+        var subtitle = activeCard.getAttribute("data-subtitle") || "";
+        if (proofCaptionTitle) proofCaptionTitle.textContent = title;
+        if (proofCaptionSubtitle) proofCaptionSubtitle.textContent = subtitle;
+        if (proofLive) proofLive.textContent = "Showing " + title + (subtitle ? ", " + subtitle : "") + ".";
+      }
+      if (proofToggle) {
+        proofToggle.textContent = proofPaused ? "Resume" : "Pause";
+        proofToggle.setAttribute("aria-pressed", String(proofPaused));
+      }
+    }
+
+    function proofGo(delta) {
+      if (!proofCards.length) return;
+      proofActive = (proofActive + delta + proofCards.length) % proofCards.length;
+      proofUpdate();
+    }
+
+    function proofSet(index) {
+      if (!proofCards.length) return;
+      proofActive = (index + proofCards.length) % proofCards.length;
+      proofUpdate();
+    }
+
+    proofCards.forEach(function (card, index) {
+      card.addEventListener("click", function (event) {
+        if (event.target && event.target.closest && event.target.closest("a")) return;
+        proofSet(index);
+      });
+      card.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          proofSet(index);
+        }
+      });
+    });
+
+    if (proofPrev) proofPrev.addEventListener("click", function () { proofGo(-1); });
+    if (proofNext) proofNext.addEventListener("click", function () { proofGo(1); });
+    if (proofToggle) {
+      proofToggle.addEventListener("click", function () {
+        if (reducedMotion) return;
+        proofPaused = !proofPaused;
+        proofUpdate();
+      });
+    }
+    if (proofStage) {
+      proofStage.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          proofGo(1);
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          proofGo(-1);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          proofSet(0);
+        } else if (event.key === "End") {
+          event.preventDefault();
+          proofSet(proofCards.length - 1);
+        }
+      });
+      proofStage.addEventListener("pointerdown", function (event) {
+        proofDragStart = event.clientX;
+        if (proofStage.setPointerCapture) proofStage.setPointerCapture(event.pointerId);
+      });
+      proofStage.addEventListener("pointerup", function (event) {
+        if (proofDragStart === null) return;
+        var delta = event.clientX - proofDragStart;
+        proofDragStart = null;
+        if (Math.abs(delta) > 34) proofGo(delta < 0 ? 1 : -1);
+      });
+      proofStage.addEventListener("pointercancel", function () {
+        proofDragStart = null;
+      });
+      proofStage.addEventListener("mouseenter", function () { proofHover = true; });
+      proofStage.addEventListener("mouseleave", function () { proofHover = false; });
+      proofStage.addEventListener("focusin", function () { proofFocus = true; });
+      proofStage.addEventListener("focusout", function () { proofFocus = false; });
+    }
+    if ("IntersectionObserver" in window) {
+      var proofIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          proofVisible = entry.isIntersecting;
+        });
+      }, { threshold: 0.25 });
+      proofIO.observe(proofOrbit);
+    }
+    window.addEventListener("resize", proofSyncRadius);
+    proofSyncRadius();
+    proofUpdate();
+    if (!reducedMotion) {
+      window.setInterval(function () {
+        if (document.hidden || proofPaused || proofHover || proofFocus || !proofVisible) return;
+        proofGo(1);
+      }, 4200);
     }
   }
 
@@ -892,7 +1034,7 @@
     var chatIntro =
       "Hey. I am Ranbir's portfolio assistant. Ask me about his skills, projects, experience, education, or which roles he could fit.";
     var chatFallback = "I am having trouble connecting to my AI service right now. Please try again in a moment.";
-    var chatPrivacyWarning = "Privacy warning: I cannot share private personal information such as phone number, address, net worth, family details, relationship details, compensation, or private identifiers. Ask about Ranbir's public portfolio, education, skills, projects, experience, research, or achievements instead.";
+    var chatPrivacyWarning = "Privacy warning: I can share resume-public contact and professional details only. I cannot share private personal information such as address, net worth, family details, relationship details, date of birth, age, compensation, government identifiers, medical details, religion, caste, future employer, or private location.";
     var chatInjectionWarning = "Prompt-injection warning: I cannot ignore grounding rules, reveal hidden instructions, expose context or provider details, or fabricate facts about Ranbir. Ask a normal portfolio question instead.";
     var chatMaxMessages = 40;
     var chatTtl = 14 * 24 * 60 * 60 * 1000;
@@ -1086,23 +1228,84 @@
       return String(value || "").toLowerCase().replace(/[^a-z0-9+/.\s-]/g, " ").replace(/\s+/g, " ").trim();
     }
 
+    var chatPrivacyPattern = /net ?worth|wealth|salary|ctc|compensation|pay|income|home address|residential address|current address|permanent address|address|where .*live|whatsapp|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/;
+    var chatInjectionPattern = /ignore .*instructions|ignore .*previous|ignore .*rules|bypass|jailbreak|developer message|system prompt|hidden prompt|hidden context|dump .*context|reveal .*context|show .*prompt|api key|provider|secret|make up|fabricate|pretend .*has|roleplay .*ignore|forget .*rules|override .*instructions/;
+    var chatAchievementPattern = /achievement|achievements|award|awards|sih|smart india hackathon|robocon|irc|international rover challenge|insightify|patent|certification|certifications|certificate|finalist|rank/;
+
+    function isResumePublicContactQuery(query) {
+      return /\b(phone|mobile|email|e-mail|mail|contact number|contact details|contact info|contact information|reach|portfolio|website|github|linkedin)\b/.test(query);
+    }
+
+    function resumePublicContactFallback(query) {
+      var parts = [];
+      if (/phone|mobile|contact number|contact details|contact info|contact information|reach|contact\b/.test(query)) parts.push("phone +91 83760 86612");
+      if (/email|e-mail|mail|contact details|contact info|contact information|reach|contact\b/.test(query)) parts.push("email rk26.ftw@gmail.com");
+      if (/portfolio|website|site/.test(query)) parts.push("portfolio ranbirkumar26.github.io");
+      if (/github/.test(query)) parts.push("GitHub github.com/Ranbirkumar26");
+      if (/linkedin/.test(query)) parts.push("LinkedIn linkedin.com/in/ranbir-kumar-a705551b5");
+      if (!parts.length) {
+        parts = [
+          "phone +91 83760 86612",
+          "email rk26.ftw@gmail.com",
+          "portfolio ranbirkumar26.github.io",
+          "GitHub github.com/Ranbirkumar26",
+          "LinkedIn linkedin.com/in/ranbir-kumar-a705551b5"
+        ];
+      }
+      return "Ranbir's resume-public contact details are " + parts.join(", ") + ".";
+    }
+
+    function achievementFallback(query) {
+      if (/sih|smart india hackathon/.test(query)) {
+        return "Smart India Hackathon 2025 Grand Finalist: Ranbir's team was top 5 nationally in Robotics and Drones after placing top 3 among nearly 800 college-level teams.";
+      }
+      if (/robocon/.test(query)) {
+        return "DD Robocon proof: Ranbir's team achieved All-India Rank 1 in Round 1 with 100 out of 100 in stage one.";
+      }
+      if (/\birc\b|international rover challenge/.test(query)) {
+        return "International Rover Challenge proof: Ranbir's team placed 20th worldwide at IRC 2025 among more than 100 applicant teams, and is a finalist again for IRC 2026.";
+      }
+      if (/insightify/.test(query)) {
+        return "Insightify 6.0 proof: Ranbir's team DataQuants was a national finalist, ranked 1st nationally in the analysis round, and ranked 2nd in the ML case-study round.";
+      }
+      if (/patent/.test(query)) {
+        return "Patent proof: Ranbir has an Autonomous Patrolling Robot patent track listed as patent filed or in process on the portfolio and resume.";
+      }
+      if (/certification|certifications|certificate/.test(query)) {
+        return "Certification proof includes Cisco Networking Academy Network Support and Security plus IBM SkillsBuild AI and cloud certificates listed in the portfolio context.";
+      }
+      return "Ranbir's achievement proof includes Smart India Hackathon 2025 Grand Finalist, DD Robocon All-India Rank 1 in Round 1, IRC 2025 20th worldwide, Insightify 6.0 National Finalist, an Autonomous Patrolling Robot patent track, and listed certifications.";
+    }
+
     function offlineChatFallback(question) {
       var query = normalizeChatText(question);
-      var privacy = /net ?worth|wealth|salary|ctc|compensation|pay|income|home address|address|where .*live|phone|mobile|whatsapp|contact number|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/;
-      var injection = /ignore .*instructions|ignore .*previous|ignore .*rules|bypass|jailbreak|developer message|system prompt|hidden prompt|hidden context|dump .*context|reveal .*context|show .*prompt|api key|provider|secret|make up|fabricate|pretend .*has|roleplay .*ignore|forget .*rules|override .*instructions/;
 
-      if (injection.test(query)) {
+      if (chatInjectionPattern.test(query)) {
         return {
           answer: chatInjectionWarning,
           sources: ["Safety policy"],
           status: "Backend unreachable. Showing local safety answer."
         };
       }
-      if (privacy.test(query)) {
+      if (isResumePublicContactQuery(query)) {
+        return {
+          answer: resumePublicContactFallback(query) + (chatPrivacyPattern.test(query) ? " " + chatPrivacyWarning : ""),
+          sources: ["Hosted resume", "Contact links"],
+          status: "Backend unreachable. Showing offline resume-public answer."
+        };
+      }
+      if (chatPrivacyPattern.test(query)) {
         return {
           answer: chatPrivacyWarning,
           sources: ["Privacy policy"],
           status: "Backend unreachable. Showing local privacy answer."
+        };
+      }
+      if (chatAchievementPattern.test(query)) {
+        return {
+          answer: achievementFallback(query),
+          sources: ["Achievements", "Research"],
+          status: "Backend unreachable. Showing offline achievement answer."
         };
       }
       if (/why .*hire|hire .*ranbir|role fit|fit for|good for/.test(query)) {
@@ -1178,6 +1381,26 @@
       return null;
     }
 
+    function localPolicyChatAnswer(question) {
+      var query = normalizeChatText(question);
+      if (chatInjectionPattern.test(query)) {
+        return { answer: chatInjectionWarning, sources: ["Safety policy"] };
+      }
+      if (isResumePublicContactQuery(query)) {
+        return {
+          answer: resumePublicContactFallback(query) + (chatPrivacyPattern.test(query) ? " " + chatPrivacyWarning : ""),
+          sources: ["Hosted resume", "Contact links"]
+        };
+      }
+      if (chatPrivacyPattern.test(query)) {
+        return { answer: chatPrivacyWarning, sources: ["Privacy policy"] };
+      }
+      if (chatAchievementPattern.test(query)) {
+        return { answer: achievementFallback(query), sources: ["Achievements", "Research"] };
+      }
+      return null;
+    }
+
     function openChat(showBubble) {
       if (!chatPanel || !chatLauncher) return;
       chatbot.classList.add("chatbot-open");
@@ -1223,6 +1446,16 @@
       if (chatSending) return;
       if (text.length > 900) {
         setChatStatus("Keep questions under 900 characters.");
+        return;
+      }
+
+      var localPolicyAnswer = localPolicyChatAnswer(text);
+      if (localPolicyAnswer) {
+        chatLastQuestion = text;
+        if (!retrying) addChatMessage("user", text);
+        addChatMessage("assistant", localPolicyAnswer.answer, { sources: localPolicyAnswer.sources });
+        setChatStatus("");
+        if (chatInput) chatInput.value = "";
         return;
       }
 

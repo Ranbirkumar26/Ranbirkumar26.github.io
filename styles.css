@@ -58,7 +58,10 @@
 /* scroll-behavior:smooth intentionally absent: it can no-op anchor and
    programmatic scrolls in some Chromium builds. script.js animates instead;
    scroll-padding covers the no-JS native jump fallback. */
-html { scroll-padding-top: 84px; }
+html {
+  scroll-padding-top: 84px;
+  overflow-x: hidden;
+}
 
 body {
   background:
@@ -382,6 +385,238 @@ ul { list-style: none; }
   font-style: normal;
   font-size: 0.68rem;
   line-height: 1.45;
+}
+
+/* ---------- Proof orbit ---------- */
+
+.proof-orbit-section {
+  position: relative;
+  padding-top: 36px;
+}
+
+.proof-orbit-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+  gap: 32px;
+  align-items: center;
+  min-height: 480px;
+  border-top: 1px solid var(--line);
+  padding-top: 54px;
+}
+
+.proof-orbit-copy p {
+  max-width: 440px;
+  margin-top: 14px;
+  font-size: 0.98rem;
+}
+
+.proof-orbit {
+  position: relative;
+  min-width: 0;
+  min-height: 420px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 14px;
+  isolation: isolate;
+}
+
+.proof-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 58px 9% 34px;
+  border: 1px solid rgba(217, 160, 63, 0.16);
+  border-radius: 50%;
+  transform: rotateX(66deg);
+  background:
+    radial-gradient(circle, rgba(94, 130, 232, 0.08), transparent 58%),
+    repeating-conic-gradient(from 0deg, rgba(217, 160, 63, 0.16) 0 1deg, transparent 1deg 20deg);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.proof-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 84px 18% 60px;
+  border: 1px dashed rgba(139, 166, 240, 0.2);
+  border-radius: 50%;
+  transform: rotateX(66deg);
+  pointer-events: none;
+}
+
+.proof-orbit-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  position: relative;
+  z-index: 3;
+}
+
+.proof-orbit-btn {
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  color: var(--text-muted);
+  border-radius: 10px 4px 10px 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.proof-orbit-btn:hover,
+.proof-orbit-btn:focus-visible {
+  color: var(--amber);
+  border-color: rgba(217, 160, 63, 0.55);
+  background: rgba(217, 160, 63, 0.08);
+  transform: translateY(-1px);
+}
+
+.proof-orbit-stage {
+  position: relative;
+  z-index: 2;
+  min-height: 320px;
+  perspective: 1200px;
+  outline: none;
+  touch-action: pan-y;
+  overflow: hidden;
+}
+
+.proof-orbit-stage:focus-visible {
+  box-shadow: 0 0 0 3px rgba(94, 130, 232, 0.35);
+  border-radius: 16px;
+}
+
+.proof-orbit-ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.proof-orbit-card {
+  --orbit-step: 0deg;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(230px, 44vw);
+  min-height: 244px;
+  padding: 20px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px 4px 14px 4px;
+  background:
+    linear-gradient(135deg, rgba(217, 160, 63, 0.08), transparent 44%),
+    color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 22px 48px -34px rgba(0, 0, 0, 0.75);
+  transform:
+    translate(-50%, -50%)
+    rotateY(calc(var(--orbit-step) + var(--orbit-angle, 0deg)))
+    translateZ(var(--orbit-radius, 300px))
+    rotateY(calc((var(--orbit-step) + var(--orbit-angle, 0deg)) * -1));
+  opacity: 0.4;
+  filter: saturate(0.74) blur(0.2px);
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s ease, filter 0.35s ease, border-color 0.25s ease;
+  cursor: pointer;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.proof-orbit-card::before,
+.proof-orbit-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.proof-orbit-card::before {
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.16;
+}
+
+.proof-orbit-card::after {
+  right: 12px;
+  top: 12px;
+  width: 26px;
+  height: 26px;
+  border-top: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+  opacity: 0.75;
+}
+
+.proof-orbit-card.is-active {
+  opacity: 1;
+  filter: none;
+  border-color: rgba(217, 160, 63, 0.56);
+  z-index: 5;
+}
+
+.proof-orbit-card.is-near {
+  opacity: 0.68;
+  filter: saturate(0.88);
+}
+
+.proof-orbit-index {
+  position: relative;
+  z-index: 1;
+  color: var(--amber);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+}
+
+.proof-orbit-card h3,
+.proof-orbit-card p,
+.proof-orbit-link {
+  position: relative;
+  z-index: 1;
+}
+
+.proof-orbit-card h3 {
+  font-size: 1.05rem;
+}
+
+.proof-orbit-card p {
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.proof-orbit-link {
+  margin-top: auto;
+  width: max-content;
+  color: var(--accent-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.proof-orbit-link:hover,
+.proof-orbit-link:focus-visible {
+  color: var(--amber);
+}
+
+.proof-orbit-caption {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px 4px 12px 4px;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.proof-orbit-caption-title {
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
 }
 
 .hero-visual { display: flex; justify-content: center; }
@@ -1850,6 +2085,7 @@ html.scene-paused .project-scene::after {
 
 @media (prefers-reduced-motion: reduce) {
 
+  .proof-orbit-card { transition: none; }
   .to-top { transition: none; }
 }
 
@@ -1861,6 +2097,8 @@ html.scene-paused .project-scene::after {
   .portrait-frame { max-width: 240px; }
   .hero { padding-top: 130px; }
   .hero-sub { min-height: 5.4em; }
+  .proof-orbit-shell { grid-template-columns: 1fr; min-height: 0; gap: 24px; }
+  .proof-orbit-copy p { max-width: 680px; }
   .about-grid { grid-template-columns: 1fr; }
   .video-resume-grid { grid-template-columns: 1fr; align-items: stretch; }
   .project, .project-flip { grid-template-columns: 1fr; gap: 24px; }
@@ -1893,6 +2131,45 @@ html.scene-paused .project-scene::after {
 
 @media (max-width: 760px) {
   .section { padding: 72px 0; }
+  .proof-orbit-section { padding-top: 20px; }
+  .proof-orbit-shell { padding-top: 36px; }
+  .proof-orbit { min-height: 0; }
+  .proof-orbit::before,
+  .proof-orbit::after { display: none; }
+  .proof-orbit-controls { justify-content: stretch; }
+  .proof-orbit-btn { flex: 1; }
+  .proof-orbit-stage {
+    min-height: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    perspective: none;
+    padding-bottom: 8px;
+    touch-action: pan-x pan-y;
+  }
+  .proof-orbit-ring {
+    position: relative;
+    inset: auto;
+    display: flex;
+    gap: 14px;
+    transform-style: flat;
+  }
+  .proof-orbit-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: 0 0 min(82vw, 320px);
+    width: auto;
+    min-height: 220px;
+    transform: none !important;
+    opacity: 1;
+    filter: none;
+    scroll-snap-align: center;
+  }
+  .proof-orbit-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
   .video-resume-player { padding: 10px; }
   .video-frame::after { top: 10px; left: 10px; font-size: 0.58rem; }
   .video-mute-toggle { top: 10px; right: 10px; padding: 6px 9px; }
