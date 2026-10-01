@@ -898,12 +898,16 @@
     return cleanEndpoint;
   }
 
-  function portfolioApiError(body, fallback) {
-    if (body && body.error && typeof body.error === "object" && body.error.message) return body.error.message;
-    if (body && typeof body.error === "string") return body.error;
-    if (body && body.message) return body.message;
-    return fallback;
-  }
+    function portfolioApiError(body, fallback) {
+      if (body && body.error && typeof body.error === "object" && body.error.message) return body.error.message;
+      if (body && typeof body.error === "string") return body.error;
+      if (body && body.message) return body.message;
+      return fallback;
+    }
+
+    function isUnknownPortfolioAnswer(answer) {
+      return String(answer || "").trim() === "I do not have that information in my portfolio context.";
+    }
 
   /* ----- Contact relay: post to the portfolio backend if configured;
      otherwise fall back to a prefilled email. ----- */
@@ -1584,6 +1588,10 @@
                 var safeError = new Error(portfolioApiError(body, chatFallback));
                 safeError.safeChatError = true;
                 throw safeError;
+              }
+              if (targetIndex + 1 < chatTargets.length && isUnknownPortfolioAnswer(body.answer)) {
+                attempt(targetIndex + 1, 1);
+                return;
               }
               onSuccess(body);
             });
