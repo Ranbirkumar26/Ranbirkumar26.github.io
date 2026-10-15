@@ -224,6 +224,35 @@ test("portfolio backend APIs", async (t) => {
     assert.match(clarify.body.answer, /What role are you considering Ranbir for/);
   });
 
+  await t.test("chat does not treat agent role wording as private age request", async () => {
+    const roleFit = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "agent_role_fit_test_123",
+      message: "The post is AI Agent Engineer. Why should I hire Ranbir?",
+      history: [],
+    });
+    assert.equal(roleFit.status, 200);
+    assert.match(roleFit.body.answer, /AI Agent Engineer roles/);
+    assert.match(roleFit.body.answer, /ForgeAI/);
+    assert.doesNotMatch(roleFit.body.answer, /Privacy warning/);
+
+    const plainMessage = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "message_false_positive_test_123",
+      message: "Message me a summary of Ranbir's projects.",
+      history: [],
+    });
+    assert.equal(plainMessage.status, 200);
+    assert.match(plainMessage.body.answer, /iORA DocQA/);
+    assert.doesNotMatch(plainMessage.body.answer, /Privacy warning/);
+
+    const realAge = await postJson(app.baseUrl, "/api/chat", {
+      conversationId: "age_privacy_test_123",
+      message: "What is Ranbir's age?",
+      history: [],
+    });
+    assert.equal(realAge.status, 200);
+    assert.equal(realAge.body.answer, PRIVACY_WARNING);
+  });
+
   await t.test("chat routes achievement questions to achievement proof", async () => {
     const sih = await postJson(app.baseUrl, "/api/chat", {
       conversationId: "sih_test_123",

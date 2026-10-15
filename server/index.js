@@ -493,7 +493,7 @@ function roleTagsFor(text) {
 }
 
 function isHiringQuestion(text) {
-  return /hire|recruit|candidate|fit|suitable|role|internship|job|interview/.test(normalize(text));
+  return /\b(hire|recruit|candidate|fit|suitable|role|internship|job|interview|post|position|opening)\b/.test(normalize(text));
 }
 
 function needsRoleClarification(message) {
@@ -512,7 +512,7 @@ function isResumePublicContactQuestion(message) {
 
 function isPrivatePersonalQuestion(message) {
   const query = normalize(message);
-  return /net ?worth|wealth|salary|ctc|compensation|pay|income|home address|residential address|current address|permanent address|address|where .*live|whatsapp|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/.test(query);
+  return /net\s?worth|\bwealth\b|\bsalary\b|\bctc\b|\bcompensation\b|\bpay\b|\bincome\b|\bhome\s+address\b|\bresidential\s+address\b|\bcurrent\s+address\b|\bpermanent\s+address\b|\baddress\b|\bwhere\s+(?:does\s+)?(?:ranbir|he)\s+live\b|\bwhatsapp\b|\bdate\s+of\s+birth\b|\bdob\b|\bbirthday\b|\bage\b|\bhow\s+old\b|\bfamily\b|\bparents?\b|\bsiblings?\b|\bgirlfriend\b|\bboyfriend\b|\brelationship\b|\bmarried\b|\breligion\b|\bcaste\b|\bpolitical\b|\bmedical\b|\bhealth\b|\bgovernment\s+id\b|\baadhaar\b|\bpassport\b|\bprivate\s+location\b|\bfuture\s+employer\b|\bjoining\s+next\b/.test(query);
 }
 
 function resumePublicContactAnswer(message) {
@@ -691,6 +691,9 @@ function canonicalProjectAnswer() {
 function roleFitAnswer(message, contextItems) {
   const roles = roleTagsFor(message);
   if (!roles.size) return null;
+  if (/\b(ai\s+agent|agentic|agent engineer|llm agent|agents?|langgraph|mcp)\b/.test(normalize(message))) {
+    return "For AI Agent Engineer roles, Ranbir's strongest evidence is iORA DocQA for grounded RAG, multi-provider fallback and SQL routing, ForgeAI for LangGraph agents, repo indexing and approval-gated patch verification, AuthPilot for Planner, Executor and Verifier agent workflows, SemantiCache for retrieval optimization, and EnergyPlus LLM HVAC Agent for tool-driven control over live simulator telemetry.";
+  }
   if (roles.has("computer_vision")) {
     return "For Computer Vision roles, Ranbir's strongest evidence is Proeffico production CV work on NVIDIA Jetson Xavier NX under 40 ms inference, Annadata's YOLO and ResNet agriculture vision pipeline, rover perception work for terrain and arrow-marker detection, and the Vision-Based Terrain Analysis research track.";
   }

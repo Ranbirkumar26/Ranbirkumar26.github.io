@@ -1399,6 +1399,10 @@
       return String(answer || "").trim() === "I do not have that information in my portfolio context.";
     }
 
+    function isOverSensitivePrivacyAnswer(answer, question) {
+      return /^Privacy warning:/i.test(String(answer || "").trim()) && !chatPrivacyPattern.test(normalizeChatText(question));
+    }
+
   /* ----- Contact relay: post to the portfolio backend if configured;
      otherwise fall back to a prefilled email. ----- */
   var contactForm = document.getElementById("contactForm");
@@ -1722,7 +1726,7 @@
       return String(value || "").toLowerCase().replace(/[^a-z0-9+/.\s-]/g, " ").replace(/\s+/g, " ").trim();
     }
 
-    var chatPrivacyPattern = /net ?worth|wealth|salary|ctc|compensation|pay|income|home address|residential address|current address|permanent address|address|where .*live|whatsapp|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/;
+    var chatPrivacyPattern = /net\s?worth|\bwealth\b|\bsalary\b|\bctc\b|\bcompensation\b|\bpay\b|\bincome\b|\bhome\s+address\b|\bresidential\s+address\b|\bcurrent\s+address\b|\bpermanent\s+address\b|\baddress\b|\bwhere\s+(?:does\s+)?(?:ranbir|he)\s+live\b|\bwhatsapp\b|\bdate\s+of\s+birth\b|\bdob\b|\bbirthday\b|\bage\b|\bhow\s+old\b|\bfamily\b|\bparents?\b|\bsiblings?\b|\bgirlfriend\b|\bboyfriend\b|\brelationship\b|\bmarried\b|\breligion\b|\bcaste\b|\bpolitical\b|\bmedical\b|\bhealth\b|\bgovernment\s+id\b|\baadhaar\b|\bpassport\b|\bprivate\s+location\b|\bfuture\s+employer\b|\bjoining\s+next\b/;
     var chatInjectionPattern = /ignore .*instructions|ignore .*previous|ignore .*rules|bypass|jailbreak|developer message|system prompt|hidden prompt|hidden context|dump .*context|reveal .*context|show .*prompt|api key|provider|secret|make up|fabricate|pretend .*has|roleplay .*ignore|forget .*rules|override .*instructions/;
     var chatAchievementPattern = /achievement|achievements|award|awards|sih|smart india hackathon|robocon|irc|international rover challenge|insightify|patent|certification|certifications|certificate|finalist|rank/;
 
@@ -1802,7 +1806,14 @@
           status: "Backend unreachable. Showing offline achievement answer."
         };
       }
-      if (/why .*hire|hire .*ranbir|role fit|fit for|good for/.test(query)) {
+      if (/why .*hire|hire .*ranbir|role fit|fit for|good for|\b(post|position|opening)\b/.test(query)) {
+        if (/\b(ai\s+agent|agentic|agent engineer|llm agent|agents?|langgraph|mcp)\b/.test(query)) {
+          return {
+            answer: "For AI Agent Engineer roles, Ranbir's strongest public evidence is iORA DocQA for grounded RAG, multi-provider fallback and SQL routing, ForgeAI for LangGraph agents, repo indexing and approval-gated patch verification, AuthPilot for Planner, Executor and Verifier agent workflows, SemantiCache for retrieval optimization, and EnergyPlus LLM HVAC Agent for tool-driven control over live simulator telemetry.",
+            sources: ["Projects", "Agentic AI", "RAG"],
+            status: "Backend unreachable. Showing offline portfolio answer."
+          };
+        }
         if (/computer vision|vision|cv\b|yolo|resnet|jetson|edge/.test(query)) {
           return {
             answer: "For Computer Vision roles, Ranbir's strongest public evidence is Proeffico production CV work on NVIDIA Jetson Xavier NX under 40 ms inference, Annadata's YOLO and ResNet agriculture pipeline, rover perception work for terrain and arrow-marker detection, and the Vision-Based Terrain Analysis research track.",
@@ -2079,7 +2090,7 @@
                 safeError.safeChatError = true;
                 throw safeError;
               }
-              if (targetIndex + 1 < chatTargets.length && isUnknownPortfolioAnswer(body.answer)) {
+              if (targetIndex + 1 < chatTargets.length && (isUnknownPortfolioAnswer(body.answer) || isOverSensitivePrivacyAnswer(body.answer, text))) {
                 attempt(targetIndex + 1, 1);
                 return;
               }

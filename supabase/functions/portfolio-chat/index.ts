@@ -212,7 +212,7 @@ function roleTagsFor(text: string) {
 
 function isHiringQuestion(text: string) {
   const query = normalize(text);
-  return /hire|recruit|candidate|fit|suitable|role|internship|job|interview/.test(query);
+  return /\b(hire|recruit|candidate|fit|suitable|role|internship|job|interview|post|position|opening)\b/.test(query);
 }
 
 function needsRoleClarification(message: string) {
@@ -234,7 +234,7 @@ function isResumePublicContactQuestion(message: string) {
 
 function isPrivatePersonalQuestion(message: string) {
   const query = normalize(message);
-  if (/net ?worth|wealth|salary|ctc|compensation|pay|income|home address|residential address|current address|permanent address|address|where .*live|whatsapp|date of birth|dob|birthday|age|family|parents|sibling|girlfriend|boyfriend|relationship|married|religion|caste|political|medical|health|government id|aadhaar|passport|private location|future employer|joining next/.test(query)) {
+  if (/net\s?worth|\bwealth\b|\bsalary\b|\bctc\b|\bcompensation\b|\bpay\b|\bincome\b|\bhome\s+address\b|\bresidential\s+address\b|\bcurrent\s+address\b|\bpermanent\s+address\b|\baddress\b|\bwhere\s+(?:does\s+)?(?:ranbir|he)\s+live\b|\bwhatsapp\b|\bdate\s+of\s+birth\b|\bdob\b|\bbirthday\b|\bage\b|\bhow\s+old\b|\bfamily\b|\bparents?\b|\bsiblings?\b|\bgirlfriend\b|\bboyfriend\b|\brelationship\b|\bmarried\b|\breligion\b|\bcaste\b|\bpolitical\b|\bmedical\b|\bhealth\b|\bgovernment\s+id\b|\baadhaar\b|\bpassport\b|\bprivate\s+location\b|\bfuture\s+employer\b|\bjoining\s+next\b/.test(query)) {
     return true;
   }
   return false;
@@ -429,6 +429,9 @@ function achievementFallback(message: string) {
 function hireFallback(message: string, contextItems: KnowledgeItem[]) {
   const roleTags = roleTagsFor(message);
   if (!roleTags.size) return "What role are you considering Ranbir for: AI/ML, Computer Vision, Software Development, Data Science, Robotics, Embedded AI, Research, or something else?";
+  if (/\b(ai\s+agent|agentic|agent engineer|llm agent|agents?|langgraph|mcp)\b/.test(normalize(message))) {
+    return "For AI Agent Engineer roles, Ranbir's strongest evidence is iORA DocQA for grounded RAG, multi-provider fallback and SQL routing, ForgeAI for LangGraph agents, repo indexing and approval-gated patch verification, AuthPilot for Planner, Executor and Verifier agent workflows, SemantiCache for retrieval optimization, and EnergyPlus LLM HVAC Agent for tool-driven control over live simulator telemetry.";
+  }
   const evidence = contextItems
     .filter((item) => !String(item.id || "").startsWith("policy."))
     .slice(0, 5)
@@ -671,7 +674,8 @@ export default {
     if (
       isResumePublicContactQuestion(message) ||
       isPrivatePersonalQuestion(message) ||
-      isAchievementQuestion(message)
+      isAchievementQuestion(message) ||
+      isHiringQuestion(message)
     ) {
       return json({ ok: true, answer: completePlainTextAnswer(deterministicAnswer) });
     }
