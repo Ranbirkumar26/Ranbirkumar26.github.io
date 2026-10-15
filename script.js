@@ -155,7 +155,7 @@
         shimmer: isLight ? 0.72 : 0.98,
         glow: isLight ? 1.35 : (compact ? 1.82 : 2.65),
         lineWidth: isLight ? 0.7 : (compact ? 0.76 : 1.18),
-        opacity: isLight ? 0.58 : (compact ? 0.64 : 0.96),
+        opacity: isLight ? 0.58 : (compact ? 0.5 : 0.72),
         mouseStrength: isLight ? 0.78 : 1.12,
         mouseRadius: compact ? 0.42 : 0.36
       };
@@ -1736,14 +1736,14 @@
       if (/email|e-mail|mail|contact details|contact info|contact information|reach|contact\b/.test(query)) parts.push("email rk26.ftw@gmail.com");
       if (/portfolio|website|site/.test(query)) parts.push("portfolio ranbirkumar26.github.io");
       if (/github/.test(query)) parts.push("GitHub github.com/Ranbirkumar26");
-      if (/linkedin/.test(query)) parts.push("LinkedIn linkedin.com/in/ranbir-kumar-a705551b5");
+      if (/linkedin/.test(query)) parts.push("LinkedIn linkedin.com/in/ranbirkumar-ai");
       if (!parts.length) {
         parts = [
           "phone +91 83760 86612",
           "email rk26.ftw@gmail.com",
           "portfolio ranbirkumar26.github.io",
           "GitHub github.com/Ranbirkumar26",
-          "LinkedIn linkedin.com/in/ranbir-kumar-a705551b5"
+          "LinkedIn linkedin.com/in/ranbirkumar-ai"
         ];
       }
       return "Ranbir's resume-public contact details are " + parts.join(", ") + ".";

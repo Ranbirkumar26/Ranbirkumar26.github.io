@@ -23,7 +23,7 @@ const RESUME_PUBLIC_CONTACT = {
   email: "rk26.ftw@gmail.com",
   portfolio: "ranbirkumar26.github.io",
   github: "github.com/Ranbirkumar26",
-  linkedin: "linkedin.com/in/ranbir-kumar-a705551b5",
+  linkedin: "linkedin.com/in/ranbirkumar-ai",
 };
 const CHAT_WINDOW_LIMIT = Number(process.env.CHAT_WINDOW_LIMIT || 30);
 const CHAT_DAY_LIMIT = Number(process.env.CHAT_DAY_LIMIT || 150);

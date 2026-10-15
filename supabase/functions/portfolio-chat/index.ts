@@ -45,7 +45,7 @@ const resumePublicContact = {
   email: "rk26.ftw@gmail.com",
   portfolio: "ranbirkumar26.github.io",
   github: "github.com/Ranbirkumar26",
-  linkedin: "linkedin.com/in/ranbir-kumar-a705551b5",
+  linkedin: "linkedin.com/in/ranbirkumar-ai",
 };
 const memoryRate = new Map<string, RateState>();
 let supabaseAdmin: any = null;
