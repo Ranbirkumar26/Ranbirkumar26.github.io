@@ -16,10 +16,10 @@
   <meta name="twitter:title" content="Ranbir Kumar | AI Engineer">
   <meta name="twitter:description" content="Production RAG systems, real-time edge vision, autonomous rovers. SIH 2025 finalist, two papers under review.">
   <meta name="twitter:image" content="https://ranbirkumar26.github.io/assets/og.png">
-  <meta name="theme-color" content="#0a0f1b">
+  <meta name="theme-color" content="#070706">
   <meta name="portfolio-api-base" content="https://ranbir-portfolio-backend.onrender.com">
   <link rel="canonical" href="https://ranbirkumar26.github.io/">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23202B41'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%238BA6F0' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23070706'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='26' font-weight='700' fill='%23D9A03F' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=optional" rel="stylesheet">
@@ -34,7 +34,7 @@
       } catch (e) {}
     })();
   </script>
-<link rel="stylesheet" href="styles.min.css?v=38">
+  <link rel="stylesheet" href="styles.min.css?v=45">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,6 +56,7 @@
 </head>
 <body>
 <div class="bg-field" aria-hidden="true">
+  <canvas class="flux-lines-canvas" id="fluxLinesCanvas"></canvas>
   <span class="bg-trace bg-trace-a"></span>
   <span class="bg-trace bg-trace-b"></span>
   <span class="bg-topo"></span>
@@ -96,7 +97,7 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="hero-eyebrow mono">// AI systems · edge vision · rover autonomy</p>
+        <p class="hero-eyebrow mono">AI systems · edge vision · rover autonomy</p>
         <h1 class="hero-title">
           I build intelligent systems that survive
           <span class="accent">deployment</span>, users and rough terrain.
@@ -156,73 +157,105 @@
     </div>
   </section>
 
-  <!-- ============ PROOF ORBIT ============ -->
+  <!-- ============ PROOF DEPTH CAROUSEL ============ -->
   <section class="section proof-orbit-section" id="proof-orbit" aria-labelledby="proofOrbitTitle">
     <div class="container proof-orbit-shell reveal">
       <div class="proof-orbit-copy">
         <span class="section-kicker mono">Mission proof</span>
-        <h2 id="proofOrbitTitle">Flagship signals in orbit.</h2>
+        <h2 id="proofOrbitTitle">Forward-deployed AI systems.</h2>
         <p>
-          A fast scan of shipped AI, semantic retrieval, edge vision, rover systems, research and competition proof before the deeper project cards.
+          A fast scan of RAG, agentic workflows, evaluation harnesses and backend-heavy systems before the deeper project cards.
         </p>
       </div>
       <div class="proof-orbit" data-proof-orbit>
         <div class="proof-orbit-controls" aria-label="Proof orbit controls">
-          <button class="proof-orbit-btn mono" type="button" data-proof-prev aria-label="Show previous proof">Prev</button>
+          <button class="proof-orbit-btn mono" type="button" data-proof-prev aria-label="Show previous system">Prev</button>
           <button class="proof-orbit-btn mono" type="button" data-proof-toggle aria-pressed="false">Pause</button>
-          <button class="proof-orbit-btn mono" type="button" data-proof-next aria-label="Show next proof">Next</button>
+          <button class="proof-orbit-btn mono" type="button" data-proof-next aria-label="Show next system">Next</button>
         </div>
-        <div class="proof-orbit-stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Portfolio proof orbit">
+        <div class="proof-orbit-stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Portfolio AI systems carousel">
           <div class="proof-orbit-ring">
-            <article class="proof-orbit-card" data-proof-card data-title="iORA DocQA" data-subtitle="RAG product shipped" tabindex="0">
+            <article class="proof-orbit-card is-active" data-proof-card data-title="iORA DocQA" data-subtitle="Production RAG document platform" tabindex="0" aria-current="true">
               <span class="proof-orbit-index mono">01</span>
               <h3>iORA DocQA</h3>
-              <p>Shipped RAG document intelligence with pgvector retrieval and DuckDB SQL routing.</p>
+              <p>Production document intelligence with Supabase auth, pgvector retrieval, DuckDB table reasoning and multi-provider fallback.</p>
               <a href="#projects" class="proof-orbit-link mono">View project</a>
             </article>
-            <article class="proof-orbit-card" data-proof-card data-title="SemantiCache" data-subtitle="Semantic cache layer" tabindex="0">
+            <article class="proof-orbit-card" data-proof-card data-title="HiRAGe_vCl" data-subtitle="RAG resume shortlisting portal" tabindex="0" aria-current="false">
               <span class="proof-orbit-index mono">02</span>
-              <h3>SemantiCache</h3>
-              <p>FAISS-backed semantic cache designed to cut redundant lookups by 40 percent.</p>
+              <h3>HiRAGe_vCl</h3>
+              <p>Resume shortlisting system that parses documents, embeds candidates into pgvector, ranks against job descriptions and grounds explanations.</p>
               <a href="#projects" class="proof-orbit-link mono">View project</a>
             </article>
-            <article class="proof-orbit-card" data-proof-card data-title="Proeffico CV" data-subtitle="Edge vision deployment" tabindex="0">
+            <article class="proof-orbit-card" data-proof-card data-title="ForgeAI" data-subtitle="Agentic code control plane" tabindex="0" aria-current="false">
               <span class="proof-orbit-index mono">03</span>
-              <h3>Proeffico CV</h3>
-              <p>Four Jetson Xavier NX pipelines for client workflows, targeting sub-40 ms inference.</p>
-              <a href="#experience" class="proof-orbit-link mono">View experience</a>
-            </article>
-            <article class="proof-orbit-card" data-proof-card data-title="Annadata/SIH" data-subtitle="National finalist proof" tabindex="0">
-              <span class="proof-orbit-index mono">04</span>
-              <h3>Annadata/SIH</h3>
-              <p>Top 5 nationally in Robotics and Drones using YOLOv8 plus ResNet agriculture vision.</p>
+              <h3>ForgeAI</h3>
+              <p>Local-first engineering agent platform with LangGraph agents, repo indexing, RAG search, approval gates and verified patch evidence.</p>
               <a href="#projects" class="proof-orbit-link mono">View project</a>
             </article>
-            <article class="proof-orbit-card" data-proof-card data-title="Robocon" data-subtitle="AIR 1 Round 1" tabindex="0">
+            <article class="proof-orbit-card" data-proof-card data-title="AuthPilot" data-subtitle="Grounded prior authorization agent" tabindex="0" aria-current="false">
+              <span class="proof-orbit-index mono">04</span>
+              <h3>AuthPilot</h3>
+              <p>Synthetic healthcare authorization prototype with Planner, Executor and Verifier agents, grounding checks, queues and evaluation harnesses.</p>
+              <a href="#projects" class="proof-orbit-link mono">View project</a>
+            </article>
+            <article class="proof-orbit-card" data-proof-card data-title="Guardian-AI / RaGeX" data-subtitle="RAG pricing guardrail" tabindex="0" aria-current="false">
               <span class="proof-orbit-index mono">05</span>
-              <h3>Robocon</h3>
-              <p>All-India Rank 1 in Round 1 with 100 out of 100 in stage one.</p>
-              <a href="#achievements" class="proof-orbit-link mono">View proof</a>
+              <h3>Guardian-AI / RaGeX</h3>
+              <p>Pricing guardrail system with live simulator, Exasol persistence, regret scoring, retrieved policy evidence and dashboard review.</p>
+              <a href="#projects" class="proof-orbit-link mono">View project</a>
             </article>
-            <article class="proof-orbit-card" data-proof-card data-title="IRC" data-subtitle="20th worldwide" tabindex="0">
+            <article class="proof-orbit-card" data-proof-card data-title="EnergyPlus LLM HVAC Agent" data-subtitle="Closed-loop building control" tabindex="0" aria-current="false">
               <span class="proof-orbit-index mono">06</span>
-              <h3>IRC</h3>
-              <p>20th worldwide at International Rover Challenge 2025 with rover systems work.</p>
-              <a href="#robotics" class="proof-orbit-link mono">View robotics</a>
-            </article>
-            <article class="proof-orbit-card" data-proof-card data-title="Research/patent" data-subtitle="Research and IP track" tabindex="0">
-              <span class="proof-orbit-index mono">07</span>
-              <h3>Research/patent</h3>
-              <p>CVPR EarthVision under review plus Autonomous Patrolling Robot patent track.</p>
-              <a href="#research" class="proof-orbit-link mono">View research</a>
+              <h3>EnergyPlus LLM HVAC Agent</h3>
+              <p>Autonomous HVAC controller that reads EnergyPlus telemetry, uses MCP tools and writes safe setpoints back into the live simulation.</p>
+              <a href="#projects" class="proof-orbit-link mono">View project</a>
             </article>
           </div>
         </div>
         <div class="proof-orbit-caption" aria-hidden="true">
           <span class="proof-orbit-caption-title mono" data-proof-caption-title>iORA DocQA</span>
-          <span data-proof-caption-subtitle>RAG product shipped</span>
+          <span data-proof-caption-subtitle>Production RAG document platform</span>
         </div>
-        <p class="sr-only" data-proof-live aria-live="polite">Showing iORA DocQA, RAG product shipped.</p>
+        <p class="sr-only" data-proof-live aria-live="polite">Showing iORA DocQA, production RAG document platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STACK LOOP ============ -->
+  <section class="logo-loop-section" aria-label="Core AI and backend stack">
+    <div class="container">
+      <div class="logo-loop-shell reveal">
+        <p class="logo-loop-label mono">Core stack in motion</p>
+        <div class="logo-loop" tabindex="0">
+          <div class="logo-loop-track" aria-hidden="true">
+            <span class="logo-chip mono">RAG</span>
+            <span class="logo-chip mono">LangGraph</span>
+            <span class="logo-chip mono">FastAPI</span>
+            <span class="logo-chip mono">Supabase</span>
+            <span class="logo-chip mono">pgvector</span>
+            <span class="logo-chip mono">Postgres</span>
+            <span class="logo-chip mono">FAISS</span>
+            <span class="logo-chip mono">Gemini</span>
+            <span class="logo-chip mono">MCP</span>
+            <span class="logo-chip mono">Docker</span>
+            <span class="logo-chip mono">Next.js</span>
+            <span class="logo-chip mono">Jetson</span>
+            <span class="logo-chip mono">RAG</span>
+            <span class="logo-chip mono">LangGraph</span>
+            <span class="logo-chip mono">FastAPI</span>
+            <span class="logo-chip mono">Supabase</span>
+            <span class="logo-chip mono">pgvector</span>
+            <span class="logo-chip mono">Postgres</span>
+            <span class="logo-chip mono">FAISS</span>
+            <span class="logo-chip mono">Gemini</span>
+            <span class="logo-chip mono">MCP</span>
+            <span class="logo-chip mono">Docker</span>
+            <span class="logo-chip mono">Next.js</span>
+            <span class="logo-chip mono">Jetson</span>
+          </div>
+        </div>
+        <p class="sr-only">Core stack: RAG, LangGraph, FastAPI, Supabase, pgvector, Postgres, FAISS, Gemini, MCP, Docker, Next.js and Jetson.</p>
       </div>
     </div>
   </section>
@@ -231,7 +264,7 @@
   <section class="section" id="about">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.01 // About</span>
+        <span class="section-kicker mono">SEC.01 · About</span>
         <h2>The person behind the commits</h2>
       </div>
       <div class="about-grid">
@@ -279,14 +312,14 @@
   <section class="section video-resume-section" id="video-resume">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.01B // Video resume</span>
+        <span class="section-kicker mono">SEC.01B · Video resume</span>
         <h2>A fast pass beyond the PDF.</h2>
         <p class="section-sub">
           A quick spoken overview of how I think about AI coding workflows, product ownership and startup-paced engineering.
         </p>
       </div>
       <div class="video-resume-grid">
-        <div class="video-resume-player card reveal">
+        <div class="video-resume-player card reveal" data-scroll-expand>
           <div class="video-frame" data-video-frame>
             <video
               id="videoResume"
@@ -305,7 +338,7 @@
           </div>
         </div>
         <aside class="video-resume-notes card reveal" aria-label="Video resume notes">
-          <span class="video-note-kicker mono">RK26 // video summary</span>
+          <span class="video-note-kicker mono">RK26 · video summary</span>
           <h3>Video summary</h3>
           <p>
             I introduce how I use AI coding agents in real engineering workflows: Claude Code for architecture
@@ -328,7 +361,7 @@
   <section class="section section-alt" id="experience">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.02 // Experience</span>
+        <span class="section-kicker mono">SEC.02 · Experience</span>
         <h2>Where I have shipped</h2>
       </div>
       <div class="timeline">
@@ -410,7 +443,7 @@
   <section class="section" id="projects">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.03 // Projects</span>
+        <span class="section-kicker mono">SEC.03 · Projects</span>
         <h2>Flagship work</h2>
         <p class="section-sub">
           Status is stated honestly:
@@ -427,8 +460,8 @@
 
       <div class="project-category">
         <div class="project-category-head reveal">
-          <span class="mono project-category-kicker">01 // Category</span>
-          <h3>Generative AI &amp; AI Applications</h3>
+          <span class="mono project-category-kicker">01 · Category</span>
+          <h3>Forward-deployed AI, agents and backend systems</h3>
         </div>
 
       <!-- iORA DocQA -->
@@ -538,41 +571,63 @@
 
         <div class="grid-2 project-category-grid">
           <article class="card mini reveal">
-            <div class="mini-top"><h3>ForgeAI</h3><span class="badge badge-local">Running locally</span></div>
+            <div class="mini-top"><h3>HiRAGe_vCl</h3><span class="badge badge-local">RAG portal</span></div>
             <p>
-              A local-first autonomous software-engineering control plane with repo indexing, approval-gated
-              LangGraph agents, FastAPI orchestration, SSE events, RAG search, visual review artifacts and a
-              Next.js dashboard.
+              Resume shortlisting portal with admin and candidate flows. It parses PDF and Word resumes,
+              embeds candidates into pgvector, ranks them against a job description and explains every match.
+            </p>
+            <div class="tag-row"><span class="tag">RAG</span><span class="tag">pgvector</span><span class="tag">Gemini</span><span class="tag">Supabase</span></div>
+            <p class="mini-proof mono">Signal: applied hiring RAG with grounded pros and cons.</p>
+            <div class="project-links">
+              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/HiRAGe_vCl" target="_blank" rel="noopener">Code</a>
+            </div>
+          </article>
+          <article class="card mini reveal">
+            <div class="mini-top"><h3>ForgeAI</h3><span class="badge badge-local">Agent control plane</span></div>
+            <p>
+              Local-first autonomous software engineering system with repo indexing, LangGraph agents,
+              RAG search, approval gates, patch verification, SSE events and a Next.js dashboard.
             </p>
             <div class="tag-row"><span class="tag">FastAPI</span><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">Next.js</span></div>
-            <p class="mini-proof mono">Signal: agent systems + approval-safe engineering workflows.</p>
+            <p class="mini-proof mono">Signal: agentic engineering with audit-ready patch evidence.</p>
             <div class="project-links">
               <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/forgeAI" target="_blank" rel="noopener">Code</a>
             </div>
           </article>
           <article class="card mini reveal">
-            <div class="mini-top"><h3>RecallAI</h3><span class="badge badge-local">Running locally</span></div>
+            <div class="mini-top"><h3>AuthPilot</h3><span class="badge badge-local">Research prototype</span></div>
             <p>
-              A local-first visual episodic memory app: teach objects from camera/upload frames, add room and
-              nearby-object context, then search remembered objects by text, image, or both.
+              Synthetic prior authorization agent with Planner, Executor and Verifier stages, grounding
+              checks, human escalation, queue semantics and reproducible evaluation.
             </p>
-            <div class="tag-row"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">React</span><span class="tag">Visual search</span></div>
-            <p class="mini-proof mono">Signal: productized CV retrieval with local persistence.</p>
+            <div class="tag-row"><span class="tag">Agents</span><span class="tag">FHIR</span><span class="tag">Grounding</span><span class="tag">Evaluation</span></div>
+            <p class="mini-proof mono">Signal: safety-aware agent workflows with explicit verification.</p>
             <div class="project-links">
-              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/RecallAI" target="_blank" rel="noopener">Code</a>
+              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/Agentic-Prior-Authorization-System" target="_blank" rel="noopener">Code</a>
             </div>
           </article>
           <article class="card mini reveal">
-            <div class="mini-top"><h3>FieldOpsEnv</h3><span class="badge badge-award">OpenEnv Hackathon</span></div>
+            <div class="mini-top"><h3>Guardian-AI / RaGeX</h3><span class="badge badge-live">RAG guardrail</span></div>
             <p>
-              A deterministic benchmark environment for autonomous field-robotics agents: structured terrain
-              grids, hazard zones, and hard energy budgets, modeling disaster response, mine inspection and
-              precision agriculture. Supports LLM-assisted decision-making. Packaged as a Docker Space.
+              AI pricing guardrail with a live simulator, Exasol persistence, regret scoring, policy
+              evidence retrieval and dashboard review for risky automated pricing decisions.
             </p>
-            <div class="tag-row"><span class="tag">RL environments</span><span class="tag">Agents</span><span class="tag">Docker</span></div>
-            <p class="mini-proof mono">Signal: robotics agents + constrained planning.</p>
+            <div class="tag-row"><span class="tag">RAG</span><span class="tag">Exasol</span><span class="tag">FastAPI</span><span class="tag">Dashboard</span></div>
+            <p class="mini-proof mono">Signal: decision guardrails with evidence-backed explanation.</p>
             <div class="project-links">
-              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/fieldopsenv-openenv" target="_blank" rel="noopener">Code</a>
+              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/Guardian-AI" target="_blank" rel="noopener">Code</a>
+            </div>
+          </article>
+          <article class="card mini reveal">
+            <div class="mini-top"><h3>EnergyPlus LLM HVAC Agent</h3><span class="badge badge-local">MCP control</span></div>
+            <p>
+              Closed-loop building-control agent that reads EnergyPlus telemetry, reasons with local LLM
+              tools, then writes thermostat setpoints back into the running simulation.
+            </p>
+            <div class="tag-row"><span class="tag">LLM agents</span><span class="tag">MCP</span><span class="tag">EnergyPlus</span><span class="tag">Control</span></div>
+            <p class="mini-proof mono">Signal: AI system connected to live simulator actuation.</p>
+            <div class="project-links">
+              <a class="btn btn-small btn-ghost" href="https://github.com/Ranbirkumar26/energyplus-llm-hvac-agent" target="_blank" rel="noopener">Code</a>
             </div>
           </article>
         </div>
@@ -580,7 +635,7 @@
 
       <div class="project-category">
         <div class="project-category-head reveal">
-          <span class="mono project-category-kicker">02 // Category</span>
+          <span class="mono project-category-kicker">02 · Category</span>
           <h3>Machine Learning, Deep Learning &amp; Computer Vision</h3>
         </div>
 
@@ -720,7 +775,7 @@
 
       <div class="project-category">
         <div class="project-category-head reveal">
-          <span class="mono project-category-kicker">03 // Category</span>
+          <span class="mono project-category-kicker">03 · Category</span>
           <h3>Data Science &amp; Data Engineering</h3>
         </div>
 
@@ -799,7 +854,7 @@
   <section class="section section-alt" id="research">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.04 // Research</span>
+        <span class="section-kicker mono">SEC.04 · Research</span>
         <h2>Papers and patents</h2>
         <p class="section-sub">Both manuscripts are with peer-reviewed journals. Venues will be named once decisions are public.</p>
       </div>
@@ -867,7 +922,7 @@
   <section class="section" id="robotics">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">Mission log // Robotics</span>
+        <span class="section-kicker mono">Mission log · Robotics</span>
         <h2>Technocrats Robotics, VIT Chennai</h2>
         <p class="section-sub">Mechanical member since March 2024. Rover Lead since August 2025.</p>
       </div>
@@ -957,7 +1012,7 @@
   <section class="section" id="skills">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.07 // Skills</span>
+        <span class="section-kicker mono">SEC.07 · Skills</span>
         <h2>Tools I reach for</h2>
         <p class="section-sub">Skills are grouped by where they have been used, not by buzzword density.</p>
       </div>
@@ -1005,7 +1060,7 @@
   <section class="section section-alt" id="achievements">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.08 // Achievements</span>
+        <span class="section-kicker mono">SEC.08 · Achievements</span>
         <h2>Proof of work</h2>
       </div>
       <div class="proof-wall reveal" aria-label="Achievement summary">
@@ -1038,7 +1093,7 @@
       </div>
 
       <div class="cert-block reveal">
-        <h3 class="cert-heading mono">// Certifications</h3>
+        <h3 class="cert-heading mono">Certifications</h3>
         <div class="grid-2 cert-grid">
           <article class="card cert">
             <div class="cert-row">
@@ -1103,7 +1158,7 @@
   <section class="section section-alt" id="education">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-kicker mono">SEC.09 // Education</span>
+        <span class="section-kicker mono">SEC.09 · Education</span>
         <h2>Education</h2>
       </div>
       <article class="card edu reveal">
@@ -1133,7 +1188,7 @@
   <!-- ============ CONTACT ============ -->
   <section class="section contact" id="contact">
     <div class="container contact-inner reveal">
-      <span class="section-kicker mono">SEC.10 // Contact</span>
+      <span class="section-kicker mono">SEC.10 · Contact</span>
       <h2>Let us build something.</h2>
       <p class="contact-sub">
         Open to internships, research collaborations and full-time roles in AI, RAG systems, computer vision
@@ -1154,7 +1209,7 @@
       <form class="contact-form" id="contactForm" data-contact-email="rk26.ftw@gmail.com" data-contact-endpoint="/api/contact" novalidate>
         <div class="contact-form-head">
           <h3>Message me</h3>
-          <span class="mono">RK26 // inbox relay</span>
+          <span class="mono">RK26 · inbox relay</span>
         </div>
         <div class="contact-form-grid">
           <label for="contactName">
@@ -1194,11 +1249,16 @@
 
 <footer class="footer">
   <div class="container footer-inner">
-    <span class="mono">// I like to build stuff.</span>
-    <span class="mono footer-building">// currently building: a web platform + a mapping feature · updated July 2026</span>
-    <span class="mono footer-eot">// end of transmission</span>
+    <span class="mono">I like to build stuff.</span>
+    <span class="mono footer-building">Currently building: a web platform + a mapping feature · updated July 2026</span>
+    <span class="mono footer-eot">End of transmission</span>
   </div>
 </footer>
+
+<a class="contact-floater mono" href="#contact" aria-label="Jump to contact section">
+  <span class="contact-floater-dot" aria-hidden="true"></span>
+  <span>Connect with me</span>
+</a>
 
 <section
   class="chatbot"
@@ -1228,7 +1288,7 @@
   <div class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-labelledby="chatTitle" hidden>
     <div class="chat-head">
       <div>
-        <span class="chat-kicker mono">RK26 // portfolio assistant</span>
+        <span class="chat-kicker mono">RK26 · portfolio assistant</span>
         <h2 id="chatTitle">Ask about Ranbir</h2>
       </div>
       <div class="chat-head-actions">
@@ -1269,6 +1329,6 @@
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m5 14 7-7 7 7"/></svg>
 </button>
 
-<script src="script.min.js?v=38"></script>
+<script src="script.min.js?v=45"></script>
 </body>
 </html>

@@ -489,6 +489,113 @@ export const knowledgeItems: KnowledgeItem[] = [
     "visibility": "public"
   },
   {
+    "id": "project.hirage",
+    "title": "HiRAGe_vCl",
+    "tags": [
+      "project",
+      "rag",
+      "resume screening",
+      "pgvector",
+      "gemini",
+      "supabase",
+      "full stack"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "rag",
+      "full_stack",
+      "backend"
+    ],
+    "priority": 9,
+    "content": "HiRAGe_vCl is a resume shortlisting portal powered by a retrieval augmented generation pipeline. Public GitHub materials say admins create jobs, upload PDF and Word resume pools, parse and chunk resumes, embed them into pgvector, rank candidates against a job description, and generate grounded pros and cons for the top candidates. It includes an admin portal, candidate portal, local Docker and Supabase setup, a worker process, and Gemini-powered embeddings and explanations.",
+    "evidence": [
+      "GitHub public API",
+      "HiRAGe_vCl repository README",
+      "Projects section"
+    ],
+    "visibility": "public"
+  },
+  {
+    "id": "project.forgeai",
+    "title": "ForgeAI",
+    "tags": [
+      "project",
+      "agents",
+      "langgraph",
+      "rag",
+      "fastapi",
+      "next.js",
+      "developer tools"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "rag",
+      "backend",
+      "full_stack"
+    ],
+    "priority": 9,
+    "content": "ForgeAI is a local-first autonomous software engineering control plane for verified, approval-gated code changes. Public GitHub materials describe a FastAPI and LangGraph backend, Next.js dashboard, repository indexing, deterministic retrieval, durable run history, human approval gates, Server-Sent Events, patch verification, secret scanning, and VerifiedPatch evidence that a human can inspect, approve, apply, reject, replay, and audit.",
+    "evidence": [
+      "GitHub public API",
+      "ForgeAI repository README",
+      "Projects section"
+    ],
+    "visibility": "public"
+  },
+  {
+    "id": "project.authpilot",
+    "title": "AuthPilot",
+    "tags": [
+      "project",
+      "agents",
+      "healthcare",
+      "prior authorization",
+      "grounding",
+      "evaluation",
+      "queue"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "backend",
+      "software"
+    ],
+    "priority": 8,
+    "content": "AuthPilot is a synthetic prior authorization research prototype. Public GitHub materials describe a Planner, Executor, and Verifier architecture with human-in-the-loop escalation, grounding checks, a Postgres-style concurrent queue, synthetic FHIR-shaped records, and a reproducible evaluation harness. The repository explicitly says it uses synthetic data only and is not clinically validated for patient care.",
+    "evidence": [
+      "GitHub public API",
+      "Agentic-Prior-Authorization-System repository README",
+      "Projects section"
+    ],
+    "visibility": "public"
+  },
+  {
+    "id": "project.guardian_ai",
+    "title": "Guardian-AI / RaGeX",
+    "tags": [
+      "project",
+      "rag",
+      "pricing",
+      "guardrails",
+      "exasol",
+      "dashboard",
+      "backend"
+    ],
+    "roleTags": [
+      "ai_ml",
+      "rag",
+      "backend",
+      "data"
+    ],
+    "priority": 9,
+    "content": "Guardian-AI, also called RaGeX in the demo, is an AI pricing guardrail system. Public GitHub materials describe a live pricing simulator, Exasol-backed guardrail checks, counterfactual regret scoring, grounded RAG explanations, and a dashboard review workflow. Ranbir's team ownership notes identify Ranbir on the RAG explanation layer, evidence retrieval, dashboard, and Render integration endpoint.",
+    "evidence": [
+      "GitHub public API",
+      "Guardian-AI repository README",
+      "Projects section"
+    ],
+    "visibility": "public"
+  },
+  {
     "id": "project.semanticache",
     "title": "SemantiCache",
     "tags": [
@@ -650,7 +757,7 @@ export const knowledgeItems: KnowledgeItem[] = [
   },
   {
     "id": "project.ecoloop",
-    "title": "EcoLoop HVAC optimization agent",
+    "title": "EnergyPlus LLM HVAC Agent",
     "tags": [
       "project",
       "llm",
@@ -666,7 +773,7 @@ export const knowledgeItems: KnowledgeItem[] = [
       "software"
     ],
     "priority": 8,
-    "content": "EcoLoop, represented publicly as energyplus-llm-hvac-agent and eco-loop-building-agents, is an LLM-driven autonomous HVAC optimization agent. Resume details say Ranbir engineered a closed-loop AI agent over a DOE reference building simulated in EnergyPlus. A local Qwen2.5-7B model reads zone temperature, humidity, Fanger PMV, occupancy, and power, then writes thermostat setpoints back into the running simulation. The resumes report electricity reduction from 158.9 kWh to 145.6 kWh, an 8.4 percent reduction over a matched 2-day window, while keeping about 88 percent of occupied-hour comfort readings inside the acceptable PMV band. The system exposes five control tools over Model Context Protocol.",
+    "content": "EnergyPlus LLM HVAC Agent, also represented by eco-loop-building-agents, is an LLM-driven autonomous HVAC optimization agent. Resume and GitHub details say Ranbir engineered a closed-loop AI agent over a DOE reference building simulated in EnergyPlus. A local Qwen2.5-7B model reads zone temperature, humidity, Fanger PMV, occupancy, and power, then writes thermostat setpoints back into the running simulation. The resumes and repository report electricity reduction from 158.9 kWh to 145.6 kWh, an 8.4 percent reduction over a matched 2-day window, while keeping about 88 percent of occupied-hour comfort readings inside the acceptable PMV band. The system exposes five control tools over Model Context Protocol.",
     "evidence": [
       "Supplied resumes",
       "GitHub public API"
