@@ -23,11 +23,11 @@
   --btn-ink: #070706;
   --nav-glass: rgba(7, 7, 6, 0.78);
   --glow-strength: 0.14;
-  --flux-line-a: #b9b7ae;
-  --flux-line-b: #c7ad77;
-  --flux-line-c: #9fbab3;
-  --flux-line-d: #d1d0ca;
-  --flux-opacity: 0.74;
+  --flux-line-a: #666b65;
+  --flux-line-b: #675a40;
+  --flux-line-c: #52645f;
+  --flux-line-d: #74736c;
+  --flux-opacity: 0.095;
   --flux-blend: normal;
   --slat-opacity: 0.08;
   --radius: 14px;

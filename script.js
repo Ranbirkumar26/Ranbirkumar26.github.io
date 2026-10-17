@@ -146,18 +146,18 @@
         light: isLight ? 1 : 0,
         flowX: isLight ? 0.88 : 0.62,
         flowY: isLight ? -0.22 : -0.52,
-        speed: reducedMotion ? 0 : (isLight ? 0.16 : 0.24),
+        speed: reducedMotion ? 0 : (isLight ? 0.16 : 0.14),
         scale: compact ? 1.34 : 1.42,
         turbulence: isLight ? 0.92 : (compact ? 1.04 : 1.22),
         fluidity: isLight ? 0.085 : 0.072,
         rimWidth: isLight ? 0.13 : 0.16,
         sharpness: isLight ? 2.1 : 1.72,
         shimmer: isLight ? 0.72 : 0.98,
-        glow: isLight ? 1.35 : (compact ? 1.82 : 2.65),
-        lineWidth: isLight ? 0.7 : (compact ? 0.76 : 1.18),
-        opacity: isLight ? 0.58 : (compact ? 0.5 : 0.72),
-        mouseStrength: isLight ? 0.78 : 1.12,
-        mouseRadius: compact ? 0.42 : 0.36
+        glow: isLight ? 1.35 : (compact ? 0.2 : 0.26),
+        lineWidth: isLight ? 0.7 : (compact ? 0.2 : 0.26),
+        opacity: isLight ? 0.58 : (compact ? 0.075 : 0.095),
+        mouseStrength: isLight ? 0.78 : 0.055,
+        mouseRadius: isLight ? (compact ? 0.42 : 0.36) : (compact ? 0.05 : 0.04)
       };
     }
 
@@ -195,8 +195,10 @@
       gl.uniform3fv(uniforms.uColors, palette);
       gl.uniform1i(uniforms.uColorCount, MAX_FLUX_COLORS);
       gl.uniform4f(uniforms.uMagnet, magnet.x, magnet.y, magnet.active * settings.mouseStrength, settings.mouseRadius);
-      var twist = 1.9 * Math.min(1, swirl.age / 0.23) * Math.exp(-Math.max(0, swirl.age - 0.23) * 1.1);
-      gl.uniform4f(uniforms.uSwirl, swirl.x, swirl.y, canvas.height * 0.22 * (1 + swirl.age * 0.5), swirl.age < 6 ? twist : 0);
+      var twistBase = settings.light ? 1.9 : 0.1;
+      var twist = twistBase * Math.min(1, swirl.age / 0.23) * Math.exp(-Math.max(0, swirl.age - 0.23) * 1.1);
+      var swirlReach = settings.light ? 0.22 : 0.035;
+      gl.uniform4f(uniforms.uSwirl, swirl.x, swirl.y, canvas.height * swirlReach * (1 + swirl.age * 0.5), swirl.age < 6 ? twist : 0);
       gl.uniform1f(uniforms.uReveal, revealEase);
       gl.uniform1f(uniforms.uLight, settings.light);
       gl.uniform1f(uniforms.uOpacity, settings.opacity);
