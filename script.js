@@ -1425,6 +1425,15 @@
       return /^Privacy warning:/i.test(String(answer || "").trim()) && !chatPrivacyPattern.test(normalizeChatText(question));
     }
 
+    function normalizeAssistantAnswer(answer) {
+      return String(answer || "")
+        .replace(/has been filed/gi, "has been published")
+        .replace(/a filed patent/gi, "a published patent")
+        .replace(/patent filing/gi, "published patent")
+        .replace(/the Autonomous Patrolling Robot patent track/gi, "the published Autonomous Patrolling Robot patent")
+        .replace(/Filing specifics remain confidential until public\.?/gi, "Patent number or publication link has not been supplied in the portfolio context yet.");
+    }
+
   /* ----- Contact relay: post to the portfolio backend if configured;
      otherwise fall back to a prefilled email. ----- */
   var contactForm = document.getElementById("contactForm");
@@ -1872,7 +1881,7 @@
       }
       if (/project|projects|worked on|built|builds|build|what all|what has .*done|portfolio work/.test(query)) {
         return {
-          answer: "Ranbir's visible portfolio projects include iORA DocQA, SemantiCache, Annadata, CraveConnect, Smart Task Manager, Apple Quality Detection, ShareKart, Rover Abhimanyu, and the Autonomous Patrolling Robot patent track.",
+          answer: "Ranbir's visible portfolio projects include iORA DocQA, SemantiCache, Annadata, CraveConnect, Smart Task Manager, Apple Quality Detection, ShareKart, Rover Abhimanyu, and the published Autonomous Patrolling Robot patent.",
           sources: ["Projects", "Robotics", "Research"],
           status: "Backend unreachable. Showing offline portfolio answer."
         };
@@ -2052,7 +2061,7 @@
       function onSuccess(body) {
         clearWakingNotice();
         hideTyping();
-        addChatMessage("assistant", body.answer || chatFallback, { sources: body.sources });
+        addChatMessage("assistant", normalizeAssistantAnswer(body.answer || chatFallback), { sources: body.sources });
         setChatStatus("");
         finish();
       }
