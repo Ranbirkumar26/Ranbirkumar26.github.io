@@ -554,6 +554,26 @@ ul { list-style: none; }
   transform-style: preserve-3d;
 }
 
+.proof-orbit-hotspot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 120;
+  width: min(296px, 48vw);
+  min-height: 282px;
+  transform: translate(-50%, -50%);
+  border-radius: 14px 4px 14px 4px;
+  color: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-drag: none;
+}
+
+.proof-orbit-hotspot:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--amber) 54%, transparent);
+  outline-offset: 5px;
+}
+
 .proof-orbit-card {
   position: absolute;
   left: 50%;
@@ -579,6 +599,7 @@ ul { list-style: none; }
   overflow: hidden;
   backface-visibility: hidden;
   will-change: transform, opacity, filter;
+  pointer-events: none;
 }
 
 .proof-orbit-card::before,
@@ -615,6 +636,7 @@ ul { list-style: none; }
     0 34px 92px -48px rgba(0, 0, 0, 0.88),
     0 0 0 1px color-mix(in srgb, var(--amber) 10%, transparent);
   z-index: 5;
+  pointer-events: auto;
 }
 
 .proof-orbit-card.is-near {
@@ -653,6 +675,7 @@ ul { list-style: none; }
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  pointer-events: auto;
 }
 
 .proof-orbit-link:hover,
@@ -1733,31 +1756,6 @@ ul { list-style: none; }
   z-index: 150;
 }
 
-/* ---------- Back to top ---------- */
-
-.to-top {
-  position: fixed;
-  right: 22px;
-  bottom: 22px;
-  z-index: 90;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface-2);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 0.25s ease, transform 0.25s ease, color 0.2s ease, border-color 0.2s ease;
-}
-.to-top.show { opacity: 1; pointer-events: auto; transform: none; }
-.to-top:hover { color: var(--accent-soft); border-color: var(--accent); }
-
 /* ---------- Branded placeholder mockups ---------- */
 
 /* photo-style */
@@ -2272,7 +2270,6 @@ html.scene-paused .project-scene::after {
     transform: none;
   }
   .proof-orbit-card { transition: none; }
-  .to-top { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -2354,6 +2351,7 @@ html.scene-paused .project-scene::after {
     gap: 14px;
     transform-style: flat;
   }
+  .proof-orbit-hotspot { display: none; }
   .proof-orbit-card {
     position: relative;
     left: auto;
@@ -2364,6 +2362,7 @@ html.scene-paused .project-scene::after {
     transform: none !important;
     opacity: 1;
     filter: none;
+    pointer-events: auto;
     scroll-snap-align: center;
   }
   .proof-orbit-caption {
@@ -2419,62 +2418,6 @@ html.scene-paused .project-scene::after {
 .cert-issuer { font-size: 0.86rem; }
 
 /* ---------- Motion layer (gated on fine pointers / no-preference) ---------- */
-
-/* rover-cam reticle cursor: corner brackets, center dot, live coords */
-.reticle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
-  pointer-events: none;
-  z-index: 300;
-  opacity: 0;
-  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease, opacity 0.3s ease;
-}
-.reticle.on { opacity: 0.75; }
-.reticle::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  margin: -1.5px 0 0 -1.5px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.ret-corner { position: absolute; width: 9px; height: 9px; transition: border-color 0.2s ease; }
-.ret-tl { top: 0; left: 0; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-.ret-tr { top: 0; right: 0; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-.ret-bl { bottom: 0; left: 0; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-.ret-br { bottom: 0; right: 0; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-.ret-coords {
-  position: absolute;
-  left: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 9px;
-  line-height: 1.3;
-  color: var(--text-muted);
-  white-space: pre;
-}
-.reticle.hovering {
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
-  opacity: 1;
-}
-.reticle.hovering .ret-corner { border-color: var(--accent-soft); }
-.reticle.no-coords .ret-coords { opacity: 0; }
-.reticle.frozen {
-  opacity: 1;
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--amber) 55%, transparent));
-}
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .reticle { display: none; }
-}
 
 /* hero portrait float */
 @media (prefers-reduced-motion: no-preference) {
@@ -2943,11 +2886,6 @@ html.scene-paused .project-scene::after {
 
 .footer-building { color: var(--text-muted); font-size: 0.74rem; }
 .footer-inner { flex-wrap: wrap; gap: 8px; }
-
-/* reticle can occlude text in narrow fine-pointer contexts */
-@media (max-width: 900px) {
-  .reticle { display: none; }
-}
 
 /* health-check downgraded badge keeps layout, loses the live glow */
 .badge[data-health].health-up { color: var(--live); border-color: rgba(63, 206, 143, 0.35); }

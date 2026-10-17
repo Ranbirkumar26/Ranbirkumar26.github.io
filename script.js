@@ -537,28 +537,17 @@
     }, 2600);
   }
 
-  /* ----- Scroll progress + back-to-top ----- */
+  /* ----- Scroll progress ----- */
   var progress = document.getElementById("scrollProgress");
-  var toTop = document.getElementById("toTop");
   function onScrollProgress() {
     var doc = document.documentElement;
     var max = doc.scrollHeight - doc.clientHeight;
     if (progress) {
       progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
     }
-    if (toTop) {
-      toTop.classList.toggle("show", window.scrollY > 600);
-    }
   }
   window.addEventListener("scroll", onScrollProgress, { passive: true });
   onScrollProgress();
-  if (toTop) {
-    toTop.addEventListener("click", function () {
-      animateScrollTo(0);
-      // leave no stale #section hash after returning to the top
-      if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
-    });
-  }
 
   /* ----- Theme toggle ----- */
   var themeToggle = document.getElementById("themeToggle");
@@ -580,58 +569,6 @@
       try { localStorage.setItem("theme", next); } catch (e) {}
       applyThemeMeta();
     });
-  }
-
-  /* ----- Rover-cam reticle cursor (fine pointers only) ----- */
-  var ring = document.getElementById("cursorRing");
-  if (ring && !reducedMotion && window.matchMedia("(pointer: fine)").matches) {
-    var coords = document.getElementById("retCoords");
-    var rx = -100, ry = -100, tx = -100, ty = -100, ringOn = false, frame = 0;
-    var reticleFrozen = false;
-    document.addEventListener("mousemove", function (e) {
-      if (!reticleFrozen) {
-        tx = e.clientX;
-        ty = e.clientY;
-      }
-      if (!ringOn) {
-        ringOn = true;
-        rx = tx; ry = ty;
-        ring.classList.add("on");
-      }
-    });
-    document.addEventListener("mouseleave", function () {
-      ringOn = false;
-      ring.classList.remove("on");
-    });
-    (function follow() {
-      rx += (tx - rx) * 0.16;
-      ry += (ty - ry) * 0.16;
-      ring.style.transform = "translate(" + rx + "px," + ry + "px)";
-      // text updates are cheap but pointless at 60fps; every 3rd frame reads fine
-      if (coords && frame++ % 3 === 0) {
-        coords.textContent = "x:" + Math.round(rx) + "\ny:" + Math.round(ry);
-      }
-      requestAnimationFrame(follow);
-    })();
-    document.querySelectorAll("a, button, input, textarea, select, .nav, .hero-actions, .hero-proof-rail, .mission-badge, .card, .shot, .placeholder, .motion-panel, .tl-body, .project, .mini, .skill-group, .proof-tile, .cert, .edu-card, .contact-form, .contact-floater, .video-resume-player, .video-resume-notes, .proof-orbit-stage, .proof-orbit-card, .logo-loop, .chat-panel").forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
-        ring.classList.add("hovering", "no-coords");
-      });
-      el.addEventListener("mouseleave", function () {
-        ring.classList.remove("hovering", "no-coords");
-      });
-    });
-    var chatLauncherForReticle = document.getElementById("chatLauncher");
-    if (chatLauncherForReticle) {
-      chatLauncherForReticle.addEventListener("mouseenter", function () {
-        reticleFrozen = true;
-        ring.classList.add("frozen", "no-coords");
-      });
-      chatLauncherForReticle.addEventListener("mouseleave", function () {
-        reticleFrozen = false;
-        ring.classList.remove("frozen", "no-coords");
-      });
-    }
   }
 
   /* ----- Mission clock: time since joining the robotics team ----- */
@@ -827,21 +764,43 @@
       proofSetTarget(Math.round(proofTarget) + delta, true);
     }
 
+    function proofNavigateLink(link) {
+      if (!link) return;
+      var href = link.getAttribute("href") || "";
+      if (href.charAt(0) === "#") {
+        var target = document.getElementById(href.slice(1));
+        if (!target) return;
+        smoothScrollTo(target.getBoundingClientRect().top + window.scrollY - navOffset);
+        revealNow(target);
+        forceRevealSweep();
+        if (history.pushState) history.pushState(null, "", href);
+        return;
+      }
+      link.click();
+    }
+
     function proofOpenActiveLink(event) {
       var activeCard = proofCards[proofActive];
       if (!activeCard || !event) return false;
+      if (event.target && event.target.closest && event.target.closest(".proof-orbit-link")) return false;
       var link = activeCard.querySelector(".proof-orbit-link");
       if (!link) return false;
       var rect = link.getBoundingClientRect();
+      var cardRect = activeCard.getBoundingClientRect();
       var pad = 10;
       var insideLink =
         event.clientX >= rect.left - pad &&
         event.clientX <= rect.right + pad &&
         event.clientY >= rect.top - pad &&
         event.clientY <= rect.bottom + pad;
-      if (!insideLink) return false;
+      var insideCard =
+        event.clientX >= cardRect.left &&
+        event.clientX <= cardRect.right &&
+        event.clientY >= cardRect.top &&
+        event.clientY <= cardRect.bottom;
+      if (!insideLink && !insideCard) return false;
       event.preventDefault();
-      link.click();
+      proofNavigateLink(link);
       return true;
     }
 
@@ -916,6 +875,9 @@
         else if (proofOpenActiveLink(event)) return;
         else proofSetTarget(Math.round(proofTarget), true);
       });
+      proofStage.addEventListener("click", function (event) {
+        proofOpenActiveLink(event);
+      }, true);
       proofStage.addEventListener("pointercancel", function () {
         proofDragStart = null;
         proofDragLast = null;
