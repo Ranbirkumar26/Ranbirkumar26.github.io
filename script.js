@@ -1798,12 +1798,12 @@
         return "Insightify 6.0 proof: Ranbir's team DataQuants was a national finalist, ranked 1st nationally in the analysis round, and ranked 2nd in the ML case-study round.";
       }
       if (/patent/.test(query)) {
-        return "Patent proof: Ranbir has an Autonomous Patrolling Robot patent track listed as patent filed or in process on the portfolio and resume.";
+        return "Patent proof: Ranbir has a published Autonomous Patrolling Robot patent listed on the portfolio and resume. Patent number or publication link has not been supplied in the portfolio context yet.";
       }
       if (/certification|certifications|certificate/.test(query)) {
         return "Certification proof includes Cisco Networking Academy Network Support and Security plus IBM SkillsBuild AI and cloud certificates listed in the portfolio context.";
       }
-      return "Ranbir's achievement proof includes Smart India Hackathon 2025 Grand Finalist, DD Robocon All-India Rank 1 in Round 1, IRC 2025 20th worldwide, Insightify 6.0 National Finalist, an Autonomous Patrolling Robot patent track, and listed certifications.";
+      return "Ranbir's achievement proof includes Smart India Hackathon 2025 Grand Finalist, DD Robocon All-India Rank 1 in Round 1, IRC 2025 20th worldwide, Insightify 6.0 National Finalist, a published Autonomous Patrolling Robot patent, and listed certifications.";
     }
 
     function offlineChatFallback(question) {
