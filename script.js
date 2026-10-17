@@ -827,6 +827,24 @@
       proofSetTarget(Math.round(proofTarget) + delta, true);
     }
 
+    function proofOpenActiveLink(event) {
+      var activeCard = proofCards[proofActive];
+      if (!activeCard || !event) return false;
+      var link = activeCard.querySelector(".proof-orbit-link");
+      if (!link) return false;
+      var rect = link.getBoundingClientRect();
+      var pad = 10;
+      var insideLink =
+        event.clientX >= rect.left - pad &&
+        event.clientX <= rect.right + pad &&
+        event.clientY >= rect.top - pad &&
+        event.clientY <= rect.bottom + pad;
+      if (!insideLink) return false;
+      event.preventDefault();
+      link.click();
+      return true;
+    }
+
     function proofSet(index) {
       if (!proofCards.length) return;
       var base = Math.round(proofTarget);
@@ -873,6 +891,7 @@
         }
       });
       proofStage.addEventListener("pointerdown", function (event) {
+        if (event.target && event.target.closest && event.target.closest("a, button, input, textarea, select")) return;
         proofDragStart = event.clientX;
         proofDragLast = event.clientX;
         if (proofStage.setPointerCapture) proofStage.setPointerCapture(event.pointerId);
@@ -894,6 +913,7 @@
         proofDragStart = null;
         proofDragLast = null;
         if (Math.abs(delta) > 34) proofGo(delta < 0 ? 1 : -1);
+        else if (proofOpenActiveLink(event)) return;
         else proofSetTarget(Math.round(proofTarget), true);
       });
       proofStage.addEventListener("pointercancel", function () {
