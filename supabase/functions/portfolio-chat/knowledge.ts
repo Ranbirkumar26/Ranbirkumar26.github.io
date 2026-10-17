@@ -914,7 +914,7 @@ export const knowledgeItems: KnowledgeItem[] = [
       "research"
     ],
     "priority": 7,
-    "content": "The portfolio and resumes list a filed patent for an AI-powered Autonomous Campus Surveillance Robot, shown on the portfolio as Autonomous Patrolling Robot. Public shareable details say it combines YOLO detection for missing ID cards, fire or smoke, and overcrowding, action-recognition models for fight detection, real-time security alerts, and embedded deployment on Jetson Xavier NX and Raspberry Pi with LiDAR and ultrasonic navigation using Python, OpenCV, PyTorch, and ROS. Filing specifics remain confidential until public.",
+    "content": "The portfolio and resumes list a published patent for an AI-powered Autonomous Campus Surveillance Robot, shown on the portfolio as Autonomous Patrolling Robot. Public shareable details say it combines YOLO detection for missing ID cards, fire or smoke, and overcrowding, action-recognition models for fight detection, real-time security alerts, and embedded deployment on Jetson Xavier NX and Raspberry Pi with LiDAR and ultrasonic navigation using Python, OpenCV, PyTorch, and ROS. No patent number or publication link has been supplied in the portfolio context yet.",
     "evidence": [
       "Research section",
       "Supplied resumes"
@@ -963,7 +963,7 @@ export const knowledgeItems: KnowledgeItem[] = [
       "embedded"
     ],
     "priority": 10,
-    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the Autonomous Patrolling Robot patent track.",
+    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the published Autonomous Patrolling Robot patent.",
     "evidence": [
       "Skills section",
       "Experience section",

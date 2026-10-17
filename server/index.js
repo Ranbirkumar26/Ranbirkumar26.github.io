@@ -710,7 +710,7 @@ function roleFitAnswer(message, contextItems) {
     return "For Data Science or Analytics roles, Ranbir's evidence includes CraveConnect's feature engineering and explainability pipeline, SemantiCache benchmarking, Apple Quality Detection's model evaluation flow, IAMAI testing metrics, and Power BI work.";
   }
   if (roles.has("research")) {
-    return "For Research roles, Ranbir's evidence includes Few-Shot Learning with Explainable AI, Vision-Based Terrain Analysis, the Autonomous Patrolling Robot patent track, and implementation work linking models to deployed or hardware-facing systems.";
+    return "For Research roles, Ranbir's evidence includes Few-Shot Learning with Explainable AI, Vision-Based Terrain Analysis, the published Autonomous Patrolling Robot patent, and implementation work linking models to deployed or hardware-facing systems.";
   }
   return hireFallback(message, contextItems);
 }

@@ -41,7 +41,7 @@
       "embedded"
     ],
     "priority": 10,
-    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the Autonomous Patrolling Robot patent track.",
+    "content": "Computer vision skills shown on the portfolio and resumes include YOLOv8, ResNet-18, ResNet-34, MiDaS, OpenCV, object detection, image classification, action recognition, depth estimation, dataset labelling and curation, real-time inference, and edge deployment on NVIDIA Jetson Xavier NX and Raspberry Pi. The evidence ties these to Annadata, Proeffico production pipelines, rover terrain work, and the published Autonomous Patrolling Robot patent.",
     "evidence": [
       "Skills section",
       "Experience section",
