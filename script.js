@@ -2108,7 +2108,7 @@
         fetch(target.url, { method: "POST", headers: target.headers, body: payload, signal: controller ? controller.signal : undefined })
           .then(function (response) {
             if (timeout) window.clearTimeout(timeout);
-            // Retry/fallback only on gateway/wake statuses; real errors (400, 429) surface.
+            // Gateway wake statuses get retried. Auth/config/API errors on primary move to fallback.
             if (isWakingStatus(response.status)) {
               transientRetry(targetIndex, attemptNo, null);
               return null;
@@ -2117,6 +2117,10 @@
               return { ok: false, error: chatFallback };
             }).then(function (body) {
               if (!response.ok || !body.ok) {
+                if (targetIndex + 1 < chatTargets.length) {
+                  attempt(targetIndex + 1, 1);
+                  return;
+                }
                 var safeError = new Error(portfolioApiError(body, chatFallback));
                 safeError.safeChatError = true;
                 throw safeError;
