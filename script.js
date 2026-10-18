@@ -146,18 +146,18 @@
         light: isLight ? 1 : 0,
         flowX: isLight ? 0.88 : 0.62,
         flowY: isLight ? -0.22 : -0.52,
-        speed: reducedMotion ? 0 : (isLight ? 0.16 : 0.14),
+        speed: reducedMotion ? 0 : (isLight ? 0.16 : 0.18),
         scale: compact ? 1.34 : 1.42,
-        turbulence: isLight ? 0.92 : (compact ? 1.04 : 1.22),
-        fluidity: isLight ? 0.085 : 0.072,
-        rimWidth: isLight ? 0.13 : 0.16,
-        sharpness: isLight ? 2.1 : 1.72,
-        shimmer: isLight ? 0.72 : 0.98,
-        glow: isLight ? 1.35 : (compact ? 0.2 : 0.26),
-        lineWidth: isLight ? 0.7 : (compact ? 0.2 : 0.26),
-        opacity: isLight ? 0.58 : (compact ? 0.075 : 0.095),
-        mouseStrength: isLight ? 0.78 : 0.055,
-        mouseRadius: isLight ? (compact ? 0.42 : 0.36) : (compact ? 0.05 : 0.04)
+        turbulence: isLight ? 0.92 : (compact ? 0.95 : 1.05),
+        fluidity: isLight ? 0.085 : 0.092,
+        rimWidth: isLight ? 0.13 : 0.14,
+        sharpness: isLight ? 2.1 : 1.9,
+        shimmer: isLight ? 0.72 : 0.64,
+        glow: isLight ? 1.35 : (compact ? 0.72 : 0.96),
+        lineWidth: isLight ? 0.7 : (compact ? 0.52 : 0.68),
+        opacity: isLight ? 0.58 : (compact ? 0.24 : 0.36),
+        mouseStrength: isLight ? 0.78 : 0.38,
+        mouseRadius: isLight ? (compact ? 0.42 : 0.36) : (compact ? 0.18 : 0.22)
       };
     }
 
@@ -195,9 +195,9 @@
       gl.uniform3fv(uniforms.uColors, palette);
       gl.uniform1i(uniforms.uColorCount, MAX_FLUX_COLORS);
       gl.uniform4f(uniforms.uMagnet, magnet.x, magnet.y, magnet.active * settings.mouseStrength, settings.mouseRadius);
-      var twistBase = settings.light ? 1.9 : 0.1;
+      var twistBase = settings.light ? 1.9 : 0.82;
       var twist = twistBase * Math.min(1, swirl.age / 0.23) * Math.exp(-Math.max(0, swirl.age - 0.23) * 1.1);
-      var swirlReach = settings.light ? 0.22 : 0.035;
+      var swirlReach = settings.light ? 0.22 : 0.14;
       gl.uniform4f(uniforms.uSwirl, swirl.x, swirl.y, canvas.height * swirlReach * (1 + swirl.age * 0.5), swirl.age < 6 ? twist : 0);
       gl.uniform1f(uniforms.uReveal, revealEase);
       gl.uniform1f(uniforms.uLight, settings.light);
@@ -333,8 +333,8 @@
         grad.addColorStop(0.5, i % 2 ? a : b);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.strokeStyle = grad;
-        ctx.lineWidth = light ? 0.7 : 1.4;
-        ctx.globalAlpha = light ? 0.22 : 0.42;
+        ctx.lineWidth = light ? 0.7 : 1.05;
+        ctx.globalAlpha = light ? 0.22 : 0.26;
         ctx.beginPath();
         for (var x = -60; x <= width + 60; x += 26) {
           var yy = y + Math.sin(x * 0.01 + now * 0.0007 + i) * 46 + Math.sin(x * 0.023 - now * 0.00045) * 22;
