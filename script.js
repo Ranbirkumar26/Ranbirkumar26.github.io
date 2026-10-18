@@ -668,20 +668,15 @@
     var proofCards = Array.prototype.slice.call(proofOrbit.querySelectorAll("[data-proof-card]"));
     var proofPrev = proofOrbit.querySelector("[data-proof-prev]");
     var proofNext = proofOrbit.querySelector("[data-proof-next]");
-    var proofToggle = proofOrbit.querySelector("[data-proof-toggle]");
     var proofLive = proofOrbit.querySelector("[data-proof-live]");
     var proofCaptionTitle = proofOrbit.querySelector("[data-proof-caption-title]");
     var proofCaptionSubtitle = proofOrbit.querySelector("[data-proof-caption-subtitle]");
     var proofTarget = 0;
     var proofPosition = 0;
     var proofActive = 0;
-    var proofPaused = reducedMotion;
-    var proofVisible = true;
-    var proofHover = false;
-    var proofFocus = false;
     var proofDragStart = null;
     var proofDragLast = null;
-    var proofMouseDrift = 0;
+    var proofFrame = 0;
     var proofCompact = false;
 
     function proofShortest(raw) {
@@ -704,10 +699,6 @@
       if (proofCaptionTitle) proofCaptionTitle.textContent = title;
       if (proofCaptionSubtitle) proofCaptionSubtitle.textContent = subtitle;
       if (proofLive && forceLive) proofLive.textContent = "Showing " + title + (subtitle ? ", " + subtitle : "") + ".";
-      if (proofToggle) {
-        proofToggle.textContent = proofPaused ? "Resume" : "Pause";
-        proofToggle.setAttribute("aria-pressed", String(proofPaused));
-      }
     }
 
     function proofLayout(forceLive) {
@@ -753,11 +744,42 @@
       });
     }
 
+    function proofScrollCompact() {
+      if (!proofCompact || !proofCards.length) return;
+      var activeIndex = ((Math.round(proofTarget) % proofCards.length) + proofCards.length) % proofCards.length;
+      var card = proofCards[activeIndex];
+      if (card && card.scrollIntoView) {
+        card.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", inline: "center", block: "nearest" });
+      }
+    }
+
+    function proofAnimate() {
+      if (proofFrame || reducedMotion || proofCompact) return;
+      function tick() {
+        proofPosition += (proofTarget - proofPosition) * 0.16;
+        if (Math.abs(proofTarget - proofPosition) < 0.002) {
+          proofPosition = proofTarget;
+          proofFrame = 0;
+          proofLayout(false);
+          return;
+        }
+        proofLayout(false);
+        proofFrame = requestAnimationFrame(tick);
+      }
+      proofFrame = requestAnimationFrame(tick);
+    }
+
     function proofSetTarget(next, forceLive) {
       if (!proofCards.length) return;
       proofTarget = next;
-      if (reducedMotion || proofCompact) proofPosition = proofTarget;
+      if (reducedMotion || proofCompact) {
+        proofPosition = proofTarget;
+        proofLayout(forceLive);
+        proofScrollCompact();
+        return;
+      }
       proofLayout(forceLive);
+      proofAnimate();
     }
 
     function proofGo(delta) {
@@ -826,13 +848,6 @@
 
     if (proofPrev) proofPrev.addEventListener("click", function () { proofGo(-1); });
     if (proofNext) proofNext.addEventListener("click", function () { proofGo(1); });
-    if (proofToggle) {
-      proofToggle.addEventListener("click", function () {
-        if (reducedMotion) return;
-        proofPaused = !proofPaused;
-        proofLayout(true);
-      });
-    }
     if (proofStage) {
       proofStage.addEventListener("keydown", function (event) {
         if (event.key === "ArrowRight") {
@@ -860,11 +875,10 @@
           var dragDelta = event.clientX - proofDragLast;
           proofDragLast = event.clientX;
           proofTarget -= dragDelta / Math.max(190, proofStage.clientWidth * 0.34);
+          proofPosition = proofTarget;
+          proofLayout(false);
           return;
         }
-        var rect = proofStage.getBoundingClientRect();
-        var center = rect.left + rect.width / 2;
-        proofMouseDrift = Math.max(-0.035, Math.min(0.035, proofMouseDrift + (event.clientX - center) / Math.max(1, rect.width) * 0.018));
       });
       proofStage.addEventListener("pointerup", function (event) {
         if (proofDragStart === null) return;
@@ -883,24 +897,11 @@
         proofDragLast = null;
         proofSetTarget(Math.round(proofTarget), false);
       });
-      proofStage.addEventListener("mouseenter", function () { proofHover = true; });
       proofStage.addEventListener("mouseleave", function () {
-        proofHover = false;
-        proofMouseDrift = 0;
         if (proofDragStart !== null) proofSetTarget(Math.round(proofTarget), false);
         proofDragStart = null;
         proofDragLast = null;
       });
-      proofStage.addEventListener("focusin", function () { proofFocus = true; });
-      proofStage.addEventListener("focusout", function () { proofFocus = false; });
-    }
-    if ("IntersectionObserver" in window) {
-      var proofIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          proofVisible = entry.isIntersecting;
-        });
-      }, { threshold: 0.25 });
-      proofIO.observe(proofOrbit);
     }
     window.addEventListener("resize", function () {
       proofSyncMode();
@@ -908,31 +909,6 @@
     });
     proofSyncMode();
     proofLayout(true);
-    if (!reducedMotion) {
-      var proofLastTick = performance.now();
-      function proofTick(now) {
-        var dt = Math.min(40, now - proofLastTick);
-        proofLastTick = now;
-        if (!document.hidden && proofVisible && !proofPaused) {
-          if (!proofHover && !proofFocus && proofDragStart === null) {
-            proofTarget += 0.00018 * dt;
-          }
-          if (proofHover && proofDragStart === null) {
-            proofTarget += proofMouseDrift * dt;
-            proofMouseDrift *= 0.92;
-          }
-        }
-        proofPosition += (proofTarget - proofPosition) * 0.095;
-        if (Math.abs(proofTarget - proofPosition) < 0.001) proofPosition = proofTarget;
-        proofLayout(false);
-        requestAnimationFrame(proofTick);
-      }
-      requestAnimationFrame(proofTick);
-      window.setInterval(function () {
-        if (document.hidden || proofPaused || proofHover || proofFocus || !proofVisible || proofDragStart !== null) return;
-        proofGo(1);
-      }, 5600);
-    }
   }
 
   /* ----- Experience timeline draws with scroll ----- */
