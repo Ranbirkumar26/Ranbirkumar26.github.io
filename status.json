@@ -1,5 +1,5 @@
 {
-  "checked": "2026-11-16T20:24:33Z",
+  "checked": "2026-11-17T03:46:13Z",
   "docqa": {
     "state": "access_gated",
     "label": "access gated"
@@ -9,7 +9,7 @@
     "label": "sleeping demo"
   },
   "craveconnect": {
-    "state": "sleeping",
-    "label": "sleeping demo"
+    "state": "public",
+    "label": "public demo"
   }
 }
